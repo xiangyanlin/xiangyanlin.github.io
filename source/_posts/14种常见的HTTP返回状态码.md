@@ -1,7 +1,10 @@
 ---
 title: 14种常见的HTTP返回状态码
 date: 2019-11-17 21:08:39
+categories: 
+  - http
 tags:
+  - http
 
 ---
 
