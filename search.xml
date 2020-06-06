@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>14种常见的HTTP返回状态码</title>
+    <url>/2019/11/17/14%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81/</url>
+    <content><![CDATA[<p>今天学习了一下HTTP状态码，把自己的理解记录一下，如有不对之处，欢迎指正</p>
+<a id="more"></a>
+<h2 id="2开头：成功"><a href="#2开头：成功" class="headerlink" title="2开头：成功"></a>2开头：成功</h2><h3 id="200-ok"><a href="#200-ok" class="headerlink" title="200:ok"></a>200:ok</h3><p>成功</p>
+<h3 id="204：No-Content"><a href="#204：No-Content" class="headerlink" title="204：No Content"></a>204：No Content</h3><pre><code>请求成功，但是没有东西（资源）可以返回（响应）</code></pre><h3 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206: Partial Content"></a>206: Partial Content</h3><pre><code>范围请求的成功返回状态码</code></pre><h2 id="3开头：重定向"><a href="#3开头：重定向" class="headerlink" title="3开头：重定向"></a>3开头：重定向</h2><h3 id="301：Moved-Permanently"><a href="#301：Moved-Permanently" class="headerlink" title="301：Moved Permanently"></a>301：Moved Permanently</h3><pre><code>永久性重定向。就是书签一样的</code></pre><h3 id="302：-Found"><a href="#302：-Found" class="headerlink" title="302： Found"></a>302： Found</h3><pre><code>临时性重定向。告知本次请求使用新的URL.</code></pre><h3 id="303-：See-Other"><a href="#303-：See-Other" class="headerlink" title="303 ：See Other"></a>303 ：See Other</h3><pre><code>告知请求对应的资源存在着另一个 URI，使用Get请求去访问这个新的URI.</code></pre><h3 id="304：-Not-Modified"><a href="#304：-Not-Modified" class="headerlink" title="　304： Not Modified"></a>　304： Not Modified</h3><pre><code>304 虽然被划分在 3XX 类别中，但是和重定向没有关 系。</code></pre><p>发送附带条件的请求时，资源已找到。但不满足条件。</p>
+<h3 id="307：-Temporary-Redirect"><a href="#307：-Temporary-Redirect" class="headerlink" title="　307： Temporary Redirect"></a>　307： Temporary Redirect</h3><pre><code>临时重定向，该状态码与 302 Found 有着相同的含义。但是307 会遵照浏览器标准，不会从 POST 变成 GET。防止重定向时改变请求方式。</code></pre><h2 id="4开头：客户端错误"><a href="#4开头：客户端错误" class="headerlink" title="　4开头：客户端错误"></a>　4开头：客户端错误</h2><pre><code>表示发出请求的客服端发生错误</code></pre><h3 id="400：-Bad-Request"><a href="#400：-Bad-Request" class="headerlink" title="　400： Bad Request"></a>　400： Bad Request</h3><pre><code>400表示请求报文中存在语法错误。当错误发生时，需修改请求的内容。</code></pre><h3 id="401：-Unauthorized"><a href="#401：-Unauthorized" class="headerlink" title="401： Unauthorized"></a>401： Unauthorized</h3><pre><code>请求的资源需要通过认证。第一次返回401，会弹出认证用的对话窗口。第二次返回401，表示认证失败</code></pre><h3 id="403：-Forbidden"><a href="#403：-Forbidden" class="headerlink" title="　403： Forbidden"></a>　403： Forbidden</h3><pre><code>因为访问权限等问题，服务器拒绝对资源的访问，服务器在实体的主体部分说明，用户以看到该说明。</code></pre><h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="　404 Not Found"></a>　404 Not Found</h3><pre><code>这个出现的比较多。
+该状态码表明服务器上无法找到请求的资源。
+除此之外，也可以在服务器端拒绝请求且不想说明理由时使用。</code></pre><h2 id="5开头：服务器错误"><a href="#5开头：服务器错误" class="headerlink" title="5开头：服务器错误"></a>5开头：服务器错误</h2><h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500: Internal Server Error"></a>500: Internal Server Error</h3><pre><code>服务器端在执行请求时发生了错误。一般是代码逻辑错误，各种异常</code></pre><h3 id="503-：Service-Unavailable"><a href="#503-：Service-Unavailable" class="headerlink" title="　503 ：Service Unavailable"></a>　503 ：Service Unavailable</h3><pre><code>服务器超负荷</code></pre><h5 id="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"><a href="#当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200" class="headerlink" title="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"></a>当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200</h5><h6 id="参考阅读《HTTP图解》一书"><a href="#参考阅读《HTTP图解》一书" class="headerlink" title="参考阅读《HTTP图解》一书"></a>参考阅读《HTTP图解》一书</h6>]]></content>
+      <categories>
+        <category>http</category>
+      </categories>
+      <tags>
+        <tag>http</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/06/05/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
