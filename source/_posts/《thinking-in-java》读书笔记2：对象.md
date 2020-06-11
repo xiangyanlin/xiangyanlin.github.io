@@ -2,8 +2,8 @@
 title: 《thinking in java》读书笔记2：对象
 date: 2019-12-04 21:05:30
 categories:
-	-读书笔记
-		-thinKing injava
+  - 读书笔记
+    - thinKing in java
 tags: 笔记
 ---
 
