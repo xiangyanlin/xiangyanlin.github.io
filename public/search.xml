@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>14种常见的HTTP返回状态码</title>
+    <url>/2019/11/17/14%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81/</url>
+    <content><![CDATA[<p>今天学习了一下HTTP状态码，把自己的理解记录一下，如有不对之处，欢迎指正</p>
+<a id="more"></a>
+<h2 id="2开头：成功"><a href="#2开头：成功" class="headerlink" title="2开头：成功"></a>2开头：成功</h2><h3 id="200-ok"><a href="#200-ok" class="headerlink" title="200:ok"></a>200:ok</h3><p>成功</p>
+<h3 id="204：No-Content"><a href="#204：No-Content" class="headerlink" title="204：No Content"></a>204：No Content</h3><pre><code>请求成功，但是没有东西（资源）可以返回（响应）</code></pre><h3 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206: Partial Content"></a>206: Partial Content</h3><pre><code>范围请求的成功返回状态码</code></pre><h2 id="3开头：重定向"><a href="#3开头：重定向" class="headerlink" title="3开头：重定向"></a>3开头：重定向</h2><h3 id="301：Moved-Permanently"><a href="#301：Moved-Permanently" class="headerlink" title="301：Moved Permanently"></a>301：Moved Permanently</h3><pre><code>永久性重定向。就是书签一样的</code></pre><h3 id="302：-Found"><a href="#302：-Found" class="headerlink" title="302： Found"></a>302： Found</h3><pre><code>临时性重定向。告知本次请求使用新的URL.</code></pre><h3 id="303-：See-Other"><a href="#303-：See-Other" class="headerlink" title="303 ：See Other"></a>303 ：See Other</h3><pre><code>告知请求对应的资源存在着另一个 URI，使用Get请求去访问这个新的URI.</code></pre><h3 id="304：-Not-Modified"><a href="#304：-Not-Modified" class="headerlink" title="　304： Not Modified"></a>　304： Not Modified</h3><pre><code>304 虽然被划分在 3XX 类别中，但是和重定向没有关 系。</code></pre><p>发送附带条件的请求时，资源已找到。但不满足条件。</p>
+<h3 id="307：-Temporary-Redirect"><a href="#307：-Temporary-Redirect" class="headerlink" title="　307： Temporary Redirect"></a>　307： Temporary Redirect</h3><pre><code>临时重定向，该状态码与 302 Found 有着相同的含义。但是307 会遵照浏览器标准，不会从 POST 变成 GET。防止重定向时改变请求方式。</code></pre><h2 id="4开头：客户端错误"><a href="#4开头：客户端错误" class="headerlink" title="　4开头：客户端错误"></a>　4开头：客户端错误</h2><pre><code>表示发出请求的客服端发生错误</code></pre><h3 id="400：-Bad-Request"><a href="#400：-Bad-Request" class="headerlink" title="　400： Bad Request"></a>　400： Bad Request</h3><pre><code>400表示请求报文中存在语法错误。当错误发生时，需修改请求的内容。</code></pre><h3 id="401：-Unauthorized"><a href="#401：-Unauthorized" class="headerlink" title="401： Unauthorized"></a>401： Unauthorized</h3><pre><code>请求的资源需要通过认证。第一次返回401，会弹出认证用的对话窗口。第二次返回401，表示认证失败</code></pre><h3 id="403：-Forbidden"><a href="#403：-Forbidden" class="headerlink" title="　403： Forbidden"></a>　403： Forbidden</h3><pre><code>因为访问权限等问题，服务器拒绝对资源的访问，服务器在实体的主体部分说明，用户以看到该说明。</code></pre><h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="　404 Not Found"></a>　404 Not Found</h3><pre><code>这个出现的比较多。
+该状态码表明服务器上无法找到请求的资源。
+除此之外，也可以在服务器端拒绝请求且不想说明理由时使用。</code></pre><h2 id="5开头：服务器错误"><a href="#5开头：服务器错误" class="headerlink" title="5开头：服务器错误"></a>5开头：服务器错误</h2><h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500: Internal Server Error"></a>500: Internal Server Error</h3><pre><code>服务器端在执行请求时发生了错误。一般是代码逻辑错误，各种异常</code></pre><h3 id="503-：Service-Unavailable"><a href="#503-：Service-Unavailable" class="headerlink" title="　503 ：Service Unavailable"></a>　503 ：Service Unavailable</h3><pre><code>服务器超负荷</code></pre><h5 id="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"><a href="#当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200" class="headerlink" title="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"></a>当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200</h5><h6 id="参考阅读《HTTP图解》一书"><a href="#参考阅读《HTTP图解》一书" class="headerlink" title="参考阅读《HTTP图解》一书"></a>参考阅读《HTTP图解》一书</h6>]]></content>
+      <categories>
+        <category>http</category>
+      </categories>
+      <tags>
+        <tag>http</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mybatis 缓存 的知识点</title>
     <url>/2020/02/22/Mybatis-%E7%BC%93%E5%AD%98-%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
     <content><![CDATA[<p>像大多数的持久化框架一样，Mybatis 也提供了缓存策略，通过缓存策略来减少数据库的查询次数，从而提 高性能。 </p>
@@ -45,26 +62,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/06/06/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Spring 声明式事务注解@Transactional</title>
     <url>/2019/11/21/Spring-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%B3%A8%E8%A7%A3-Transactional/</url>
     <content><![CDATA[<p> Spring 声明式事务注解@Transactional使用的两种方式：1 结合xml配置使用； 2纯注解使用</p>
@@ -79,6 +76,25 @@
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mybatis 延迟加载和立即加载的实现</title>
+    <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
+<a id="more"></a>
+
+<p> 延迟加载：   就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载.<br> 好处：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速 度要快。<br> 坏处：   因为只有当需要用到数据时，才会进行数据库查询，这样在大批量数据查询时，因为查询工作也要消耗 时间，所以可能造成用户等待时间变长，造成用户体验下降<br> 在我们使用多表查询时（一对一，一对多或者多对多），mybatis默认使用立即加载。如果我们想使用延迟加载需要做两件事</p>
+<h3 id="1设置多表查询返回的resultMap"><a href="#1设置多表查询返回的resultMap" class="headerlink" title="1设置多表查询返回的resultMap"></a>1设置多表查询返回的resultMap</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1tEntity2&quot; type&#x3D;&quot;entity1&quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;entity1_id&quot; column&#x3D;&quot;entity1_id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;entity2_id&quot; column&#x3D;&quot;entity2_id&quot;&gt;&lt;&#x2F;result&gt;&lt;!--关联字段--&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;file&quot; column&#x3D;&quot;file&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1就可以了--&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装entity2的内容</span><br><span class="line">    select属性指定的内容：查询entity2的唯一标识：</span><br><span class="line">    column属性指定的内容：entity2根据id查询时，所需要的参数的值</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;entity2&quot; column&#x3D;&quot;entity2_id&quot; javaType&#x3D;&quot;entity2&quot; select&#x3D;&quot;namespce+查询语句的id&quot;&gt;&lt;&#x2F;association&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1 where entity2_id&#x3D;?就可以了--&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<p>配置映射文件config.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
       </tags>
   </entry>
   <entry>
@@ -99,16 +115,39 @@
       </tags>
   </entry>
   <entry>
-    <title>mybatis 延迟加载和立即加载的实现</title>
-    <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
+    <title>Hello World</title>
+    <url>/2020/06/06/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <a id="more"></a>
 
-<p> 延迟加载：   就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载.<br> 好处：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速 度要快。<br> 坏处：   因为只有当需要用到数据时，才会进行数据库查询，这样在大批量数据查询时，因为查询工作也要消耗 时间，所以可能造成用户等待时间变长，造成用户体验下降<br> 在我们使用多表查询时（一对一，一对多或者多对多），mybatis默认使用立即加载。如果我们想使用延迟加载需要做两件事</p>
-<h3 id="1设置多表查询返回的resultMap"><a href="#1设置多表查询返回的resultMap" class="headerlink" title="1设置多表查询返回的resultMap"></a>1设置多表查询返回的resultMap</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1tEntity2&quot; type&#x3D;&quot;entity1&quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;entity1_id&quot; column&#x3D;&quot;entity1_id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;entity2_id&quot; column&#x3D;&quot;entity2_id&quot;&gt;&lt;&#x2F;result&gt;&lt;!--关联字段--&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;file&quot; column&#x3D;&quot;file&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1就可以了--&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装entity2的内容</span><br><span class="line">    select属性指定的内容：查询entity2的唯一标识：</span><br><span class="line">    column属性指定的内容：entity2根据id查询时，所需要的参数的值</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;entity2&quot; column&#x3D;&quot;entity2_id&quot; javaType&#x3D;&quot;entity2&quot; select&#x3D;&quot;namespce+查询语句的id&quot;&gt;&lt;&#x2F;association&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1 where entity2_id&#x3D;?就可以了--&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<p>配置映射文件config.xml</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
-<p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>mybatis表间关系，多表联查如何定义实体和返回类型</title>
+    <url>/2019/12/17/mybatis%E8%A1%A8%E9%97%B4%E5%85%B3%E7%B3%BB%EF%BC%8C%E5%A4%9A%E8%A1%A8%E8%81%94%E6%9F%A5%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93%E5%92%8C%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p> mybatis表间关系，多表联查如何定义实体和返回类型</p>
+<a id="more"></a>
+
+<h3 id="1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联"><a href="#1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联" class="headerlink" title="1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)"></a>1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity1 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field1;</span><br><span class="line">private Entity2 entity2;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field2;</span><br><span class="line">private Entity2 entity1;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Entity1对应的mapper中加入相应的resultMap</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1Entity2Map&quot; type&#x3D;&quot;Entity1 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field1&quot; column&#x3D;&quot;field1&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装Entity2的内容--&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot; javaType&#x3D;&quot;Entity2&quot;&gt;</span><br><span class="line">        &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field2&quot; property&#x3D;&quot;field2&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;association&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<p>2，一对多关系在实体加入关联实体属性(Entity3 和Entity4一对多,通过field关联)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity3 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field3;</span><br><span class="line">private List&lt;Entity4&gt; entity4;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field4;</span><br><span class="line">private Entity2 entity3;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Entity3对应的mapper中加入相应的resultMap</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity3Entity4Map&quot; type&#x3D;&quot;Entity3 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field3&quot; column&#x3D;&quot;field3&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 配置Entity3对象中Entity4集合的映射 --&gt;</span><br><span class="line">    &lt;collection property&#x3D;&quot;Entity4&quot; ofType&#x3D;&quot;Entity4&quot;&gt;</span><br><span class="line">        &lt;id column&#x3D;&quot;id&quot; property&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field4&quot; property&#x3D;&quot;field4&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;collection&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3，多对多关系"><a href="#3，多对多关系" class="headerlink" title="3，多对多关系"></a>3，多对多关系</h3><p>多对多关系就类似了，实体（Entity5，Entity6关联）中都是加对方的List<T><br>ReultMap关对方联集合的映射</p>
 ]]></content>
       <categories>
         <category>mybatis</category>
@@ -143,25 +182,15 @@
       </tags>
   </entry>
   <entry>
-    <title>mybatis表间关系，多表联查如何定义实体和返回类型</title>
-    <url>/2019/12/17/mybatis%E8%A1%A8%E9%97%B4%E5%85%B3%E7%B3%BB%EF%BC%8C%E5%A4%9A%E8%A1%A8%E8%81%94%E6%9F%A5%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93%E5%92%8C%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p> mybatis表间关系，多表联查如何定义实体和返回类型</p>
-<a id="more"></a>
-
-<h3 id="1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联"><a href="#1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联" class="headerlink" title="1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)"></a>1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity1 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field1;</span><br><span class="line">private Entity2 entity2;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field2;</span><br><span class="line">private Entity2 entity1;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> Entity1对应的mapper中加入相应的resultMap</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1Entity2Map&quot; type&#x3D;&quot;Entity1 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field1&quot; column&#x3D;&quot;field1&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装Entity2的内容--&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot; javaType&#x3D;&quot;Entity2&quot;&gt;</span><br><span class="line">        &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field2&quot; property&#x3D;&quot;field2&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;association&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<p>2，一对多关系在实体加入关联实体属性(Entity3 和Entity4一对多,通过field关联)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity3 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field3;</span><br><span class="line">private List&lt;Entity4&gt; entity4;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field4;</span><br><span class="line">private Entity2 entity3;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> Entity3对应的mapper中加入相应的resultMap</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity3Entity4Map&quot; type&#x3D;&quot;Entity3 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field3&quot; column&#x3D;&quot;field3&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 配置Entity3对象中Entity4集合的映射 --&gt;</span><br><span class="line">    &lt;collection property&#x3D;&quot;Entity4&quot; ofType&#x3D;&quot;Entity4&quot;&gt;</span><br><span class="line">        &lt;id column&#x3D;&quot;id&quot; property&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field4&quot; property&#x3D;&quot;field4&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;collection&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3，多对多关系"><a href="#3，多对多关系" class="headerlink" title="3，多对多关系"></a>3，多对多关系</h3><p>多对多关系就类似了，实体（Entity5，Entity6关联）中都是加对方的List<T><br>ReultMap关对方联集合的映射</p>
+    <title>org.xml.sax.SAXNotRecognizedException:Feature:http://apache.org/xml/features/val</title>
+    <url>/2020/05/15/org-xml-sax-SAXNotRecognizedException-Feature-http-apache-org-xml-features-val/</url>
+    <content><![CDATA[<p>导入一个web项目，跑起来的时候报”org.xml.sax.SAXNotRecognizedException:Feature:<a href="http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行" target="_blank" rel="noopener">http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行</a></p>
 ]]></content>
       <categories>
-        <category>mybatis</category>
+        <category>jdk</category>
       </categories>
       <tags>
-        <tag>mybatis</tag>
+        <tag>jdk</tag>
       </tags>
   </entry>
   <entry>
@@ -181,30 +210,6 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
-    <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
-    <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>org.xml.sax.SAXNotRecognizedException:Feature:http://apache.org/xml/features/val</title>
-    <url>/2020/05/15/org-xml-sax-SAXNotRecognizedException-Feature-http-apache-org-xml-features-val/</url>
-    <content><![CDATA[<p>导入一个web项目，跑起来的时候报”org.xml.sax.SAXNotRecognizedException:Feature:<a href="http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行" target="_blank" rel="noopener">http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行</a></p>
-]]></content>
-      <categories>
-        <category>jdk</category>
-      </categories>
-      <tags>
-        <tag>jdk</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>sql获取当前插入表的id</title>
     <url>/2019/12/05/sql%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%8F%92%E5%85%A5%E8%A1%A8%E7%9A%84id/</url>
     <content><![CDATA[<p> sql获取当前插入表的id</p>
@@ -215,6 +220,18 @@
 
 <p>动态sql:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;selectKey keyProperty&#x3D;&quot;userId&quot; keyColumn&#x3D;&quot;id&quot; resultType&#x3D;&quot;int&quot; order&#x3D;&quot;AFTER&quot;&gt;</span><br><span class="line">    select last_insert_id();</span><br><span class="line">&lt;&#x2F;selectKey&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
+    <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
+    <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
+]]></content>
       <categories>
         <category>mysql</category>
       </categories>
@@ -251,6 +268,22 @@
       </tags>
   </entry>
   <entry>
+    <title>《thinking in java》读书笔记2：对象</title>
+    <url>/2019/12/04/%E3%80%8Athinking-in-java%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B02%EF%BC%9A%E5%AF%B9%E8%B1%A1/</url>
+    <content><![CDATA[<p>BigInteger:支持任意精度的整数<br>BigDecimal:支持任何精度的定点数<br>java的作用域由{ }决定，</p>
+<a id="more"></a>
+
+<h4 id="java基本成员变量默认值"><a href="#java基本成员变量默认值" class="headerlink" title="java基本成员变量默认值"></a>java基本成员变量默认值</h4><p>boolean:false, char：’\u0000’(null), byte:0, short: 0, int：0，long: 0L, float: 0.0f, double:0.0d</p>
+<h4 id="javadoc"><a href="#javadoc" class="headerlink" title="javadoc"></a>javadoc</h4><p>javadoc 命令只能出现在”/**”注释中出现，主要有两种方式。<br>1，文档标签,<br>（1）独立文档标签：以”@”开头<br> （2）行内文档标签：同样以”@”开头，但是要括在”{}”内。<br>2，嵌入html<br>如: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">*&lt;ol&gt;</span><br><span class="line">*&lt;li&gt;item one</span><br><span class="line">*&lt;&#x2F;ol&gt;</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>-读书笔记 -thinKing injava</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《thinking in java》读书笔记</title>
     <url>/2019/12/02/%E3%80%8Athinking-in-java%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>记录今天一些学习《JAVA编程思想》中读到的让我深思和值得记录的点</p>
@@ -260,22 +293,6 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;User&gt; users&#x3D;new ArrayList&lt;User&gt;;</span><br></pre></td></tr></table></figure>
 <p>applet:只在浏览器中运行的小程序。<br>Intranet:企业内部网</p>
 ]]></content>
-      <categories>
-        <category>-读书笔记 -thinKing injava</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《thinking in java》读书笔记2：对象</title>
-    <url>/2019/12/04/%E3%80%8Athinking-in-java%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B02%EF%BC%9A%E5%AF%B9%E8%B1%A1/</url>
-    <content><![CDATA[<p>BigInteger:支持任意精度的整数<br>BigDecimal:支持任何精度的定点数<br>java的作用域由{ }决定，</p>
-<a id="more"></a>
-
-<h4 id="java基本成员变量默认值"><a href="#java基本成员变量默认值" class="headerlink" title="java基本成员变量默认值"></a>java基本成员变量默认值</h4><p>boolean:false, char：’\u0000’(null), byte:0, short: 0, int：0，long: 0L, float: 0.0f, double:0.0d</p>
-<h4 id="javadoc"><a href="#javadoc" class="headerlink" title="javadoc"></a>javadoc</h4><p>javadoc 命令只能出现在”/**”注释中出现，主要有两种方式。<br>1，文档标签,<br>（1）独立文档标签：以”@”开头<br> （2）行内文档标签：同样以”@”开头，但是要括在”{}”内。<br>2，嵌入html<br>如: </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">*&lt;ol&gt;</span><br><span class="line">*&lt;li&gt;item one</span><br><span class="line">*&lt;&#x2F;ol&gt;</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>-读书笔记 -thinKing injava</category>
       </categories>
@@ -302,6 +319,61 @@
       </tags>
   </entry>
   <entry>
+    <title>区分项目中的数据实体目录 entity，dto,vo</title>
+    <url>/2020/03/06/%E5%8C%BA%E5%88%86%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%9E%E4%BD%93%E7%9B%AE%E5%BD%95-entity%EF%BC%8Cdto-vo/</url>
+    <content><![CDATA[<p>1、entity 里的每一个字段，与数据库相对应，<br>2、vo 里的每一个字段，是和你前台 html 页面相对应，<br>3、dto 这是用来转换从 entity 到 vo，或者从 vo 到 entity 的中间的东西 。（DTO中拥有的字段应该是entity中或者是vo中的一个子集）<br><a href="https://www.cnblogs.com/vegetableDD/p/11732495.html" target="_blank" rel="noopener">参考文章：https://www.cnblogs.com/vegetableDD/p/11732495.html</a></p>
+]]></content>
+      <categories>
+        <category>java规范</category>
+      </categories>
+      <tags>
+        <tag>java规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在学Spring Aop 发现的注意点</title>
+    <url>/2019/11/18/%E5%9C%A8%E5%AD%A6Spring-Aop-%E5%8F%91%E7%8E%B0%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
+    <content><![CDATA[<h2 id="基于xml"><a href="#基于xml" class="headerlink" title="基于xml"></a>基于xml</h2><p>有两种方式可以实现：1环绕通知; 2前置通知，后置通知，最终通知，异常通知</p>
+<a id="more"></a>
+
+<h3 id="1环绕通知"><a href="#1环绕通知" class="headerlink" title="1环绕通知"></a>1环绕通知</h3><p>配置环绕通知</p>
+<h3 id="2前置通知，后置通知，最终通知，异常通知"><a href="#2前置通知，后置通知，最终通知，异常通知" class="headerlink" title="2前置通知，后置通知，最终通知，异常通知"></a>2前置通知，后置通知，最终通知，异常通知</h3><!--配置aop-->
+<pre><code>&lt;aop:config&gt;
+    &lt;!--切入点表达式--&gt;
+    &lt;aop:pointcut id=&quot;pr&quot; expression=&quot;execution(作用范围)&quot;&gt;&lt;/aop:pointcut&gt;
+    &lt;aop:aspect id=&quot;txAdvice&quot; ref=&quot;txManager&quot;&gt;
+        &lt;!--前置通知--&gt;
+        &lt;aop:before method=&quot;beginTransaction&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:before&gt;
+        &lt;!--后置通知--&gt;
+        &lt;aop:after-returning method=&quot;commit&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:after-returning&gt;
+        &lt;!--异常通知--&gt;
+        &lt;aop:after-throwing method=&quot;rollback&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:after-throwing&gt;
+        &lt;!--最终通知--&gt;
+        &lt;aop:after method=&quot;release&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:after&gt;
+    &lt;/aop:aspect&gt;
+
+&lt;/aop:config&gt;</code></pre><h3 id="基于注解"><a href="#基于注解" class="headerlink" title="基于注解"></a>基于注解</h3><p>只能使用环绕通知<br>如果使用前置通知，后置通知，最终通知，异常通知会因为执行顺序问题导致错误</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Around(&quot;pt1()&quot;)</span><br><span class="line">   public Object aroundAdvice(ProceedingJoinPoint pjp)&#123;</span><br><span class="line">       Object rtValue &#x3D; null;</span><br><span class="line">       try &#123;</span><br><span class="line">           &#x2F;&#x2F;1.获取参数</span><br><span class="line">           Object[] params &#x3D; pjp.getParams();</span><br><span class="line">           &#x2F;&#x2F;2.开启事务</span><br><span class="line">           this.beginTransaction();</span><br><span class="line">           &#x2F;&#x2F;3.执行方法</span><br><span class="line">           rtValue &#x3D; pjp.proceed(params);</span><br><span class="line">           &#x2F;&#x2F;4.提交事务</span><br><span class="line">           this.commit();</span><br><span class="line">           &#x2F;&#x2F;返回结果</span><br><span class="line">           return  rtValue;</span><br><span class="line">       &#125;catch (Throwable e)&#123;</span><br><span class="line">           &#x2F;&#x2F;5.回滚事务</span><br><span class="line">           this.rollback();</span><br><span class="line">           throw new RuntimeException(e);</span><br><span class="line">       &#125;finally &#123;</span><br><span class="line">           &#x2F;&#x2F;6.释放资源</span><br><span class="line">           this.release();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>戴尔惠普华硕笔记本Fn键反了，按F1、F2等键出来Fn+F1、F2的效果</title>
+    <url>/2020/03/02/%E6%88%B4%E5%B0%94%E6%83%A0%E6%99%AE%E5%8D%8E%E7%A1%95%E7%AC%94%E8%AE%B0%E6%9C%ACFn%E9%94%AE%E5%8F%8D%E4%BA%86%EF%BC%8C%E6%8C%89F1%E3%80%81F2%E7%AD%89%E9%94%AE%E5%87%BA%E6%9D%A5Fn-F1%E3%80%81F2%E7%9A%84%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<p>惠普笔记本，几天按f12调试的时候，笔记本直接睡眠了，试验了一番发现Fn键反了按F12等键出来Fn+F2的效果，按F1到F12等键出来Fn+F1到F12的效果。在网上寻找一番答案发现是是fn键被锁住了。<br>找到键盘上的一个Fnlock（缩写FnLk）或Numlock键，然后按Fn+Fnlock/Numlock解锁<br><a href="https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html" target="_blank" rel="noopener">参考文章:<br>https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html</a>.</p>
+]]></content>
+      <categories>
+        <category>电脑问题 - 键盘</category>
+      </categories>
+      <tags>
+        <tag>键盘</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用eclipse导入myeclipse项目无法识别为web项目问题的解决</title>
     <url>/2020/05/15/%E4%BD%BF%E7%94%A8eclipse%E5%AF%BC%E5%85%A5myeclipse%E9%A1%B9%E7%9B%AE%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E4%B8%BAweb%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>原因eclipse默认的web目录为webcontent,而myeclipse的为webRoot,导致无法识别</p>
@@ -316,30 +388,6 @@
       </categories>
       <tags>
         <tag>eclipse</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>区分项目中的数据实体目录 entity，dto,vo</title>
-    <url>/2020/03/06/%E5%8C%BA%E5%88%86%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%9E%E4%BD%93%E7%9B%AE%E5%BD%95-entity%EF%BC%8Cdto-vo/</url>
-    <content><![CDATA[<p>1、entity 里的每一个字段，与数据库相对应，<br>2、vo 里的每一个字段，是和你前台 html 页面相对应，<br>3、dto 这是用来转换从 entity 到 vo，或者从 vo 到 entity 的中间的东西 。（DTO中拥有的字段应该是entity中或者是vo中的一个子集）<br><a href="https://www.cnblogs.com/vegetableDD/p/11732495.html" target="_blank" rel="noopener">参考文章：https://www.cnblogs.com/vegetableDD/p/11732495.html</a></p>
-]]></content>
-      <categories>
-        <category>java规范</category>
-      </categories>
-      <tags>
-        <tag>java规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>戴尔惠普华硕笔记本Fn键反了，按F1、F2等键出来Fn+F1、F2的效果</title>
-    <url>/2020/03/02/%E6%88%B4%E5%B0%94%E6%83%A0%E6%99%AE%E5%8D%8E%E7%A1%95%E7%AC%94%E8%AE%B0%E6%9C%ACFn%E9%94%AE%E5%8F%8D%E4%BA%86%EF%BC%8C%E6%8C%89F1%E3%80%81F2%E7%AD%89%E9%94%AE%E5%87%BA%E6%9D%A5Fn-F1%E3%80%81F2%E7%9A%84%E6%95%88%E6%9E%9C/</url>
-    <content><![CDATA[<p>惠普笔记本，几天按f12调试的时候，笔记本直接睡眠了，试验了一番发现Fn键反了按F12等键出来Fn+F2的效果，按F1到F12等键出来Fn+F1到F12的效果。在网上寻找一番答案发现是是fn键被锁住了。<br>找到键盘上的一个Fnlock（缩写FnLk）或Numlock键，然后按Fn+Fnlock/Numlock解锁<br><a href="https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html" target="_blank" rel="noopener">参考文章:<br>https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html</a>.</p>
-]]></content>
-      <categories>
-        <category>电脑问题 - 键盘</category>
-      </categories>
-      <tags>
-        <tag>键盘</tag>
       </tags>
   </entry>
   <entry>
@@ -381,54 +429,6 @@
       </categories>
       <tags>
         <tag>阿里云服务器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>14种常见的HTTP返回状态码</title>
-    <url>/2019/11/17/14%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81/</url>
-    <content><![CDATA[<p>今天学习了一下HTTP状态码，把自己的理解记录一下，如有不对之处，欢迎指正</p>
-<a id="more"></a>
-<h2 id="2开头：成功"><a href="#2开头：成功" class="headerlink" title="2开头：成功"></a>2开头：成功</h2><h3 id="200-ok"><a href="#200-ok" class="headerlink" title="200:ok"></a>200:ok</h3><p>成功</p>
-<h3 id="204：No-Content"><a href="#204：No-Content" class="headerlink" title="204：No Content"></a>204：No Content</h3><pre><code>请求成功，但是没有东西（资源）可以返回（响应）</code></pre><h3 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206: Partial Content"></a>206: Partial Content</h3><pre><code>范围请求的成功返回状态码</code></pre><h2 id="3开头：重定向"><a href="#3开头：重定向" class="headerlink" title="3开头：重定向"></a>3开头：重定向</h2><h3 id="301：Moved-Permanently"><a href="#301：Moved-Permanently" class="headerlink" title="301：Moved Permanently"></a>301：Moved Permanently</h3><pre><code>永久性重定向。就是书签一样的</code></pre><h3 id="302：-Found"><a href="#302：-Found" class="headerlink" title="302： Found"></a>302： Found</h3><pre><code>临时性重定向。告知本次请求使用新的URL.</code></pre><h3 id="303-：See-Other"><a href="#303-：See-Other" class="headerlink" title="303 ：See Other"></a>303 ：See Other</h3><pre><code>告知请求对应的资源存在着另一个 URI，使用Get请求去访问这个新的URI.</code></pre><h3 id="304：-Not-Modified"><a href="#304：-Not-Modified" class="headerlink" title="　304： Not Modified"></a>　304： Not Modified</h3><pre><code>304 虽然被划分在 3XX 类别中，但是和重定向没有关 系。</code></pre><p>发送附带条件的请求时，资源已找到。但不满足条件。</p>
-<h3 id="307：-Temporary-Redirect"><a href="#307：-Temporary-Redirect" class="headerlink" title="　307： Temporary Redirect"></a>　307： Temporary Redirect</h3><pre><code>临时重定向，该状态码与 302 Found 有着相同的含义。但是307 会遵照浏览器标准，不会从 POST 变成 GET。防止重定向时改变请求方式。</code></pre><h2 id="4开头：客户端错误"><a href="#4开头：客户端错误" class="headerlink" title="　4开头：客户端错误"></a>　4开头：客户端错误</h2><pre><code>表示发出请求的客服端发生错误</code></pre><h3 id="400：-Bad-Request"><a href="#400：-Bad-Request" class="headerlink" title="　400： Bad Request"></a>　400： Bad Request</h3><pre><code>400表示请求报文中存在语法错误。当错误发生时，需修改请求的内容。</code></pre><h3 id="401：-Unauthorized"><a href="#401：-Unauthorized" class="headerlink" title="401： Unauthorized"></a>401： Unauthorized</h3><pre><code>请求的资源需要通过认证。第一次返回401，会弹出认证用的对话窗口。第二次返回401，表示认证失败</code></pre><h3 id="403：-Forbidden"><a href="#403：-Forbidden" class="headerlink" title="　403： Forbidden"></a>　403： Forbidden</h3><pre><code>因为访问权限等问题，服务器拒绝对资源的访问，服务器在实体的主体部分说明，用户以看到该说明。</code></pre><h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="　404 Not Found"></a>　404 Not Found</h3><pre><code>这个出现的比较多。
-该状态码表明服务器上无法找到请求的资源。
-除此之外，也可以在服务器端拒绝请求且不想说明理由时使用。</code></pre><h2 id="5开头：服务器错误"><a href="#5开头：服务器错误" class="headerlink" title="5开头：服务器错误"></a>5开头：服务器错误</h2><h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500: Internal Server Error"></a>500: Internal Server Error</h3><pre><code>服务器端在执行请求时发生了错误。一般是代码逻辑错误，各种异常</code></pre><h3 id="503-：Service-Unavailable"><a href="#503-：Service-Unavailable" class="headerlink" title="　503 ：Service Unavailable"></a>　503 ：Service Unavailable</h3><pre><code>服务器超负荷</code></pre><h5 id="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"><a href="#当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200" class="headerlink" title="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"></a>当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200</h5><h6 id="参考阅读《HTTP图解》一书"><a href="#参考阅读《HTTP图解》一书" class="headerlink" title="参考阅读《HTTP图解》一书"></a>参考阅读《HTTP图解》一书</h6>]]></content>
-      <categories>
-        <category>http</category>
-      </categories>
-      <tags>
-        <tag>http</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在学Spring Aop 发现的注意点</title>
-    <url>/2019/11/18/%E5%9C%A8%E5%AD%A6Spring-Aop-%E5%8F%91%E7%8E%B0%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
-    <content><![CDATA[<h2 id="基于xml"><a href="#基于xml" class="headerlink" title="基于xml"></a>基于xml</h2><p>有两种方式可以实现：1环绕通知; 2前置通知，后置通知，最终通知，异常通知</p>
-<a id="more"></a>
-
-<h3 id="1环绕通知"><a href="#1环绕通知" class="headerlink" title="1环绕通知"></a>1环绕通知</h3><p>配置环绕通知</p>
-<h3 id="2前置通知，后置通知，最终通知，异常通知"><a href="#2前置通知，后置通知，最终通知，异常通知" class="headerlink" title="2前置通知，后置通知，最终通知，异常通知"></a>2前置通知，后置通知，最终通知，异常通知</h3><!--配置aop-->
-<pre><code>&lt;aop:config&gt;
-    &lt;!--切入点表达式--&gt;
-    &lt;aop:pointcut id=&quot;pr&quot; expression=&quot;execution(作用范围)&quot;&gt;&lt;/aop:pointcut&gt;
-    &lt;aop:aspect id=&quot;txAdvice&quot; ref=&quot;txManager&quot;&gt;
-        &lt;!--前置通知--&gt;
-        &lt;aop:before method=&quot;beginTransaction&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:before&gt;
-        &lt;!--后置通知--&gt;
-        &lt;aop:after-returning method=&quot;commit&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:after-returning&gt;
-        &lt;!--异常通知--&gt;
-        &lt;aop:after-throwing method=&quot;rollback&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:after-throwing&gt;
-        &lt;!--最终通知--&gt;
-        &lt;aop:after method=&quot;release&quot; pointcut-ref=&quot;pr&quot;&gt;&lt;/aop:after&gt;
-    &lt;/aop:aspect&gt;
-
-&lt;/aop:config&gt;</code></pre><h3 id="基于注解"><a href="#基于注解" class="headerlink" title="基于注解"></a>基于注解</h3><p>只能使用环绕通知<br>如果使用前置通知，后置通知，最终通知，异常通知会因为执行顺序问题导致错误</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Around(&quot;pt1()&quot;)</span><br><span class="line">   public Object aroundAdvice(ProceedingJoinPoint pjp)&#123;</span><br><span class="line">       Object rtValue &#x3D; null;</span><br><span class="line">       try &#123;</span><br><span class="line">           &#x2F;&#x2F;1.获取参数</span><br><span class="line">           Object[] params &#x3D; pjp.getParams();</span><br><span class="line">           &#x2F;&#x2F;2.开启事务</span><br><span class="line">           this.beginTransaction();</span><br><span class="line">           &#x2F;&#x2F;3.执行方法</span><br><span class="line">           rtValue &#x3D; pjp.proceed(params);</span><br><span class="line">           &#x2F;&#x2F;4.提交事务</span><br><span class="line">           this.commit();</span><br><span class="line">           &#x2F;&#x2F;返回结果</span><br><span class="line">           return  rtValue;</span><br><span class="line">       &#125;catch (Throwable e)&#123;</span><br><span class="line">           &#x2F;&#x2F;5.回滚事务</span><br><span class="line">           this.rollback();</span><br><span class="line">           throw new RuntimeException(e);</span><br><span class="line">       &#125;finally &#123;</span><br><span class="line">           &#x2F;&#x2F;6.释放资源</span><br><span class="line">           this.release();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
 </search>
