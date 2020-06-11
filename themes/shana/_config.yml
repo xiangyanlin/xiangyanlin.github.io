@@ -96,11 +96,15 @@ auto_excerpt:
 
 # Local search
 # Dependencies: https://github.com/flashlab/hexo-generator-search
-local_search:
-  enable: true
+#local_search:
+  #enable: true
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
-  trigger: auto
+  #trigger: auto
   # show top n results per article, show all results by setting to -1
   top_n_per_article: 1
-  
+
+reward:
+  reward_comment: 您的支持将鼓励我继续创作！
+  wechatpay: /images/wechat-reward-image.JPG
+  alipay: /images/ali-reward-image.JPG
