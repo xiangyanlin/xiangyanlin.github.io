@@ -62,23 +62,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring 编程式事务</title>
-    <url>/2019/11/21/Spring-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
-    <content><![CDATA[<p>Spring 编程式事务:1 配置文件bean.xml; 2在自己的业务层方法加编程式事务</p>
-<a id="more"></a>
-
-<h4 id="1-配置文件bean-xml"><a href="#1-配置文件bean-xml" class="headerlink" title="1 配置文件bean.xml"></a>1 配置文件bean.xml</h4><p>导入相关依赖后，在配置文件bean.xml文件中配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 配置事务管理器--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">&lt;!--这里是自己配置的数据源--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置事务模板对象--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionTemplate&quot; class&#x3D;&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;transactionManager&quot; ref&#x3D;&quot;transactionManager&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="2在自己的业务层方法加编程式事务"><a href="#2在自己的业务层方法加编程式事务" class="headerlink" title="2在自己的业务层方法加编程式事务"></a>2在自己的业务层方法加编程式事务</h4><p>在需要加事务的方法method中书写：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallback&lt;Object&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object doInTransaction(TransactionStatus status) &#123;</span><br><span class="line">                ......</span><br><span class="line">                自己的方法逻辑</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2020/06/16/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -99,6 +82,23 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Spring 编程式事务</title>
+    <url>/2019/11/21/Spring-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
+    <content><![CDATA[<p>Spring 编程式事务:1 配置文件bean.xml; 2在自己的业务层方法加编程式事务</p>
+<a id="more"></a>
+
+<h4 id="1-配置文件bean-xml"><a href="#1-配置文件bean-xml" class="headerlink" title="1 配置文件bean.xml"></a>1 配置文件bean.xml</h4><p>导入相关依赖后，在配置文件bean.xml文件中配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 配置事务管理器--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">&lt;!--这里是自己配置的数据源--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置事务模板对象--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionTemplate&quot; class&#x3D;&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;transactionManager&quot; ref&#x3D;&quot;transactionManager&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2在自己的业务层方法加编程式事务"><a href="#2在自己的业务层方法加编程式事务" class="headerlink" title="2在自己的业务层方法加编程式事务"></a>2在自己的业务层方法加编程式事务</h4><p>在需要加事务的方法method中书写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallback&lt;Object&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object doInTransaction(TransactionStatus status) &#123;</span><br><span class="line">                ......</span><br><span class="line">                自己的方法逻辑</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title> mybatic初学环境搭建</title>
     <url>/2019/11/19/mybatic%E5%88%9D%E5%AD%A6%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<p>搭建mybatis环境</p>
@@ -108,6 +108,25 @@
 <h3 id="2-配置mybaits的配置文件SqlMapConfig-xml"><a href="#2-配置mybaits的配置文件SqlMapConfig-xml" class="headerlink" title="2 配置mybaits的配置文件SqlMapConfig.xml"></a>2 配置mybaits的配置文件SqlMapConfig.xml</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;!-- mybatis的主配置文件 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 配置环境 --&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">        &lt;!-- 配置mysql的环境--&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">            &lt;!-- 配置事务的类型--&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;</span><br><span class="line">            &lt;!-- 配置数据源（连接池） --&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;!-- 配置连接数据库的4个基本信息 --&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;test&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 --&gt;</span><br><span class="line">    &lt;mappers&gt;</span><br><span class="line">        &lt;mapper resource&#x3D;&quot;com&#x2F;itheima&#x2F;dao&#x2F;IUserDao.xml&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="3-创建数据库表对应的实体"><a href="#3-创建数据库表对应的实体" class="headerlink" title="3 创建数据库表对应的实体"></a>3 创建数据库表对应的实体</h3><h3 id="4-创建SqlMapConfig-xml对应的映射文件"><a href="#4-创建SqlMapConfig-xml对应的映射文件" class="headerlink" title="4 创建SqlMapConfig.xml对应的映射文件"></a>4 创建SqlMapConfig.xml对应的映射文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">        &lt;!DOCTYPE mapper</span><br><span class="line">                PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">                &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">                &lt;!--****是对应的dao层接口--&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;****&quot;&gt;</span><br><span class="line">&lt;!--这里写自己的动态sql--&gt;</span><br><span class="line">.......</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
 <h5 id="5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml"><a href="#5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml" class="headerlink" title="5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml"></a>5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml</h5>]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mybatis 延迟加载和立即加载的实现</title>
+    <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
+<a id="more"></a>
+
+<p> 延迟加载：   就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载.<br> 好处：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速 度要快。<br> 坏处：   因为只有当需要用到数据时，才会进行数据库查询，这样在大批量数据查询时，因为查询工作也要消耗 时间，所以可能造成用户等待时间变长，造成用户体验下降<br> 在我们使用多表查询时（一对一，一对多或者多对多），mybatis默认使用立即加载。如果我们想使用延迟加载需要做两件事</p>
+<h3 id="1设置多表查询返回的resultMap"><a href="#1设置多表查询返回的resultMap" class="headerlink" title="1设置多表查询返回的resultMap"></a>1设置多表查询返回的resultMap</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1tEntity2&quot; type&#x3D;&quot;entity1&quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;entity1_id&quot; column&#x3D;&quot;entity1_id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;entity2_id&quot; column&#x3D;&quot;entity2_id&quot;&gt;&lt;&#x2F;result&gt;&lt;!--关联字段--&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;file&quot; column&#x3D;&quot;file&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1就可以了--&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装entity2的内容</span><br><span class="line">    select属性指定的内容：查询entity2的唯一标识：</span><br><span class="line">    column属性指定的内容：entity2根据id查询时，所需要的参数的值</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;entity2&quot; column&#x3D;&quot;entity2_id&quot; javaType&#x3D;&quot;entity2&quot; select&#x3D;&quot;namespce+查询语句的id&quot;&gt;&lt;&#x2F;association&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1 where entity2_id&#x3D;?就可以了--&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<p>配置映射文件config.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+]]></content>
       <categories>
         <category>mybatis</category>
       </categories>
@@ -133,25 +152,6 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Context&gt;</span><br><span class="line"></span><br><span class="line">&lt;Resource </span><br><span class="line">name&#x3D;&quot;jdbc&#x2F;test&quot;                  数据源的名称</span><br><span class="line">type&#x3D;&quot;javax.sql.DataSource&quot;                   数据源类型</span><br><span class="line">auth&#x3D;&quot;Container&quot;                        数据源提供者</span><br><span class="line">maxActive&#x3D;&quot;20&quot;                         最大活动数</span><br><span class="line">maxWait&#x3D;&quot;10000&quot;                            最大等待时间</span><br><span class="line">maxIdle&#x3D;&quot;5&quot;                               最大空闲数</span><br><span class="line">username&#x3D;&quot;root&quot;                            用户名</span><br><span class="line">password&#x3D;&quot;1234&quot;                            密码</span><br><span class="line">driverClassName&#x3D;&quot;com.mysql.jdbc.Driver&quot;          驱动类</span><br><span class="line">url&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;eesy_mybatis&quot; 连接url字符串</span><br><span class="line">&#x2F;&gt;</span><br></pre></td></tr></table></figure>
 <p>在resouce的目录下：<br>写一个配置文件：context.xml</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Resource </span><br><span class="line">name&#x3D;&quot;jdbc&#x2F;test&quot;</span><br><span class="line">type&#x3D;&quot;javax.sql.DataSource&quot;</span><br><span class="line">auth&#x3D;&quot;Container&quot;</span><br><span class="line">maxActive&#x3D;</span><br><span class="line">maxWait&#x3D;</span><br><span class="line">maxIdle&#x3D;</span><br><span class="line">username&#x3D;</span><br><span class="line">password&#x3D;</span><br><span class="line">driverClassName&#x3D;&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">url&#x3D;</span><br><span class="line">&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Context&gt;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mybatis 延迟加载和立即加载的实现</title>
-    <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
-<a id="more"></a>
-
-<p> 延迟加载：   就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载.<br> 好处：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速 度要快。<br> 坏处：   因为只有当需要用到数据时，才会进行数据库查询，这样在大批量数据查询时，因为查询工作也要消耗 时间，所以可能造成用户等待时间变长，造成用户体验下降<br> 在我们使用多表查询时（一对一，一对多或者多对多），mybatis默认使用立即加载。如果我们想使用延迟加载需要做两件事</p>
-<h3 id="1设置多表查询返回的resultMap"><a href="#1设置多表查询返回的resultMap" class="headerlink" title="1设置多表查询返回的resultMap"></a>1设置多表查询返回的resultMap</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1tEntity2&quot; type&#x3D;&quot;entity1&quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;entity1_id&quot; column&#x3D;&quot;entity1_id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;entity2_id&quot; column&#x3D;&quot;entity2_id&quot;&gt;&lt;&#x2F;result&gt;&lt;!--关联字段--&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;file&quot; column&#x3D;&quot;file&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1就可以了--&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装entity2的内容</span><br><span class="line">    select属性指定的内容：查询entity2的唯一标识：</span><br><span class="line">    column属性指定的内容：entity2根据id查询时，所需要的参数的值</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;entity2&quot; column&#x3D;&quot;entity2_id&quot; javaType&#x3D;&quot;entity2&quot; select&#x3D;&quot;namespce+查询语句的id&quot;&gt;&lt;&#x2F;association&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1 where entity2_id&#x3D;?就可以了--&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<p>配置映射文件config.xml</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
-<p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-]]></content>
       <categories>
         <category>mybatis</category>
       </categories>
@@ -198,18 +198,6 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
-    <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
-    <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>org.xml.sax.SAXNotRecognizedException:Feature:http://apache.org/xml/features/val</title>
     <url>/2020/05/15/org-xml-sax-SAXNotRecognizedException-Feature-http-apache-org-xml-features-val/</url>
     <content><![CDATA[<p>导入一个web项目，跑起来的时候报”org.xml.sax.SAXNotRecognizedException:Feature:<a href="http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行" target="_blank" rel="noopener">http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行</a></p>
@@ -219,6 +207,18 @@
       </categories>
       <tags>
         <tag>jdk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
+    <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
+    <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -319,18 +319,6 @@
       </tags>
   </entry>
   <entry>
-    <title>区分项目中的数据实体目录 entity，dto,vo</title>
-    <url>/2020/03/06/%E5%8C%BA%E5%88%86%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%9E%E4%BD%93%E7%9B%AE%E5%BD%95-entity%EF%BC%8Cdto-vo/</url>
-    <content><![CDATA[<p>1、entity 里的每一个字段，与数据库相对应，<br>2、vo 里的每一个字段，是和你前台 html 页面相对应，<br>3、dto 这是用来转换从 entity 到 vo，或者从 vo 到 entity 的中间的东西 。（DTO中拥有的字段应该是entity中或者是vo中的一个子集）<br><a href="https://www.cnblogs.com/vegetableDD/p/11732495.html" target="_blank" rel="noopener">参考文章：https://www.cnblogs.com/vegetableDD/p/11732495.html</a></p>
-]]></content>
-      <categories>
-        <category>java规范</category>
-      </categories>
-      <tags>
-        <tag>java规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用eclipse导入myeclipse项目无法识别为web项目问题的解决</title>
     <url>/2020/05/15/%E4%BD%BF%E7%94%A8eclipse%E5%AF%BC%E5%85%A5myeclipse%E9%A1%B9%E7%9B%AE%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E4%B8%BAweb%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>原因eclipse默认的web目录为webcontent,而myeclipse的为webRoot,导致无法识别</p>
@@ -345,18 +333,6 @@
       </categories>
       <tags>
         <tag>eclipse</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>戴尔惠普华硕笔记本Fn键反了，按F1、F2等键出来Fn+F1、F2的效果</title>
-    <url>/2020/03/02/%E6%88%B4%E5%B0%94%E6%83%A0%E6%99%AE%E5%8D%8E%E7%A1%95%E7%AC%94%E8%AE%B0%E6%9C%ACFn%E9%94%AE%E5%8F%8D%E4%BA%86%EF%BC%8C%E6%8C%89F1%E3%80%81F2%E7%AD%89%E9%94%AE%E5%87%BA%E6%9D%A5Fn-F1%E3%80%81F2%E7%9A%84%E6%95%88%E6%9E%9C/</url>
-    <content><![CDATA[<p>惠普笔记本，几天按f12调试的时候，笔记本直接睡眠了，试验了一番发现Fn键反了按F12等键出来Fn+F2的效果，按F1到F12等键出来Fn+F1到F12的效果。在网上寻找一番答案发现是是fn键被锁住了。<br>找到键盘上的一个Fnlock（缩写FnLk）或Numlock键，然后按Fn+Fnlock/Numlock解锁<br><a href="https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html" target="_blank" rel="noopener">参考文章:<br>https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html</a>.</p>
-]]></content>
-      <categories>
-        <category>电脑问题 - 键盘</category>
-      </categories>
-      <tags>
-        <tag>键盘</tag>
       </tags>
   </entry>
   <entry>
@@ -388,6 +364,30 @@
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区分项目中的数据实体目录 entity，dto,vo</title>
+    <url>/2020/03/06/%E5%8C%BA%E5%88%86%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%9E%E4%BD%93%E7%9B%AE%E5%BD%95-entity%EF%BC%8Cdto-vo/</url>
+    <content><![CDATA[<p>1、entity 里的每一个字段，与数据库相对应，<br>2、vo 里的每一个字段，是和你前台 html 页面相对应，<br>3、dto 这是用来转换从 entity 到 vo，或者从 vo 到 entity 的中间的东西 。（DTO中拥有的字段应该是entity中或者是vo中的一个子集）<br><a href="https://www.cnblogs.com/vegetableDD/p/11732495.html" target="_blank" rel="noopener">参考文章：https://www.cnblogs.com/vegetableDD/p/11732495.html</a></p>
+]]></content>
+      <categories>
+        <category>java规范</category>
+      </categories>
+      <tags>
+        <tag>java规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>戴尔惠普华硕笔记本Fn键反了，按F1、F2等键出来Fn+F1、F2的效果</title>
+    <url>/2020/03/02/%E6%88%B4%E5%B0%94%E6%83%A0%E6%99%AE%E5%8D%8E%E7%A1%95%E7%AC%94%E8%AE%B0%E6%9C%ACFn%E9%94%AE%E5%8F%8D%E4%BA%86%EF%BC%8C%E6%8C%89F1%E3%80%81F2%E7%AD%89%E9%94%AE%E5%87%BA%E6%9D%A5Fn-F1%E3%80%81F2%E7%9A%84%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<p>惠普笔记本，几天按f12调试的时候，笔记本直接睡眠了，试验了一番发现Fn键反了按F12等键出来Fn+F2的效果，按F1到F12等键出来Fn+F1到F12的效果。在网上寻找一番答案发现是是fn键被锁住了。<br>找到键盘上的一个Fnlock（缩写FnLk）或Numlock键，然后按Fn+Fnlock/Numlock解锁<br><a href="https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html" target="_blank" rel="noopener">参考文章:<br>https://jingyan.baidu.com/article/ff41162594df7f12e48237ee.html</a>.</p>
+]]></content>
+      <categories>
+        <category>电脑问题 - 键盘</category>
+      </categories>
+      <tags>
+        <tag>键盘</tag>
       </tags>
   </entry>
   <entry>
