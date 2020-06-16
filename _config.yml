@@ -9,7 +9,7 @@ description: '理论何等强大，就何等狡猾'
 keywords:
 author: brainBike
 language: zh-CN
-timezone: ''
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -94,12 +94,15 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: next
+
 # 搜索
 search:
   path: search.xml
   field: post
   format: html
   limit: 10000
+local_search:
+  enable: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -108,3 +111,10 @@ deploy:
   repo:
     github: https://github.com/xiangyanlin/xiangyanlin.github.io.git
   branch: master
+  
+#字数和时长
+symbols_count_time:
+  symbols: true 
+  time: true 
+  total_symbols: true 
+  total_time: true 
