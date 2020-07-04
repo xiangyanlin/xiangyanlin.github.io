@@ -103,7 +103,6 @@ auto_excerpt:
   #trigger: auto
   # show top n results per article, show all results by setting to -1
   top_n_per_article: 1
-
 reward:
   reward_comment: 您的支持将鼓励我继续创作！
   wechatpay: /images/wechat-reward-image.JPG
