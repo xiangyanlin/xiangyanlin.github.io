@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>14种常见的HTTP返回状态码</title>
-    <url>/2019/11/17/14%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81/</url>
-    <content><![CDATA[<p>今天学习了一下HTTP状态码，把自己的理解记录一下，如有不对之处，欢迎指正</p>
-<a id="more"></a>
-<h2 id="2开头：成功"><a href="#2开头：成功" class="headerlink" title="2开头：成功"></a>2开头：成功</h2><h3 id="200-ok"><a href="#200-ok" class="headerlink" title="200:ok"></a>200:ok</h3><p>成功</p>
-<h3 id="204：No-Content"><a href="#204：No-Content" class="headerlink" title="204：No Content"></a>204：No Content</h3><pre><code>请求成功，但是没有东西（资源）可以返回（响应）</code></pre><h3 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206: Partial Content"></a>206: Partial Content</h3><pre><code>范围请求的成功返回状态码</code></pre><h2 id="3开头：重定向"><a href="#3开头：重定向" class="headerlink" title="3开头：重定向"></a>3开头：重定向</h2><h3 id="301：Moved-Permanently"><a href="#301：Moved-Permanently" class="headerlink" title="301：Moved Permanently"></a>301：Moved Permanently</h3><pre><code>永久性重定向。就是书签一样的</code></pre><h3 id="302：-Found"><a href="#302：-Found" class="headerlink" title="302： Found"></a>302： Found</h3><pre><code>临时性重定向。告知本次请求使用新的URL.</code></pre><h3 id="303-：See-Other"><a href="#303-：See-Other" class="headerlink" title="303 ：See Other"></a>303 ：See Other</h3><pre><code>告知请求对应的资源存在着另一个 URI，使用Get请求去访问这个新的URI.</code></pre><h3 id="304：-Not-Modified"><a href="#304：-Not-Modified" class="headerlink" title="　304： Not Modified"></a>　304： Not Modified</h3><pre><code>304 虽然被划分在 3XX 类别中，但是和重定向没有关 系。</code></pre><p>发送附带条件的请求时，资源已找到。但不满足条件。</p>
-<h3 id="307：-Temporary-Redirect"><a href="#307：-Temporary-Redirect" class="headerlink" title="　307： Temporary Redirect"></a>　307： Temporary Redirect</h3><pre><code>临时重定向，该状态码与 302 Found 有着相同的含义。但是307 会遵照浏览器标准，不会从 POST 变成 GET。防止重定向时改变请求方式。</code></pre><h2 id="4开头：客户端错误"><a href="#4开头：客户端错误" class="headerlink" title="　4开头：客户端错误"></a>　4开头：客户端错误</h2><pre><code>表示发出请求的客服端发生错误</code></pre><h3 id="400：-Bad-Request"><a href="#400：-Bad-Request" class="headerlink" title="　400： Bad Request"></a>　400： Bad Request</h3><pre><code>400表示请求报文中存在语法错误。当错误发生时，需修改请求的内容。</code></pre><h3 id="401：-Unauthorized"><a href="#401：-Unauthorized" class="headerlink" title="401： Unauthorized"></a>401： Unauthorized</h3><pre><code>请求的资源需要通过认证。第一次返回401，会弹出认证用的对话窗口。第二次返回401，表示认证失败</code></pre><h3 id="403：-Forbidden"><a href="#403：-Forbidden" class="headerlink" title="　403： Forbidden"></a>　403： Forbidden</h3><pre><code>因为访问权限等问题，服务器拒绝对资源的访问，服务器在实体的主体部分说明，用户以看到该说明。</code></pre><h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="　404 Not Found"></a>　404 Not Found</h3><pre><code>这个出现的比较多。
-该状态码表明服务器上无法找到请求的资源。
-除此之外，也可以在服务器端拒绝请求且不想说明理由时使用。</code></pre><h2 id="5开头：服务器错误"><a href="#5开头：服务器错误" class="headerlink" title="5开头：服务器错误"></a>5开头：服务器错误</h2><h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500: Internal Server Error"></a>500: Internal Server Error</h3><pre><code>服务器端在执行请求时发生了错误。一般是代码逻辑错误，各种异常</code></pre><h3 id="503-：Service-Unavailable"><a href="#503-：Service-Unavailable" class="headerlink" title="　503 ：Service Unavailable"></a>　503 ：Service Unavailable</h3><pre><code>服务器超负荷</code></pre><h5 id="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"><a href="#当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200" class="headerlink" title="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"></a>当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200</h5><h6 id="参考阅读《HTTP图解》一书"><a href="#参考阅读《HTTP图解》一书" class="headerlink" title="参考阅读《HTTP图解》一书"></a>参考阅读《HTTP图解》一书</h6>]]></content>
+    <title>Docker Compose的使用</title>
+    <url>/2020/07/07/Docker-Compose%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h4 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h4><a id="more"></a>
+
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>centos安装（使用root用户或者sudo）：</p>
+<p>从 <a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener">官方 GitHub Release</a> 处直接下载编译好的二进制文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -L https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.26.2&#x2F;docker-compose-&#96;uname -s&#96;-&#96;uname -m&#96; &gt; &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
+
+
+
+<p>给予执行权限：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><p>编写 <code>docker-compose.yml</code> 文件，这个是 Compose 使用的主模板文件。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">tomcat:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>对于 Compose 来说，大部分命令的对象既可以是项目本身，也可以指定为项目中的服务或者容器。如果没有特别的说明，命令对象将是项目，这意味着项目中所有的服务都会受到命令影响。</p>
+<p>执行 <code>docker-compose [COMMAND] --help</code> 或者 <code>docker-compose help [COMMAND]</code> 可以查看具体某个命令的使用格式。</p>
+<p><code>docker-compose</code> 命令的基本的使用格式是</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose [-f=&lt;arg&gt;...] [options] [COMMAND] [ARGS...]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="命令选项"><a href="#命令选项" class="headerlink" title="#命令选项"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-Compose-命令说明.html#命令选项" target="_blank" rel="noopener">#</a>命令选项</h2><ul>
+<li><code>-f, --file FILE</code> 指定使用的 Compose 模板文件，默认为 <code>docker-compose.yml</code>，可以多次指定。</li>
+<li><code>-p, --project-name NAME</code> 指定项目名称，默认将使用所在目录名称作为项目名。</li>
+<li><code>--x-networking</code> 使用 Docker 的可拔插网络后端特性</li>
+<li><code>--x-network-driver DRIVER</code> 指定网络后端的驱动，默认为 <code>bridge</code></li>
+<li><code>--verbose</code> 输出更多调试信息。</li>
+<li><code>-v, --version</code> 打印版本并退出。</li>
+</ul>
+]]></content>
       <categories>
-        <category>http</category>
+        <category>docker</category>
       </categories>
       <tags>
-        <tag>http</tag>
+        <tag>Docker Compose</tag>
       </tags>
   </entry>
   <entry>
@@ -73,6 +102,23 @@
       </categories>
       <tags>
         <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>14种常见的HTTP返回状态码</title>
+    <url>/2019/11/17/14%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81/</url>
+    <content><![CDATA[<p>今天学习了一下HTTP状态码，把自己的理解记录一下，如有不对之处，欢迎指正</p>
+<a id="more"></a>
+<h2 id="2开头：成功"><a href="#2开头：成功" class="headerlink" title="2开头：成功"></a>2开头：成功</h2><h3 id="200-ok"><a href="#200-ok" class="headerlink" title="200:ok"></a>200:ok</h3><p>成功</p>
+<h3 id="204：No-Content"><a href="#204：No-Content" class="headerlink" title="204：No Content"></a>204：No Content</h3><pre><code>请求成功，但是没有东西（资源）可以返回（响应）</code></pre><h3 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206: Partial Content"></a>206: Partial Content</h3><pre><code>范围请求的成功返回状态码</code></pre><h2 id="3开头：重定向"><a href="#3开头：重定向" class="headerlink" title="3开头：重定向"></a>3开头：重定向</h2><h3 id="301：Moved-Permanently"><a href="#301：Moved-Permanently" class="headerlink" title="301：Moved Permanently"></a>301：Moved Permanently</h3><pre><code>永久性重定向。就是书签一样的</code></pre><h3 id="302：-Found"><a href="#302：-Found" class="headerlink" title="302： Found"></a>302： Found</h3><pre><code>临时性重定向。告知本次请求使用新的URL.</code></pre><h3 id="303-：See-Other"><a href="#303-：See-Other" class="headerlink" title="303 ：See Other"></a>303 ：See Other</h3><pre><code>告知请求对应的资源存在着另一个 URI，使用Get请求去访问这个新的URI.</code></pre><h3 id="304：-Not-Modified"><a href="#304：-Not-Modified" class="headerlink" title="　304： Not Modified"></a>　304： Not Modified</h3><pre><code>304 虽然被划分在 3XX 类别中，但是和重定向没有关 系。</code></pre><p>发送附带条件的请求时，资源已找到。但不满足条件。</p>
+<h3 id="307：-Temporary-Redirect"><a href="#307：-Temporary-Redirect" class="headerlink" title="　307： Temporary Redirect"></a>　307： Temporary Redirect</h3><pre><code>临时重定向，该状态码与 302 Found 有着相同的含义。但是307 会遵照浏览器标准，不会从 POST 变成 GET。防止重定向时改变请求方式。</code></pre><h2 id="4开头：客户端错误"><a href="#4开头：客户端错误" class="headerlink" title="　4开头：客户端错误"></a>　4开头：客户端错误</h2><pre><code>表示发出请求的客服端发生错误</code></pre><h3 id="400：-Bad-Request"><a href="#400：-Bad-Request" class="headerlink" title="　400： Bad Request"></a>　400： Bad Request</h3><pre><code>400表示请求报文中存在语法错误。当错误发生时，需修改请求的内容。</code></pre><h3 id="401：-Unauthorized"><a href="#401：-Unauthorized" class="headerlink" title="401： Unauthorized"></a>401： Unauthorized</h3><pre><code>请求的资源需要通过认证。第一次返回401，会弹出认证用的对话窗口。第二次返回401，表示认证失败</code></pre><h3 id="403：-Forbidden"><a href="#403：-Forbidden" class="headerlink" title="　403： Forbidden"></a>　403： Forbidden</h3><pre><code>因为访问权限等问题，服务器拒绝对资源的访问，服务器在实体的主体部分说明，用户以看到该说明。</code></pre><h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="　404 Not Found"></a>　404 Not Found</h3><pre><code>这个出现的比较多。
+该状态码表明服务器上无法找到请求的资源。
+除此之外，也可以在服务器端拒绝请求且不想说明理由时使用。</code></pre><h2 id="5开头：服务器错误"><a href="#5开头：服务器错误" class="headerlink" title="5开头：服务器错误"></a>5开头：服务器错误</h2><h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500: Internal Server Error"></a>500: Internal Server Error</h3><pre><code>服务器端在执行请求时发生了错误。一般是代码逻辑错误，各种异常</code></pre><h3 id="503-：Service-Unavailable"><a href="#503-：Service-Unavailable" class="headerlink" title="　503 ：Service Unavailable"></a>　503 ：Service Unavailable</h3><pre><code>服务器超负荷</code></pre><h5 id="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"><a href="#当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200" class="headerlink" title="当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200"></a>当然，也有很多时候，返回的状态码响应都是错误的，有时候代码出错也会返回200</h5><h6 id="参考阅读《HTTP图解》一书"><a href="#参考阅读《HTTP图解》一书" class="headerlink" title="参考阅读《HTTP图解》一书"></a>参考阅读《HTTP图解》一书</h6>]]></content>
+      <categories>
+        <category>http</category>
+      </categories>
+      <tags>
+        <tag>http</tag>
       </tags>
   </entry>
   <entry>
@@ -227,20 +273,47 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring 编程式事务</title>
-    <url>/2019/11/21/Spring-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
-    <content><![CDATA[<p>Spring 编程式事务:1 配置文件bean.xml; 2在自己的业务层方法加编程式事务</p>
+    <title>Mybatis 缓存 的知识点</title>
+    <url>/2020/02/22/Mybatis-%E7%BC%93%E5%AD%98-%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>像大多数的持久化框架一样，Mybatis 也提供了缓存策略，通过缓存策略来减少数据库的查询次数，从而提 高性能。 </p>
 <a id="more"></a>
 
-<h4 id="1-配置文件bean-xml"><a href="#1-配置文件bean-xml" class="headerlink" title="1 配置文件bean.xml"></a>1 配置文件bean.xml</h4><p>导入相关依赖后，在配置文件bean.xml文件中配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 配置事务管理器--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">&lt;!--这里是自己配置的数据源--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置事务模板对象--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionTemplate&quot; class&#x3D;&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;transactionManager&quot; ref&#x3D;&quot;transactionManager&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="2在自己的业务层方法加编程式事务"><a href="#2在自己的业务层方法加编程式事务" class="headerlink" title="2在自己的业务层方法加编程式事务"></a>2在自己的业务层方法加编程式事务</h4><p>在需要加事务的方法method中书写：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallback&lt;Object&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object doInTransaction(TransactionStatus status) &#123;</span><br><span class="line">                ......</span><br><span class="line">                自己的方法逻辑</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h5 id="Mybatis-中缓存分为一级缓存，二级缓存。"><a href="#Mybatis-中缓存分为一级缓存，二级缓存。" class="headerlink" title="Mybatis 中缓存分为一级缓存，二级缓存。"></a>Mybatis 中缓存分为一级缓存，二级缓存。</h5><p><img src="https://img-blog.csdnimg.cn/20200222111725745.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="一级和二级缓存"></p>
+<h5 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h5><p>一级缓存是 SqlSession 级别的缓存，只要 SqlSession 没有 flush 或 close，它就存在。<br>一级缓存是 SqlSession 范围的缓存，当调用 SqlSession 的修改，添加，删除，commit()，close()等</p>
+<h6 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h6><p>二级缓存是 mapper 映射级别的缓存，多个 SqlSession 去操作同一个 Mapper 映射的 sql 语句，多个 SqlSession 可以共用二级缓存，二级缓存是跨 SqlSession 的</p>
+<h6 id="二级缓存的开启与关闭"><a href="#二级缓存的开启与关闭" class="headerlink" title="二级缓存的开启与关闭"></a>二级缓存的开启与关闭</h6><p>2.2.2.1 第一步：在 SqlMapConfig.xml 文件开启二级缓存 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;settings&gt; </span><br><span class="line"> &lt;!-- 开启二级缓存的支持 --&gt; </span><br><span class="line">  &lt;setting name&#x3D;&quot;cacheEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
+
+<p>因为 cacheEnabled 的取值默认就为 true，所以这一步可以省略不配置。为 true 代表开启二级缓存；为 false 代表不开启二级缓存。 </p>
+<h6 id="第二步：配置相关的-Mapper-映射文件"><a href="#第二步：配置相关的-Mapper-映射文件" class="headerlink" title="第二步：配置相关的 Mapper 映射文件"></a>第二步：配置相关的 Mapper 映射文件</h6><p><cache>标签表示当前这个 mapper 映射将使用二级缓存，区分的标准就看 mapper 的 namespace 值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line"> &lt;!DOCTYPE mapper     PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;     &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt; </span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.itheima.dao.IUserDao&quot;&gt;</span><br><span class="line"> &lt;!-- 开启二级缓存的支持 --&gt;  </span><br><span class="line"> &lt;cache&gt;&lt;&#x2F;cache&gt; </span><br><span class="line"> &lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="第三步：配置-statement-上面的-useCache-属性"><a href="#第三步：配置-statement-上面的-useCache-属性" class="headerlink" title="第三步：配置 statement 上面的 useCache 属性"></a>第三步：配置 statement 上面的 useCache 属性</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 根据 id 查询 --&gt; </span><br><span class="line">&lt;select id&#x3D;&quot;findById&quot; resultType&#x3D;&quot;user&quot; parameterType&#x3D;&quot;int&quot; useCache&#x3D;&quot;true&quot;&gt;</span><br><span class="line">  select * from user where id &#x3D; #&#123;uid&#125; </span><br><span class="line">  &lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>将 UserDao.xml 映射文件中的<select>标签中设置 useCache=”true”代表当前这个 statement 要使用 二级缓存，如果不使用二级缓存可以设置为 false。 注意：针对每次查询都需要最新的数据 sql，要设置成 useCache=false，禁用二级缓存</p>
+]]></content>
       <categories>
-        <category>Spring</category>
+        <category>mybatis</category>
       </categories>
       <tags>
-        <tag>Spring</tag>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title> mybatic初学环境搭建</title>
+    <url>/2019/11/19/mybatic%E5%88%9D%E5%AD%A6%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>搭建mybatis环境</p>
+<a id="more"></a>
+
+<h3 id="1-maven导入相关依赖"><a href="#1-maven导入相关依赖" class="headerlink" title="1 maven导入相关依赖"></a>1 maven导入相关依赖</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">&lt;!--mybatic--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4.5&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--mysql连接--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;5.1.6&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--日志--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.12&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">               &lt;!--junit测试--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.10&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置mybaits的配置文件SqlMapConfig-xml"><a href="#2-配置mybaits的配置文件SqlMapConfig-xml" class="headerlink" title="2 配置mybaits的配置文件SqlMapConfig.xml"></a>2 配置mybaits的配置文件SqlMapConfig.xml</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;!-- mybatis的主配置文件 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 配置环境 --&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">        &lt;!-- 配置mysql的环境--&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">            &lt;!-- 配置事务的类型--&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;</span><br><span class="line">            &lt;!-- 配置数据源（连接池） --&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;!-- 配置连接数据库的4个基本信息 --&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;test&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 --&gt;</span><br><span class="line">    &lt;mappers&gt;</span><br><span class="line">        &lt;mapper resource&#x3D;&quot;com&#x2F;itheima&#x2F;dao&#x2F;IUserDao.xml&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3-创建数据库表对应的实体"><a href="#3-创建数据库表对应的实体" class="headerlink" title="3 创建数据库表对应的实体"></a>3 创建数据库表对应的实体</h3><h3 id="4-创建SqlMapConfig-xml对应的映射文件"><a href="#4-创建SqlMapConfig-xml对应的映射文件" class="headerlink" title="4 创建SqlMapConfig.xml对应的映射文件"></a>4 创建SqlMapConfig.xml对应的映射文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">        &lt;!DOCTYPE mapper</span><br><span class="line">                PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">                &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">                &lt;!--****是对应的dao层接口--&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;****&quot;&gt;</span><br><span class="line">&lt;!--这里写自己的动态sql--&gt;</span><br><span class="line">.......</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml"><a href="#5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml" class="headerlink" title="5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml"></a>5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml</h5>]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
       </tags>
   </entry>
   <entry>
@@ -261,15 +334,37 @@
       </tags>
   </entry>
   <entry>
-    <title> mybatic初学环境搭建</title>
-    <url>/2019/11/19/mybatic%E5%88%9D%E5%AD%A6%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<p>搭建mybatis环境</p>
+    <title>Spring 编程式事务</title>
+    <url>/2019/11/21/Spring-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
+    <content><![CDATA[<p>Spring 编程式事务:1 配置文件bean.xml; 2在自己的业务层方法加编程式事务</p>
 <a id="more"></a>
 
-<h3 id="1-maven导入相关依赖"><a href="#1-maven导入相关依赖" class="headerlink" title="1 maven导入相关依赖"></a>1 maven导入相关依赖</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">&lt;!--mybatic--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4.5&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--mysql连接--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;5.1.6&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--日志--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.12&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">               &lt;!--junit测试--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.10&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2-配置mybaits的配置文件SqlMapConfig-xml"><a href="#2-配置mybaits的配置文件SqlMapConfig-xml" class="headerlink" title="2 配置mybaits的配置文件SqlMapConfig.xml"></a>2 配置mybaits的配置文件SqlMapConfig.xml</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;!-- mybatis的主配置文件 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 配置环境 --&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">        &lt;!-- 配置mysql的环境--&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">            &lt;!-- 配置事务的类型--&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;</span><br><span class="line">            &lt;!-- 配置数据源（连接池） --&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;!-- 配置连接数据库的4个基本信息 --&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;test&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 --&gt;</span><br><span class="line">    &lt;mappers&gt;</span><br><span class="line">        &lt;mapper resource&#x3D;&quot;com&#x2F;itheima&#x2F;dao&#x2F;IUserDao.xml&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3-创建数据库表对应的实体"><a href="#3-创建数据库表对应的实体" class="headerlink" title="3 创建数据库表对应的实体"></a>3 创建数据库表对应的实体</h3><h3 id="4-创建SqlMapConfig-xml对应的映射文件"><a href="#4-创建SqlMapConfig-xml对应的映射文件" class="headerlink" title="4 创建SqlMapConfig.xml对应的映射文件"></a>4 创建SqlMapConfig.xml对应的映射文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">        &lt;!DOCTYPE mapper</span><br><span class="line">                PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">                &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">                &lt;!--****是对应的dao层接口--&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;****&quot;&gt;</span><br><span class="line">&lt;!--这里写自己的动态sql--&gt;</span><br><span class="line">.......</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
-<h5 id="5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml"><a href="#5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml" class="headerlink" title="5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml"></a>5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml</h5>]]></content>
+<h4 id="1-配置文件bean-xml"><a href="#1-配置文件bean-xml" class="headerlink" title="1 配置文件bean.xml"></a>1 配置文件bean.xml</h4><p>导入相关依赖后，在配置文件bean.xml文件中配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 配置事务管理器--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">&lt;!--这里是自己配置的数据源--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置事务模板对象--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionTemplate&quot; class&#x3D;&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;transactionManager&quot; ref&#x3D;&quot;transactionManager&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2在自己的业务层方法加编程式事务"><a href="#2在自己的业务层方法加编程式事务" class="headerlink" title="2在自己的业务层方法加编程式事务"></a>2在自己的业务层方法加编程式事务</h4><p>在需要加事务的方法method中书写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallback&lt;Object&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object doInTransaction(TransactionStatus status) &#123;</span><br><span class="line">                ......</span><br><span class="line">                自己的方法逻辑</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mybatis表间关系，多表联查如何定义实体和返回类型</title>
+    <url>/2019/12/17/mybatis%E8%A1%A8%E9%97%B4%E5%85%B3%E7%B3%BB%EF%BC%8C%E5%A4%9A%E8%A1%A8%E8%81%94%E6%9F%A5%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93%E5%92%8C%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p> mybatis表间关系，多表联查如何定义实体和返回类型</p>
+<a id="more"></a>
+
+<h3 id="1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联"><a href="#1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联" class="headerlink" title="1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)"></a>1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity1 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field1;</span><br><span class="line">private Entity2 entity2;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field2;</span><br><span class="line">private Entity2 entity1;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Entity1对应的mapper中加入相应的resultMap</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1Entity2Map&quot; type&#x3D;&quot;Entity1 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field1&quot; column&#x3D;&quot;field1&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装Entity2的内容--&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot; javaType&#x3D;&quot;Entity2&quot;&gt;</span><br><span class="line">        &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field2&quot; property&#x3D;&quot;field2&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;association&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<p>2，一对多关系在实体加入关联实体属性(Entity3 和Entity4一对多,通过field关联)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity3 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field3;</span><br><span class="line">private List&lt;Entity4&gt; entity4;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field4;</span><br><span class="line">private Entity2 entity3;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Entity3对应的mapper中加入相应的resultMap</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity3Entity4Map&quot; type&#x3D;&quot;Entity3 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field3&quot; column&#x3D;&quot;field3&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 配置Entity3对象中Entity4集合的映射 --&gt;</span><br><span class="line">    &lt;collection property&#x3D;&quot;Entity4&quot; ofType&#x3D;&quot;Entity4&quot;&gt;</span><br><span class="line">        &lt;id column&#x3D;&quot;id&quot; property&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field4&quot; property&#x3D;&quot;field4&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;collection&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3，多对多关系"><a href="#3，多对多关系" class="headerlink" title="3，多对多关系"></a>3，多对多关系</h3><p>多对多关系就类似了，实体（Entity5，Entity6关联）中都是加对方的List<T><br>ReultMap关对方联集合的映射</p>
+]]></content>
       <categories>
         <category>mybatis</category>
       </categories>
@@ -298,71 +393,49 @@
 ]]></content>
   </entry>
   <entry>
-    <title>mybatis 延迟加载和立即加载的实现</title>
-    <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
+    <title>sql获取当前插入表的id</title>
+    <url>/2019/12/05/sql%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%8F%92%E5%85%A5%E8%A1%A8%E7%9A%84id/</url>
+    <content><![CDATA[<p> sql获取当前插入表的id</p>
 <a id="more"></a>
 
-<p> 延迟加载：   就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载.<br> 好处：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速 度要快。<br> 坏处：   因为只有当需要用到数据时，才会进行数据库查询，这样在大批量数据查询时，因为查询工作也要消耗 时间，所以可能造成用户等待时间变长，造成用户体验下降<br> 在我们使用多表查询时（一对一，一对多或者多对多），mybatis默认使用立即加载。如果我们想使用延迟加载需要做两件事</p>
-<h3 id="1设置多表查询返回的resultMap"><a href="#1设置多表查询返回的resultMap" class="headerlink" title="1设置多表查询返回的resultMap"></a>1设置多表查询返回的resultMap</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1tEntity2&quot; type&#x3D;&quot;entity1&quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;entity1_id&quot; column&#x3D;&quot;entity1_id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;entity2_id&quot; column&#x3D;&quot;entity2_id&quot;&gt;&lt;&#x2F;result&gt;&lt;!--关联字段--&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;file&quot; column&#x3D;&quot;file&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1就可以了--&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装entity2的内容</span><br><span class="line">    select属性指定的内容：查询entity2的唯一标识：</span><br><span class="line">    column属性指定的内容：entity2根据id查询时，所需要的参数的值</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;entity2&quot; column&#x3D;&quot;entity2_id&quot; javaType&#x3D;&quot;entity2&quot; select&#x3D;&quot;namespce+查询语句的id&quot;&gt;&lt;&#x2F;association&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1 where entity2_id&#x3D;?就可以了--&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<p>配置映射文件config.xml</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
-<p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-]]></content>
+<p>sql语句：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select last_insert_id();</span><br></pre></td></tr></table></figure>
+
+<p>动态sql:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;selectKey keyProperty&#x3D;&quot;userId&quot; keyColumn&#x3D;&quot;id&quot; resultType&#x3D;&quot;int&quot; order&#x3D;&quot;AFTER&quot;&gt;</span><br><span class="line">    select last_insert_id();</span><br><span class="line">&lt;&#x2F;selectKey&gt;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>mybatis</category>
+        <category>mysql</category>
       </categories>
       <tags>
-        <tag>mybatis</tag>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
-    <title>Mybatis 缓存 的知识点</title>
-    <url>/2020/02/22/Mybatis-%E7%BC%93%E5%AD%98-%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<p>像大多数的持久化框架一样，Mybatis 也提供了缓存策略，通过缓存策略来减少数据库的查询次数，从而提 高性能。 </p>
+    <title> mysql联合主键</title>
+    <url>/2020/01/07/mysql%E8%81%94%E5%90%88%E4%B8%BB%E9%94%AE/</url>
+    <content><![CDATA[<p> mysql联合主键</p>
 <a id="more"></a>
 
-<h5 id="Mybatis-中缓存分为一级缓存，二级缓存。"><a href="#Mybatis-中缓存分为一级缓存，二级缓存。" class="headerlink" title="Mybatis 中缓存分为一级缓存，二级缓存。"></a>Mybatis 中缓存分为一级缓存，二级缓存。</h5><p><img src="https://img-blog.csdnimg.cn/20200222111725745.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="一级和二级缓存"></p>
-<h5 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h5><p>一级缓存是 SqlSession 级别的缓存，只要 SqlSession 没有 flush 或 close，它就存在。<br>一级缓存是 SqlSession 范围的缓存，当调用 SqlSession 的修改，添加，删除，commit()，close()等</p>
-<h6 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h6><p>二级缓存是 mapper 映射级别的缓存，多个 SqlSession 去操作同一个 Mapper 映射的 sql 语句，多个 SqlSession 可以共用二级缓存，二级缓存是跨 SqlSession 的</p>
-<h6 id="二级缓存的开启与关闭"><a href="#二级缓存的开启与关闭" class="headerlink" title="二级缓存的开启与关闭"></a>二级缓存的开启与关闭</h6><p>2.2.2.1 第一步：在 SqlMapConfig.xml 文件开启二级缓存 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;settings&gt; </span><br><span class="line"> &lt;!-- 开启二级缓存的支持 --&gt; </span><br><span class="line">  &lt;setting name&#x3D;&quot;cacheEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
-
-<p>因为 cacheEnabled 的取值默认就为 true，所以这一步可以省略不配置。为 true 代表开启二级缓存；为 false 代表不开启二级缓存。 </p>
-<h6 id="第二步：配置相关的-Mapper-映射文件"><a href="#第二步：配置相关的-Mapper-映射文件" class="headerlink" title="第二步：配置相关的 Mapper 映射文件"></a>第二步：配置相关的 Mapper 映射文件</h6><p><cache>标签表示当前这个 mapper 映射将使用二级缓存，区分的标准就看 mapper 的 namespace 值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line"> &lt;!DOCTYPE mapper     PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;     &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt; </span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.itheima.dao.IUserDao&quot;&gt;</span><br><span class="line"> &lt;!-- 开启二级缓存的支持 --&gt;  </span><br><span class="line"> &lt;cache&gt;&lt;&#x2F;cache&gt; </span><br><span class="line"> &lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="第三步：配置-statement-上面的-useCache-属性"><a href="#第三步：配置-statement-上面的-useCache-属性" class="headerlink" title="第三步：配置 statement 上面的 useCache 属性"></a>第三步：配置 statement 上面的 useCache 属性</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 根据 id 查询 --&gt; </span><br><span class="line">&lt;select id&#x3D;&quot;findById&quot; resultType&#x3D;&quot;user&quot; parameterType&#x3D;&quot;int&quot; useCache&#x3D;&quot;true&quot;&gt;</span><br><span class="line">  select * from user where id &#x3D; #&#123;uid&#125; </span><br><span class="line">  &lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>将 UserDao.xml 映射文件中的<select>标签中设置 useCache=”true”代表当前这个 statement 要使用 二级缓存，如果不使用二级缓存可以设置为 false。 注意：针对每次查询都需要最新的数据 sql，要设置成 useCache=false，禁用二级缓存</p>
-]]></content>
+<p>把（列名1，列名2）设置联合主键。将其看成一个有序对。这个有序对不能重复！就是不能有两条记录列名1，列名2都是一样的。</p>
+<p>添加语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE table_name ADD CONSTRAINT 别名 PRIMARY KEY(列名1，列名2)；</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>mybatis</category>
+        <category>mysql</category>
       </categories>
       <tags>
-        <tag>mybatis</tag>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
-    <title>mybatis表间关系，多表联查如何定义实体和返回类型</title>
-    <url>/2019/12/17/mybatis%E8%A1%A8%E9%97%B4%E5%85%B3%E7%B3%BB%EF%BC%8C%E5%A4%9A%E8%A1%A8%E8%81%94%E6%9F%A5%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93%E5%92%8C%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p> mybatis表间关系，多表联查如何定义实体和返回类型</p>
-<a id="more"></a>
-
-<h3 id="1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联"><a href="#1，一对一关系在实体加入关联实体属性-Entity1-和Entity2一对一-通过field关联" class="headerlink" title="1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)"></a>1，一对一关系在实体加入关联实体属性(Entity1 和Entity2一对一,通过field关联)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity1 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field1;</span><br><span class="line">private Entity2 entity2;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field2;</span><br><span class="line">private Entity2 entity1;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> Entity1对应的mapper中加入相应的resultMap</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1Entity2Map&quot; type&#x3D;&quot;Entity1 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field1&quot; column&#x3D;&quot;field1&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装Entity2的内容--&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot; javaType&#x3D;&quot;Entity2&quot;&gt;</span><br><span class="line">        &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field2&quot; property&#x3D;&quot;field2&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;association&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<p>2，一对多关系在实体加入关联实体属性(Entity3 和Entity4一对多,通过field关联)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Entity3 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field3;</span><br><span class="line">private List&lt;Entity4&gt; entity4;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Entity2 implements Serializable &#123;</span><br><span class="line">private Integer id;</span><br><span class="line">private String field;</span><br><span class="line">private String field4;</span><br><span class="line">private Entity2 entity3;</span><br><span class="line">(getter,setter,toString方法)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> Entity3对应的mapper中加入相应的resultMap</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity3Entity4Map&quot; type&#x3D;&quot;Entity3 &quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;id&quot; column&#x3D;&quot;aid&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field&quot; column&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;field3&quot; column&#x3D;&quot;field3&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;!-- 配置Entity3对象中Entity4集合的映射 --&gt;</span><br><span class="line">    &lt;collection property&#x3D;&quot;Entity4&quot; ofType&#x3D;&quot;Entity4&quot;&gt;</span><br><span class="line">        &lt;id column&#x3D;&quot;id&quot; property&#x3D;&quot;id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field&quot; property&#x3D;&quot;field&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;result column&#x3D;&quot;field4&quot; property&#x3D;&quot;field4&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">    &lt;&#x2F;collection&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3，多对多关系"><a href="#3，多对多关系" class="headerlink" title="3，多对多关系"></a>3，多对多关系</h3><p>多对多关系就类似了，实体（Entity5，Entity6关联）中都是加对方的List<T><br>ReultMap关对方联集合的映射</p>
+    <title>项目启动报错</title>
+    <url>/2020/05/15/org-xml-sax-SAXNotRecognizedException-Feature-http-apache-org-xml-features-val/</url>
+    <content><![CDATA[<p>导入一个web项目，跑起来的时候报”org.xml.sax.SAXNotRecognizedException:Feature:<a href="http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行" target="_blank" rel="noopener">http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行</a></p>
 ]]></content>
       <categories>
-        <category>mybatis</category>
+        <category>jdk</category>
       </categories>
       <tags>
-        <tag>mybatis</tag>
+        <tag>jdk</tag>
       </tags>
   </entry>
   <entry>
@@ -391,49 +464,22 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
-    <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
-    <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
+    <title>mybatis 延迟加载和立即加载的实现</title>
+    <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
+<a id="more"></a>
+
+<p> 延迟加载：   就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载.<br> 好处：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速 度要快。<br> 坏处：   因为只有当需要用到数据时，才会进行数据库查询，这样在大批量数据查询时，因为查询工作也要消耗 时间，所以可能造成用户等待时间变长，造成用户体验下降<br> 在我们使用多表查询时（一对一，一对多或者多对多），mybatis默认使用立即加载。如果我们想使用延迟加载需要做两件事</p>
+<h3 id="1设置多表查询返回的resultMap"><a href="#1设置多表查询返回的resultMap" class="headerlink" title="1设置多表查询返回的resultMap"></a>1设置多表查询返回的resultMap</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;entity1tEntity2&quot; type&#x3D;&quot;entity1&quot;&gt;</span><br><span class="line">    &lt;id property&#x3D;&quot;entity1_id&quot; column&#x3D;&quot;entity1_id&quot;&gt;&lt;&#x2F;id&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;entity2_id&quot; column&#x3D;&quot;entity2_id&quot;&gt;&lt;&#x2F;result&gt;&lt;!--关联字段--&gt;</span><br><span class="line">    &lt;result property&#x3D;&quot;file&quot; column&#x3D;&quot;file&quot;&gt;&lt;&#x2F;result&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1就可以了--&gt;</span><br><span class="line">    &lt;!-- 一对一的关系映射：配置封装entity2的内容</span><br><span class="line">    select属性指定的内容：查询entity2的唯一标识：</span><br><span class="line">    column属性指定的内容：entity2根据id查询时，所需要的参数的值</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;association property&#x3D;&quot;entity2&quot; column&#x3D;&quot;entity2_id&quot; javaType&#x3D;&quot;entity2&quot; select&#x3D;&quot;namespce+查询语句的id&quot;&gt;&lt;&#x2F;association&gt;</span><br><span class="line">        &lt;!--在这里完成这个配置后只要select * from table_entity1 where entity2_id&#x3D;?就可以了--&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+<p>配置映射文件config.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 ]]></content>
       <categories>
-        <category>mysql</category>
+        <category>mybatis</category>
       </categories>
       <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title> mysql联合主键</title>
-    <url>/2020/01/07/mysql%E8%81%94%E5%90%88%E4%B8%BB%E9%94%AE/</url>
-    <content><![CDATA[<p> mysql联合主键</p>
-<a id="more"></a>
-
-<p>把（列名1，列名2）设置联合主键。将其看成一个有序对。这个有序对不能重复！就是不能有两条记录列名1，列名2都是一样的。</p>
-<p>添加语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE table_name ADD CONSTRAINT 别名 PRIMARY KEY(列名1，列名2)；</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sql获取当前插入表的id</title>
-    <url>/2019/12/05/sql%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%8F%92%E5%85%A5%E8%A1%A8%E7%9A%84id/</url>
-    <content><![CDATA[<p> sql获取当前插入表的id</p>
-<a id="more"></a>
-
-<p>sql语句：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select last_insert_id();</span><br></pre></td></tr></table></figure>
-
-<p>动态sql:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;selectKey keyProperty&#x3D;&quot;userId&quot; keyColumn&#x3D;&quot;id&quot; resultType&#x3D;&quot;int&quot; order&#x3D;&quot;AFTER&quot;&gt;</span><br><span class="line">    select last_insert_id();</span><br><span class="line">&lt;&#x2F;selectKey&gt;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
+        <tag>mybatis</tag>
       </tags>
   </entry>
   <entry>
@@ -446,18 +492,6 @@
       </categories>
       <tags>
         <tag>swagger</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>项目启动报错</title>
-    <url>/2020/05/15/org-xml-sax-SAXNotRecognizedException-Feature-http-apache-org-xml-features-val/</url>
-    <content><![CDATA[<p>导入一个web项目，跑起来的时候报”org.xml.sax.SAXNotRecognizedException:Feature:<a href="http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行" target="_blank" rel="noopener">http://apache.org/xml/features/val”。原因：原项目用的是jdk1.7而现在用的是1.8.换成jdk1.7后成功运行</a></p>
-]]></content>
-      <categories>
-        <category>jdk</category>
-      </categories>
-      <tags>
-        <tag>jdk</tag>
       </tags>
   </entry>
   <entry>
@@ -474,6 +508,53 @@
       </categories>
       <tags>
         <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用dhcp始终无法连接mysql的问题解决</title>
+    <url>/2019/11/21/%E4%BD%BF%E7%94%A8dhcp%E5%A7%8B%E7%BB%88%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5mysql%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>把mysql的时区加8</p>
+<a id="more"></a>
+
+<p>把mysql的时区加8</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global time_zone &#x3D; &#39;+8:00&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<br><a href="https://blog.csdn.net/zqb765720343/article/details/80076020" target="_blank" rel="noopener">https://blog.csdn.net/zqb765720343/article/details/80076020:</a></p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
+    <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
+    <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用eclipse导入myeclipse项目无法识别为web项目问题的解决</title>
+    <url>/2020/05/15/%E4%BD%BF%E7%94%A8eclipse%E5%AF%BC%E5%85%A5myeclipse%E9%A1%B9%E7%9B%AE%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E4%B8%BAweb%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>原因eclipse默认的web目录为webcontent,而myeclipse的为webRoot,导致无法识别</p>
+<a id="more"></a>
+
+<p>解决办法：<br>在eclipse中右击项目根路径，在弹出的对话框中，选择 Properties：<img src="https://img-blog.csdnimg.cn/2020051522170285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>选择 Project Facets，点击右边的“Convert to faceted form…”链接：<br><img src="https://img-blog.csdnimg.cn/20200515222409927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>勾选 Java 和 Dynamic Web Module ：<br><img src="https://img-blog.csdnimg.cn/20200515222615606.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>点击“ Further Configuration availabe ” 的链接 ，更改 Content Directory 名字为你的 webRoot 目录名字即可</p>
+]]></content>
+      <categories>
+        <category>eclipse</category>
+      </categories>
+      <tags>
+        <tag>eclipse</tag>
       </tags>
   </entry>
   <entry>
@@ -507,41 +588,6 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用dhcp始终无法连接mysql的问题解决</title>
-    <url>/2019/11/21/%E4%BD%BF%E7%94%A8dhcp%E5%A7%8B%E7%BB%88%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5mysql%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>把mysql的时区加8</p>
-<a id="more"></a>
-
-<p>把mysql的时区加8</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global time_zone &#x3D; &#39;+8:00&#39;;</span><br></pre></td></tr></table></figure>
-
-<p>参考链接：<br><a href="https://blog.csdn.net/zqb765720343/article/details/80076020" target="_blank" rel="noopener">https://blog.csdn.net/zqb765720343/article/details/80076020:</a></p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用eclipse导入myeclipse项目无法识别为web项目问题的解决</title>
-    <url>/2020/05/15/%E4%BD%BF%E7%94%A8eclipse%E5%AF%BC%E5%85%A5myeclipse%E9%A1%B9%E7%9B%AE%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E4%B8%BAweb%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>原因eclipse默认的web目录为webcontent,而myeclipse的为webRoot,导致无法识别</p>
-<a id="more"></a>
-
-<p>解决办法：<br>在eclipse中右击项目根路径，在弹出的对话框中，选择 Properties：<img src="https://img-blog.csdnimg.cn/2020051522170285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>选择 Project Facets，点击右边的“Convert to faceted form…”链接：<br><img src="https://img-blog.csdnimg.cn/20200515222409927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>勾选 Java 和 Dynamic Web Module ：<br><img src="https://img-blog.csdnimg.cn/20200515222615606.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>点击“ Further Configuration availabe ” 的链接 ，更改 Content Directory 名字为你的 webRoot 目录名字即可</p>
-]]></content>
-      <categories>
-        <category>eclipse</category>
-      </categories>
-      <tags>
-        <tag>eclipse</tag>
       </tags>
   </entry>
   <entry>
@@ -600,21 +646,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解决程序中执行插入语句，mysql数据库表插入的中文变成问号的问题</title>
-    <url>/2019/12/08/%E8%A7%A3%E5%86%B3%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%8F%92%E5%85%A5%E8%AF%AD%E5%8F%A5%EF%BC%8Cmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%8F%92%E5%85%A5%E7%9A%84%E4%B8%AD%E6%96%87%E5%8F%98%E6%88%90%E9%97%AE%E5%8F%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>解决程序中执行插入语句，mysql数据库表插入的中文变成问号的问题</p>
-<a id="more"></a>
-
-<p>执行保存操作，执行插入语句<br><img src="https://img-blog.csdnimg.cn/20191208134343121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>发现插入的数据，中文在数据库中变成了问号<br><img src="https://img-blog.csdnimg.cn/20191208134506604.png" alt="在这里插入图片描述"><br>在数据库中执行以下插入语句：<br><img src="https://img-blog.csdnimg.cn/20191208134633703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>发现没问题：<br><img src="https://img-blog.csdnimg.cn/20191208134717513.png" alt="在这里插入图片描述"><br>于是检查一下自己的连接配置，发现url中没有加utf-8，于是加上：<br><img src="https://img-blog.csdnimg.cn/20191208134847707.png" alt="在这里插入图片描述"><br>再次执行程序保存操作，发现问题解决：<br><img src="https://img-blog.csdnimg.cn/20191208134937709.png" alt="在这里插入图片描述"></p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title> 阿里云centos7 运行tomcat 之后远程无法访问的解决</title>
     <url>/2020/01/17/%E9%98%BF%E9%87%8C%E4%BA%91centos7-%E8%BF%90%E8%A1%8Ctomcat-%E4%B9%8B%E5%90%8E%E8%BF%9C%E7%A8%8B%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E7%9A%84%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>在安装好 jdk tomcat,并且配好环境变量之后返现远程通过8080无法访问<br>解决方法如下：</p>
@@ -638,6 +669,21 @@
       </categories>
       <tags>
         <tag>阿里云服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决程序中执行插入语句，mysql数据库表插入的中文变成问号的问题</title>
+    <url>/2019/12/08/%E8%A7%A3%E5%86%B3%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%8F%92%E5%85%A5%E8%AF%AD%E5%8F%A5%EF%BC%8Cmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%8F%92%E5%85%A5%E7%9A%84%E4%B8%AD%E6%96%87%E5%8F%98%E6%88%90%E9%97%AE%E5%8F%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>解决程序中执行插入语句，mysql数据库表插入的中文变成问号的问题</p>
+<a id="more"></a>
+
+<p>执行保存操作，执行插入语句<br><img src="https://img-blog.csdnimg.cn/20191208134343121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>发现插入的数据，中文在数据库中变成了问号<br><img src="https://img-blog.csdnimg.cn/20191208134506604.png" alt="在这里插入图片描述"><br>在数据库中执行以下插入语句：<br><img src="https://img-blog.csdnimg.cn/20191208134633703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>发现没问题：<br><img src="https://img-blog.csdnimg.cn/20191208134717513.png" alt="在这里插入图片描述"><br>于是检查一下自己的连接配置，发现url中没有加utf-8，于是加上：<br><img src="https://img-blog.csdnimg.cn/20191208134847707.png" alt="在这里插入图片描述"><br>再次执行程序保存操作，发现问题解决：<br><img src="https://img-blog.csdnimg.cn/20191208134937709.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
       </tags>
   </entry>
 </search>
