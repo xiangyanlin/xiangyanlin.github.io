@@ -131,17 +131,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">15</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">27</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -279,12 +279,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt; </span><br><span class="line"> &lt;!-- 开启二级缓存的支持 --&gt; </span><br><span class="line">  &lt;setting name&#x3D;&quot;cacheEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
 
 <p>因为 cacheEnabled 的取值默认就为 true，所以这一步可以省略不配置。为 true 代表开启二级缓存；为 false 代表不开启二级缓存。 </p>
-<h6 id="第二步：配置相关的-Mapper-映射文件"><a href="#第二步：配置相关的-Mapper-映射文件" class="headerlink" title="第二步：配置相关的 Mapper 映射文件"></a>第二步：配置相关的 Mapper 映射文件</h6><p><cache>标签表示当前这个 mapper 映射将使用二级缓存，区分的标准就看 mapper 的 namespace 值。</p>
+<h6 id="第二步：配置相关的-Mapper-映射文件"><a href="#第二步：配置相关的-Mapper-映射文件" class="headerlink" title="第二步：配置相关的 Mapper 映射文件"></a>第二步：配置相关的 Mapper 映射文件</h6><p><cache>标签表示当前这个 mapper 映射将使用二级缓存，区分的标准就看 mapper 的 namespace 值。</cache></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line"> &lt;!DOCTYPE mapper     PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;     &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt; </span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.itheima.dao.IUserDao&quot;&gt;</span><br><span class="line"> &lt;!-- 开启二级缓存的支持 --&gt;  </span><br><span class="line"> &lt;cache&gt;&lt;&#x2F;cache&gt; </span><br><span class="line"> &lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
 
 <h6 id="第三步：配置-statement-上面的-useCache-属性"><a href="#第三步：配置-statement-上面的-useCache-属性" class="headerlink" title="第三步：配置 statement 上面的 useCache 属性"></a>第三步：配置 statement 上面的 useCache 属性</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 根据 id 查询 --&gt; </span><br><span class="line">&lt;select id&#x3D;&quot;findById&quot; resultType&#x3D;&quot;user&quot; parameterType&#x3D;&quot;int&quot; useCache&#x3D;&quot;true&quot;&gt;</span><br><span class="line">  select * from user where id &#x3D; #&#123;uid&#125; </span><br><span class="line">  &lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
 
-<p>将 UserDao.xml 映射文件中的<select>标签中设置 useCache=”true”代表当前这个 statement 要使用 二级缓存，如果不使用二级缓存可以设置为 false。 注意：针对每次查询都需要最新的数据 sql，要设置成 useCache=false，禁用二级缓存</p>
+<p>将 UserDao.xml 映射文件中的<select>标签中设置 useCache=”true”代表当前这个 statement 要使用 二级缓存，如果不使用二级缓存可以设置为 false。 注意：针对每次查询都需要最新的数据 sql，要设置成 useCache=false，禁用二级缓存</select></p>
 
     </div>
 
@@ -404,20 +404,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -468,13 +468,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">28k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">25 分钟</span>
+    <span title="站点阅读时长">26 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
