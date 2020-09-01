@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Deadpool.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Deadpool.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="编程规约">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里巴巴java开发手册-编程规约">
+<meta property="og:url" content="http://yoursite.com/2020/08/14/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C-%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/index.html">
+<meta property="og:site_name" content="brainBike的个人博客">
+<meta property="og:description" content="编程规约">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-14T01:15:55.000Z">
+<meta property="article:modified_time" content="2020-08-20T09:42:13.050Z">
+<meta property="article:author" content="brainBike">
+<meta property="article:tag" content="编程规约">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/14/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C-%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>阿里巴巴java开发手册-编程规约 | brainBike的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">brainBike的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">存在即合理</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">18</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/14/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C-%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Deadpool.jpg">
+      <meta itemprop="name" content="brainBike">
+      <meta itemprop="description" content="理论何等强大，就何等狡猾">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="brainBike的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          阿里巴巴java开发手册-编程规约
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-14 09:15:55" itemprop="dateCreated datePublished" datetime="2020-08-14T09:15:55+08:00">2020-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 17:42:13" itemprop="dateModified" datetime="2020-08-20T17:42:13+08:00">2020-08-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">java开发手册</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="编程规约"><a href="#编程规约" class="headerlink" title="编程规约"></a>编程规约</h3><a id="more"></a>
+
+<h4 id="命名风格"><a href="#命名风格" class="headerlink" title="命名风格"></a>命名风格</h4><h5 id="接口和实现类命名规则"><a href="#接口和实现类命名规则" class="headerlink" title="接口和实现类命名规则"></a>接口和实现类命名规则</h5><p>1）【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部</p>
+<p>的实现类用 Impl 的后缀与接口区别。</p>
+<h5 id="三层架构各层命名规约："><a href="#三层架构各层命名规约：" class="headerlink" title="三层架构各层命名规约："></a>三层架构各层命名规约：</h5><p>A) Service/DAO 层方法命名规约</p>
+<p>1） 获取单个对象的方法用 get 做前缀。</p>
+<p>2） 获取多个对象的方法用 list 做前缀，复数形式结尾如：listObjects。 </p>
+<p>3） 获取统计值的方法用 count 做前缀。 </p>
+<p>4） 插入的方法用 save/insert 做前缀。</p>
+<p>5） 删除的方法用 remove/delete 做前缀。</p>
+<p>6） 修改的方法用 update 做前缀。</p>
+<p>B) 领域模型命名规约</p>
+<p>1） 数据对象：xxxDO，xxx 即为数据表名。</p>
+<p>2） 数据传输对象：xxxDTO，xxx 为业务领域相关的名称。</p>
+<p>3） 展示对象：xxxVO，xxx 一般为网页名称。</p>
+<p>4） POJO 是 DO/DTO/BO/VO 的统称，禁止命名成 xxxPOJO。</p>
+<h4 id="常量定义"><a href="#常量定义" class="headerlink" title="常量定义"></a>常量定义</h4><p>【强制】不允许任何魔法值（即未经预先定义的常量）直接出现在代码中。</p>
+<p>反例：String key = “Id#taobao_” + tradeId;</p>
+<p> cache.put(key, value);</p>
+<h4 id="代码格式"><a href="#代码格式" class="headerlink" title="代码格式"></a>代码格式</h4><h5 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h5><p>【强制】大括号的使用约定。如果是大括号内为空，则简洁地写成{}即可，不需要换行；如果</p>
+<p>是非空代码块则：</p>
+<p>1） 左大括号前不换行。</p>
+<p>2） 左大括号后换行。</p>
+<p>3） 右大括号前换行。</p>
+<p>4） 右大括号后还有 else 等代码则不换行；表示终止的右大括号后必须换行。</p>
+<h5 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h5><p>1【强制】左小括号和字符之间不出现空格；同样，右小括号和字符之间也不出现空格；而左大</p>
+<p>括号前需要空格。详见第 5 条下方正例提示。</p>
+<p>反例：if (空格 a == b 空格)</p>
+<p>2【强制】if/for/while/switch/do 等保留字与括号之间都必须加空格。</p>
+<p>3【强制】任何二目、三目运算符的左右两边都需要加一个空格。</p>
+<p>说明：运算符包括赋值运算符=、逻辑运算符&amp;&amp;、加减乘除符号等</p>
+<p>4 </p>
+<p>【强制】采用 4 个空格缩进，禁止使用 tab 字符。</p>
+<p>说明：如果使用 tab 缩进，必须设置 1 个 tab 为 4 个空格。IDEA 设置 tab 为 4 个空格时，</p>
+<p>请勿勾选 Use tab character；而在 eclipse 中，必须勾选 insert spaces for tabs。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">正例： </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="comment">// 缩进 4 个空格 </span></span><br><span class="line">String say = <span class="string">"hello"</span>; </span><br><span class="line"><span class="comment">// 运算符的左右必须有一个空格 </span></span><br><span class="line"><span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line"><span class="comment">// 关键词 if 与括号之间必须有一个空格，括号内的 f 与左括号，0 与右括号不需要空格 </span></span><br><span class="line"><span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">System.out.println(say); </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 左大括号前加空格且不换行；左大括号后换行 </span></span><br><span class="line"><span class="keyword">if</span> (flag == <span class="number">1</span>) &#123; </span><br><span class="line">System.out.println(<span class="string">"world"</span>); </span><br><span class="line"><span class="comment">// 右大括号前换行，右大括号后有 else，不用换行 </span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">System.out.println(<span class="string">"ok"</span>); </span><br><span class="line"><span class="comment">// 在右大括号后直接结束，则必须换行 </span></span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5【强制】注释的双斜线与注释内容之间有且仅有一个空格</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">正例：</span><br><span class="line"><span class="comment">// 这是示例注释，请注意在双斜线之后有一个空格</span></span><br><span class="line">String ygb = <span class="keyword">new</span> String();</span><br></pre></td></tr></table></figure>
+
+<p>6【强制】单行字符数限制不超过 120 个，超出需要换行，换行时遵循如下原则：</p>
+<p>1） 第二行相对第一行缩进 4 个空格，从第三行开始，不再继续缩进，参考示例。</p>
+<p>2） 运算符与下文一起换行。</p>
+<p>3） 方法调用的点符号与下文一起换行。</p>
+<p>4） 方法调用中的多个参数需要换行时，在逗号后进行。 </p>
+<p>5） 在括号前不要换行，见反例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">StringBuffer sb = <span class="keyword">new</span> StringBuffer(); </span><br><span class="line"><span class="comment">// 超过 120 个字符的情况下，换行缩进 4 个空格，点号和方法名称一起换行</span></span><br><span class="line">sb.append(<span class="string">"zi"</span>).append(<span class="string">"xin"</span>)... </span><br><span class="line">.append(<span class="string">"huang"</span>)... </span><br><span class="line">.append(<span class="string">"huang"</span>)... </span><br><span class="line">.append(<span class="string">"huang"</span>);</span><br><span class="line">反例：</span><br><span class="line">StringBuffer sb = <span class="keyword">new</span> StringBuffer(); </span><br><span class="line"><span class="comment">// 超过 120 个字符的情况下，不要在括号前换行</span></span><br><span class="line">sb.append(<span class="string">"zi"</span>).append(<span class="string">"xin"</span>)...append </span><br><span class="line">(<span class="string">"huang"</span>); </span><br><span class="line"><span class="comment">// 参数很多的方法调用可能超过 120 个字符，不要在逗号前换行</span></span><br><span class="line">method(args1, args2, args3, ... </span><br><span class="line">, argsX);</span><br></pre></td></tr></table></figure>
+
+<p>7【强制】方法参数在定义和传入时，多个参数逗号后边必须加空格。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：下例中实参的 args1，后边必须要有一个空格。</span></span><br><span class="line">method(args1, args2, args3);</span><br></pre></td></tr></table></figure>
+
+<p>8【强制】IDE 的 text file encoding 设置为 UTF-8; IDE 中文件的换行符使用 Unix 格式，</p>
+<p>不要使用 Windows 格式。</p>
+<h4 id="OOP规约"><a href="#OOP规约" class="headerlink" title="OOP规约"></a>OOP规约</h4><ol>
+<li>【强制】避免通过一个类的对象引用访问此类的静态变量或静态方法，无谓增加编译器解析成</li>
+</ol>
+<p>本，直接用类名来访问即可。</p>
+<ol start="2">
+<li>【强制】所有的覆写方法，必须加@Override 注解。</li>
+</ol>
+<p>说明：getObject()与 get0bject()的问题。一个是字母的 O，一个是数字的 0，加@Override</p>
+<p>可以准确判断是否覆盖成功。另外，如果在抽象类中对方法签名进行修改，其实现类会马上编</p>
+<p>译报错。</p>
+<ol start="3">
+<li>【强制】相同参数类型，相同业务含义，才可以使用 Java 的可变参数，避免使用 Object。</li>
+</ol>
+<p>说明：可变参数必须放置在参数列表的最后。（提倡同学们尽量不用可变参数编程）</p>
+<p>正例：public List<User> listUsers(String type, Long… ids) {…}</User></p>
+<ol start="4">
+<li>【强制】外部正在调用或者二方库依赖的接口，不允许修改方法签名，避免对接口调用方产生</li>
+</ol>
+<p>影响。接口过时必须加@Deprecated 注解，并清晰地说明采用的新接口或者新服务是什么。</p>
+<ol start="5">
+<li>【强制】不能使用过时的类或方法。</li>
+</ol>
+<p>说明：java.net.URLDecoder 中的方法 decode(String encodeStr) 这个方法已经过时，应</p>
+<p>该使用双参数 decode(String source, String encode)。接口提供方既然明确是过时接口，</p>
+<p>那么有义务同时提供新的接口；作为调用方来说，有义务去考证过时方法的新实现是什么。</p>
+<ol start="6">
+<li>【强制】Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用</li>
+</ol>
+<p>equals。</p>
+<p>正例：”test”.equals(object);</p>
+<p>反例：object.equals(“test”);</p>
+<p>说明：推荐使用 java.util.Objects#equals（JDK7 引入的工具类）</p>
+<ol start="7">
+<li>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</li>
+</ol>
+<p>说明：对于 Integer var = ? 在-128 至 127 范围内的赋值，Integer 对象是在</p>
+<p>IntegerCache.cache 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用==进行</p>
+<p>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，</p>
+<p>推荐使用 equals 方法进行判断</p>
+<ol start="8">
+<li>关于基本数据类型与包装数据类型的使用标准如下：</li>
+</ol>
+<p>1） 【强制】所有的 POJO 类属性必须使用包装数据类型。</p>
+<p>2） 【强制】RPC 方法的返回值和参数必须使用包装数据类型。</p>
+<p>3） 【推荐】所有的局部变量使用基本数据类型。</p>
+<p>说明：POJO 类属性没有初值是提醒使用者在需要使用时，必须自己显式地进行赋值，任何</p>
+<p>NPE 问题，或者入库检查，都由使用者来保证。</p>
+<p>正例：数据库的查询结果可能是 null，因为自动拆箱，用基本数据类型接收有 NPE 风险。</p>
+<p>反例：比如显示成交总额涨跌情况，即正负 x%，x 为基本数据类型，调用的 RPC 服务，调用</p>
+<p>不成功时，返回的是默认值，页面显示为 0%，这是不合理的，应该显示成中划线。所以包装</p>
+<p>数据类型的 null 值，能够表示额外的信息，如：远程调用失败，异常退出</p>
+<ol start="9">
+<li>【强制】定义 DO/DTO/VO 等 POJO 类时，不要设定任何属性默认值。</li>
+</ol>
+<p>反例：POJO 类的 gmtCreate 默认值为 new Date()，但是这个属性在数据提取时并没有置入具</p>
+<p>体值，在更新其它字段时又附带更新了此字段，导致创建时间被修改成当前时间。</p>
+<ol start="10">
+<li>【强制】序列化类新增属性时，请不要修改 serialVersionUID 字段，避免反序列失败；如</li>
+</ol>
+<p>果完全不兼容升级，避免反序列化混乱，那么请修改 serialVersionUID 值。</p>
+<p>说明：注意 serialVersionUID 不一致会抛出序列化运行时异常。</p>
+<ol start="11">
+<li>【强制】构造方法里面禁止加入任何业务逻辑，如果有初始化逻辑，请放在 init 方法中。</li>
+<li>【强制】POJO 类必须写 toString 方法。使用 IDE 中的工具：source&gt; generate toString  时，如果继承了另一个 POJO 类，注意在前面加一下 super.toString。</li>
+<li>【强制】禁止在 POJO 类中，同时存在对应属性 xxx 的 isXxx()和 getXxx()方法。</li>
+</ol>
+<p>说明：框架在调用属性 xxx 的提取方法时，并不能确定哪个方法一定是被优先调用到，神坑之一。</p>
+<h4 id="日期时间"><a href="#日期时间" class="headerlink" title="日期时间"></a>日期时间</h4><p>1.【强制】日期格式化时，传入 pattern 中表示年份统一使用小写的 y。</p>
+<p>说明：日期格式化时，yyyy 表示当天所在的年，而大写的 YYYY 代表是 week in which year（JDK7 之后</p>
+<p>引入的概念），意思是当天所在的周属于的年份，一周从周日开始，周六结束，只要本周跨年，返回的 YYYY</p>
+<p>就是下一年。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：表示日期和时间的格式如下所示：</span></span><br><span class="line"><span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>2.【强制】在日期格式中分清楚大写的 M 和小写的 m，大写的 H 和小写的 h 分别指代的意义。</p>
+<p>说明：日期格式中的这两对字母表意如下：</p>
+<p>1） 表示月份是大写的 M； </p>
+<p>2） 表示分钟则是小写的 m； </p>
+<p>3） 24 小时制的是大写的 H； </p>
+<p>4） 12 小时制的则是小写的 h。</p>
+<p>3.【强制】获取当前毫秒数：System.currentTimeMillis(); 而不是 new Date().getTime()。</p>
+<p>说明：如果想获取更加精确的纳秒级时间值，使用 System.nanoTime 的方式。在 JDK8 中，针对统计时间</p>
+<p>等场景，推荐使用 Instant 类。</p>
+<p>4.【强制】不允许在程序任何地方中使用：1）java.sql.Date 2）java.sql.Time 3）</p>
+<p>java.sql.Timestamp。</p>
+<p>说明：第 1 个不记录时间，getHours()抛出异常；第 2 个不记录日期，getYear()抛出异常；第 3 个在构造</p>
+<p>方法 super((time/1000)*1000)，fastTime 和 nanos 分开存储秒和纳秒信息。</p>
+<p>反例： java.util.Date.after(Date)进行时间比较时，当入参是 java.sql.Timestamp 时，会触发 JDK </p>
+<p>BUG(JDK9 已修复)，可能导致比较时的意外结果</p>
+<p>5.【强制】不要在程序中写死一年为 365 天，避免在公历闰年时出现日期转换错误或程序逻辑</p>
+<p>错误。</p>
+<h4 id="集合处理"><a href="#集合处理" class="headerlink" title="集合处理"></a>集合处理</h4><p>1.【强制】关于 hashCode 和 equals 的处理，遵循如下规则：</p>
+<p>1） 只要重写 equals，就必须重写 hashCode。 </p>
+<p>2） 因为 Set 存储的是不重复的对象，依据 hashCode 和 equals 进行判断，所以 Set 存储的对象必须重写</p>
+<p>这两个方法。</p>
+<p>3） 如果自定义对象作为 Map 的键，那么必须覆写 hashCode 和 equals。</p>
+<p>说明：String 因为重写了 hashCode 和 equals 方法，所以我们可以愉快地使用 String 对象作为 key 来使</p>
+<p>用。</p>
+<p>2.【强制】判断所有集合内部的元素是否为空，使用 isEmpty()方法，而不是 size()==0 的方式。</p>
+<p>说明：前者的时间复杂度为 O(1)，而且可读性更好。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">if</span>(map.isEmpty()) &#123;</span><br><span class="line"> System.out.println(<span class="string">"no element in this map."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.【强制】在使用 java.util.stream.Collectors 类的 toMap()方法转为 Map 集合时，一定要使</p>
+<p>用含有参数类型为 BinaryOperator，参数名为 mergeFunction 的方法，否则当出现相同 key</p>
+<p>值时会抛出 IllegalStateException 异常。</p>
+<p>说明：参数 mergeFunction 的作用是当出现 key 重复时，自定义对 value 的处理策略。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">List&lt;Pair&lt;String, Double&gt;&gt; pairArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">pairArrayList.add(<span class="keyword">new</span> Pair&lt;&gt;(<span class="string">"version"</span>, <span class="number">6.19</span>));</span><br><span class="line">pairArrayList.add(<span class="keyword">new</span> Pair&lt;&gt;(<span class="string">"version"</span>, <span class="number">10.24</span>));</span><br><span class="line">pairArrayList.add(<span class="keyword">new</span> Pair&lt;&gt;(<span class="string">"version"</span>, <span class="number">13.14</span>));</span><br><span class="line">Map&lt;String, Double&gt; map = pairArrayList.stream().collect(</span><br><span class="line"><span class="comment">// 生成的 map 集合中只有一个键值对：&#123;version=13.14&#125;</span></span><br><span class="line">Collectors.toMap(Pair::getKey, Pair::getValue, (v1, v2) -&gt; v2));</span><br><span class="line"><span class="comment">//反例：</span></span><br><span class="line">String[] departments = <span class="keyword">new</span> String[] &#123;<span class="string">"iERP"</span>, <span class="string">"iERP"</span>, <span class="string">"EIBU"</span>&#125;;</span><br><span class="line"><span class="comment">// 抛出 IllegalStateException 异常</span></span><br><span class="line">Map&lt;Integer, String&gt; map = Arrays.stream(departments)</span><br><span class="line"> .collect(Collectors.toMap(String::hashCode, str -&gt; str))</span><br></pre></td></tr></table></figure>
+
+<p>4.【强制】在使用 java.util.stream.Collectors 类的 toMap()方法转为 Map 集合时，一定要注</p>
+<p>意当 value 为 null 时会抛 NPE 异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//说明：在 java.util.HashMap 的 merge 方法里会进行如下的判断：</span></span><br><span class="line"><span class="keyword">if</span> (value == <span class="keyword">null</span> || remappingFunction == <span class="keyword">null</span>)</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line"><span class="comment">//反例：</span></span><br><span class="line">List&lt;Pair&lt;String, Double&gt;&gt; pairArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">2</span>);</span><br><span class="line">pairArrayList.add(<span class="keyword">new</span> Pair&lt;&gt;(<span class="string">"version1"</span>, <span class="number">4.22</span>));</span><br><span class="line">pairArrayList.add(<span class="keyword">new</span> Pair&lt;&gt;(<span class="string">"version2"</span>, <span class="keyword">null</span>));</span><br><span class="line">Map&lt;String, Double&gt; map = pairArrayList.stream().collect(</span><br><span class="line"><span class="comment">// 抛出 NullPointerException 异常</span></span><br><span class="line">Collectors.toMap(Pair::getKey, Pair::getValue, (v1, v2) -&gt; v2));</span><br></pre></td></tr></table></figure>
+
+<p>5.【强制】ArrayList 的 subList 结果不可强转成 ArrayList，否则会抛出 ClassCastException 异 </p>
+<p>常：java.util.RandomAccessSubList cannot be cast to java.util.ArrayList。</p>
+<p>说明：subList 返回的是 ArrayList 的内部类 SubList，并不是 ArrayList 而是 ArrayList 的一个视图，对</p>
+<p>于 SubList 子列表的所有操作最终会反映到原列表上。</p>
+<p>6.【强制】使用 Map 的方法 keySet()/values()/entrySet()返回集合对象时，不可以对其进行添</p>
+<p>加元素操作，否则会抛出 UnsupportedOperationException 异常。</p>
+<p>7.【强制】Collections 类返回的对象，如：emptyList()/singletonList()等都是 immutable list，</p>
+<p>不可对其进行添加或者删除元素的操作。</p>
+<p>反例：如果查询无结果，返回 Collections.emptyList()空集合对象，调用方一旦进行了添加元素的操作，就</p>
+<p>会触发 UnsupportedOperationException 异常。</p>
+<p>8.【强制】在 subList 场景中，高度注意对父集合元素的增加或删除，均会导致子列表的遍历、</p>
+<p>增加、删除产生 ConcurrentModificationException 异常。</p>
+<p>9.【强制】使用集合转数组的方法，必须使用集合的 toArray(T[] array)，传入的是类型完全一</p>
+<p>致、长度为 0 的空数组。</p>
+<p>反例：直接使用 toArray 无参方法存在问题，此方法返回值只能是 Object[]类，若强转其它类型数组将出现</p>
+<p>ClassCastException 错误。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">2</span>);</span><br><span class="line">list.add(<span class="string">"guan"</span>);</span><br><span class="line">list.add(<span class="string">"bao"</span>);</span><br><span class="line">String[] array = list.toArray(<span class="keyword">new</span> String[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<p> 说明：使用 toArray 带参方法，数组空间大小的 length， </p>
+<p>1） 等于 0，动态创建与 size 相同的数组，性能最好。</p>
+<p>2） 大于 0 但小于 size，重新创建大小等于 size 的数组，增加 GC 负担。</p>
+<p>3） 等于 size，在高并发情况下，数组创建完成之后，size 正在变大的情况下，负面影响与 2 相同。</p>
+<p>4） 大于 size，空间浪费，且在 size 处插入 null 值，存在 NPE 隐患。</p>
+<p>10.【强制】在使用 Collection 接口任何实现类的 addAll()方法时，都要对输入的集合参数进行</p>
+<p>NPE 判断。</p>
+<p>说明：在 ArrayList#addAll 方法的第一行代码即 Object[] a = c.toArray(); 其中 c 为输入集合参数，如果</p>
+<p>为 null，则直接抛出异常。</p>
+<p>11.【强制】使用工具类 Arrays.asList()把数组转换成集合时，不能使用其修改集合相关的方法，</p>
+<p>它的 add/remove/clear 方法会抛出 UnsupportedOperationException 异常。</p>
+<p>说明：asList 的返回对象是一个 Arrays 内部类，并没有实现集合的修改方法。Arrays.asList 体现的是适配</p>
+<p>器模式，只是转换接口，后台的数据仍是数组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> String[] str = <span class="keyword">new</span> String[] &#123; <span class="string">"yang"</span>, <span class="string">"hao"</span> &#125;;</span><br><span class="line"> List list = Arrays.asList(str);</span><br><span class="line"><span class="comment">//第一种情况：list.add("yangguanbao"); 运行时异常。</span></span><br><span class="line"><span class="comment">//第二种情况：str[0] = "changed"; 也会随之修改，反之亦然。</span></span><br></pre></td></tr></table></figure>
+
+<p>12 【强制】泛型通配符&lt;? extends T&gt;来接收返回的数据，此写法的泛型集合不能使用 add 方法， </p>
+<p>而&lt;? super T&gt;不能使用 get 方法，两者在接口调用赋值的场景中容易出错。</p>
+<p>说明：扩展说一下 PECS(Producer Extends Consumer Super)原则：第一、频繁往外读取内容的，适合用</p>
+<p>&lt;? extends T&gt;。第二、经常往里插入的，适合用&lt;? super T&gt;</p>
+<p>13.【强制】在无泛型限制定义的集合赋值给泛型限制的集合时，在使用集合元素时，需要进行</p>
+<p>instanceof 判断，避免抛出 ClassCastException 异常。</p>
+<p>说明：毕竟泛型是在 JDK5 后才出现，考虑到向前兼容，编译器是允许非泛型集合与泛型集合互相赋值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//反例：</span></span><br><span class="line">List&lt;String&gt; generics = <span class="keyword">null</span>;</span><br><span class="line">List notGenerics = <span class="keyword">new</span> ArrayList(<span class="number">10</span>);</span><br><span class="line">notGenerics.add(<span class="keyword">new</span> Object());</span><br><span class="line">notGenerics.add(<span class="keyword">new</span> Integer(<span class="number">1</span>));</span><br><span class="line">generics = notGenerics;</span><br><span class="line"><span class="comment">// 此处抛出 ClassCastException 异常</span></span><br><span class="line">String string = generics.get(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>14.【强制】不要在 foreach 循环里进行元素的 remove/add 操作。remove 元素请使用 Iterator</p>
+<p>方式，如果并发操作，需要对 Iterator 对象加锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*说明：三个条件如下 </span></span><br><span class="line"><span class="comment">*1） x，y 的比较结果和 y，x 的比较结果相反。</span></span><br><span class="line"><span class="comment">*2） x&gt;y，y&gt;z，则 x&gt;z。 </span></span><br><span class="line"><span class="comment">*3） x=y，则 x，z 比较结果和 y，z 比较结果相同。</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="comment">//反例：下例中没有处理相等的情况，交换两个对象判断结果并不互反，不符合第一个条件，在实际使用中可能会出现异常。</span></span><br><span class="line"><span class="keyword">new</span> Comparator&lt;Student&gt;() &#123;</span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Student o1, Student o2)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> o1.getId() &gt; o2.getId() ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="并发处理"><a href="#并发处理" class="headerlink" title="并发处理"></a>并发处理</h4><p>1.【强制】获取单例对象需要保证线程安全，其中的方法也要保证线程安全。</p>
+<p>说明：资源驱动类、工具类、单例工厂类都需要注意。</p>
+<p>2.【强制】创建线程或线程池时请指定有意义的线程名称，方便出错时回溯。</p>
+<p>正例：自定义线程工厂，并且根据外部特征进行分组，比如，来自同一机房的调用，把机房编号赋值给</p>
+<p>whatFeaturOfGroup</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserThreadFactory</span> <span class="keyword">implements</span> <span class="title">ThreadFactory</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">final</span> String namePrefix;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger nextId = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><br><span class="line"> <span class="comment">// 定义线程组名称，在 jstack 问题排查时，非常有帮助</span></span><br><span class="line"> UserThreadFactory(String whatFeaturOfGroup) &#123;</span><br><span class="line"> namePrefix = <span class="string">"From UserThreadFactory's "</span> + whatFeaturOfGroup + <span class="string">"-Worker-"</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable task)</span> </span>&#123;</span><br><span class="line"> String name = namePrefix + nextId.getAndIncrement();</span><br><span class="line"> Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">null</span>, task, name, <span class="number">0</span>, <span class="keyword">false</span>);</span><br><span class="line"> System.out.println(thread.getName());</span><br><span class="line"> <span class="keyword">return</span> thread;</span><br><span class="line"> &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.【强制】线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。</p>
+<p>说明：线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。</p>
+<p>如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。</p>
+<p>4.【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这</p>
+<p>样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。</p>
+<p>说明：Executors 返回的线程池对象的弊端如下： </p>
+<p>1） FixedThreadPool 和 SingleThreadPool：</p>
+<p>允许的请求队列长度为 Integer.MAX_VALUE，可能会堆积大量的请求，从而导致 OOM。 </p>
+<p>2） CachedThreadPool：</p>
+<p>允许的创建线程数量为 Integer.MAX_VALUE，可能会创建大量的线程，从而导致 OOM。</p>
+<p>5.【强制】SimpleDateFormat 是线程不安全的类，一般不要定义为 static 变量，如果定义为 static，</p>
+<p>必须加锁，或者使用 DateUtils 工具类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：注意线程安全，使用 DateUtils。亦推荐如下处理：</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;DateFormat&gt; df = <span class="keyword">new</span> ThreadLocal&lt;DateFormat&gt;() &#123;</span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">protected</span> DateFormat <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>6.【强制】必须回收自定义的 ThreadLocal 变量，尤其在线程池场景下，线程经常会被复用，</p>
+<p>如果不清理自定义的 ThreadLocal 变量，可能会影响后续业务逻辑和造成内存泄露等问题。</p>
+<p>尽量在代理中使用 try-finally 块进行回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">objectThreadLocal.set(userInfo);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> objectThreadLocal.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7.【强制】高并发时，同步调用应该去考量锁的性能损耗。能用无锁数据结构，就不要用锁；能</p>
+<p>锁区块，就不要锁整个方法体；能用对象锁，就不要用类锁。</p>
+<p>说明：尽可能使加锁的代码块工作量尽可能的小，避免在锁代码块中调用 RPC 方法。</p>
+<p>8.【强制】对多个资源、数据库表、对象同时加锁时，需要保持一致的加锁顺序，否则可能会造</p>
+<p>成死锁。</p>
+<p>说明：线程一需要对表 A、B、C 依次全部加锁后才可以进行更新操作，那么线程二的加锁顺序也必须是 A、 </p>
+<p>B、C，否则可能出现死锁。</p>
+<p>9.【强制】在使用阻塞等待获取锁的方式中，必须在 try 代码块之外，并且在加锁方法与 try 代</p>
+<p>码块之间没有任何可能抛出异常的方法调用，避免加锁成功后，在 finally 中无法解锁。</p>
+<p>说明一：如果在 lock 方法与 try 代码块之间的方法调用抛出异常，那么无法解锁，造成其它线程无法成功</p>
+<p>获取锁。</p>
+<p>说明二：如果 lock 方法在 try 代码块之内，可能由于其它方法抛出异常，导致在 finally 代码块中，unlock</p>
+<p>对未加锁的对象解锁，它会调用 AQS 的 tryRelease 方法（取决于具体实现类），抛出</p>
+<p>IllegalMonitorStateException 异常。</p>
+<p>说明三：在 Lock 对象的 lock 方法实现中可能抛出 unchecked 异常，产生的后果与说明二相同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">Lock lock = <span class="keyword">new</span> XxxLock();</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">lock.lock();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"> doSomething();</span><br><span class="line"> doOthers();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> lock.unlock();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//反例：</span></span><br><span class="line">Lock lock = <span class="keyword">new</span> XxxLock();</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="comment">// 如果此处抛出异常，则直接执行 finally 代码块</span></span><br><span class="line"> doSomething();</span><br><span class="line"> <span class="comment">// 无论加锁是否成功，finally 代码块都会执行</span></span><br><span class="line"> lock.lock();</span><br><span class="line"> doOthers();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>10.【强制】在使用尝试机制来获取锁的方式中，进入业务代码块之前，必须先判断当前线程是否</p>
+<p>持有锁。锁的释放规则与锁的阻塞等待方式相同。</p>
+<p>说明：Lock 对象的 unlock 方法在执行时，它会调用 AQS 的 tryRelease 方法（取决于具体实现类），如果</p>
+<p>当前线程不持有锁，则抛出 IllegalMonitorStateException 异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正例：</span></span><br><span class="line">Lock lock = <span class="keyword">new</span> XxxLock();</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">boolean</span> isLocked = lock.tryLock();</span><br><span class="line"><span class="keyword">if</span> (isLocked) &#123;</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> doSomething();</span><br><span class="line"> doOthers();</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> lock.unlock();</span><br><span class="line"> &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>11.【强制】并发修改同一记录时，避免更新丢失，需要加锁。要么在应用层加锁，要么在缓存加</p>
+<p>锁，要么在数据库层使用乐观锁，使用 version 作为更新依据。</p>
+<p>说明：如果每次访问冲突概率小于 20%，推荐使用乐观锁，否则使用悲观锁。乐观锁的重试次数不得小于</p>
+<p>3 次。</p>
+<p>12.【强制】多线程并行处理定时任务时，Timer 运行多个 TimeTask 时，只要其中之一没有捕获抛</p>
+<p>出的异常，其它任务便会自动终止运行，使用 ScheduledExecutorService 则没有这个问题。</p>
+<h4 id="控制语句"><a href="#控制语句" class="headerlink" title="控制语句"></a>控制语句</h4><p>1.【强制】在一个 switch 块内，每个 case 要么通过 continue/break/return 等来终止，要么</p>
+<p>注释说明程序将继续执行到哪一个 case 为止；在一个 switch 块内，都必须包含一个 default</p>
+<p>2.【强制】当 switch 括号内的变量类型为 String 并且此变量为外部参数时，必须先进行 null</p>
+<p>判断。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//反例：如下的代码输出是什么？</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwitchString</span> </span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"> method(<span class="keyword">null</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(String param)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">switch</span> (param) &#123;</span><br><span class="line"> <span class="comment">// 肯定不是进入这里</span></span><br><span class="line"> <span class="keyword">case</span> <span class="string">"sth"</span>:</span><br><span class="line"> System.out.println(<span class="string">"it's sth"</span>);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> <span class="comment">// 也不是进入这里</span></span><br><span class="line"> <span class="keyword">case</span> <span class="string">"null"</span>:</span><br><span class="line"> System.out.println(<span class="string">"it's null"</span>);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> <span class="comment">// 也不是进入这里</span></span><br><span class="line"> <span class="keyword">default</span>:</span><br><span class="line"> System.out.println(<span class="string">"default"</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.【强制】在 if/else/for/while/do 语句中必须使用大括号。</p>
+<p>说明：即使只有一行代码，禁止不采用大括号的编码方式：if (condition) statements; </p>
+<p>4.【强制】三目运算符 condition? 表达式 1 : 表达式 2 中，高度注意表达式 1 和 2 在类型对齐</p>
+<p>时，可能抛出因自动拆箱导致的 NPE 异常。</p>
+<p>说明：以下两种场景会触发类型对齐的拆箱操作：</p>
+<p>1） 表达式 1 或表达式 2 的值只要有一个是原始类型。</p>
+<p>2） 表达式 1 或表达式 2 的值的类型不一致，会强制拆箱升级成表示范围更大的那个类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//反例：</span></span><br><span class="line">Integer a = <span class="number">1</span>;</span><br><span class="line">Integer b = <span class="number">2</span>;</span><br><span class="line">Integer c = <span class="keyword">null</span>;</span><br><span class="line">Boolean flag = <span class="keyword">false</span>;</span><br><span class="line"><span class="comment">// a*b 的结果是 int 类型，那么 c 会强制拆箱成 int 类型，抛出 NPE 异常</span></span><br><span class="line">Integer result=(flag? a*b : c)</span><br></pre></td></tr></table></figure>
+
+<p>5.【强制】在高并发场景中，避免使用”等于”判断作为中断或退出的条件。</p>
+<p>说明：如果并发控制没有处理好，容易产生等值判断被“击穿”的情况，使用大于或小于的区间判断条件</p>
+<p>来代替。</p>
+<p>反例：判断剩余奖品数量等于 0 时，终止发放奖品，但因为并发处理错误导致奖品数量瞬间变成了负数，</p>
+<p>这样的话，活动无法终止。</p>
+<h4 id="注释规约"><a href="#注释规约" class="headerlink" title="注释规约"></a>注释规约</h4><p>1.【强制】类、类属性、类方法的注释必须使用 Javadoc 规范，使用/<em>*内容</em>/格式，不得使用</p>
+<p>// xxx 方式。</p>
+<p>说明：在 IDE 编辑窗口中，Javadoc 方式会提示相关注释，生成 Javadoc 可以正确输出相应注释；在 IDE</p>
+<p>中，工程调用方法时，不进入方法即可悬浮提示方法、参数、返回值的意义，提高阅读效率。</p>
+<p>2.【强制】所有的抽象方法（包括接口中的方法）必须要用 Javadoc 注释、除了返回值、参数、</p>
+<p>异常说明外，还必须指出该方法做什么事情，实现什么功能。</p>
+<p>说明：对子类的实现要求，或者调用注意事项，请一并说明。</p>
+<p>3【强制】所有的类都必须添加创建者和创建日期。</p>
+<p>说明：在设置模板时，注意 IDEA 的@author 为<code>${USER}</code>，而 eclipse 的@author 为<code>${user}</code>，大小写有</p>
+<p>区别，而日期的设置统一为 yyyy/MM/dd 的格式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">正例：</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> yangguanbao</span></span><br><span class="line"><span class="comment">* <span class="doctag">@date</span> 2016/10/31</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>4 【强制】方法内部单行注释，在被注释语句上方另起一行，使用//注释。方法内部多行注释使</p>
+<p>用/* */注释，注意与代码对齐。</p>
+<p>5【强制】所有的枚举类型字段必须要有注释，说明每个数据项的用途。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatReward.jpg" alt="brainBike 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/aliReward.jpg" alt="brainBike 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/" rel="tag"># 编程规约</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/14/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" rel="prev" title="分布式锁">
+      <i class="fa fa-chevron-left"></i> 分布式锁
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编程规约"><span class="nav-number">1.</span> <span class="nav-text">编程规约</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命名风格"><span class="nav-number">1.1.</span> <span class="nav-text">命名风格</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#接口和实现类命名规则"><span class="nav-number">1.1.1.</span> <span class="nav-text">接口和实现类命名规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三层架构各层命名规约："><span class="nav-number">1.1.2.</span> <span class="nav-text">三层架构各层命名规约：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常量定义"><span class="nav-number">1.2.</span> <span class="nav-text">常量定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码格式"><span class="nav-number">1.3.</span> <span class="nav-text">代码格式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#换行"><span class="nav-number">1.3.1.</span> <span class="nav-text">换行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#空格"><span class="nav-number">1.3.2.</span> <span class="nav-text">空格</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OOP规约"><span class="nav-number">1.4.</span> <span class="nav-text">OOP规约</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期时间"><span class="nav-number">1.5.</span> <span class="nav-text">日期时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合处理"><span class="nav-number">1.6.</span> <span class="nav-text">集合处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发处理"><span class="nav-number">1.7.</span> <span class="nav-text">并发处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制语句"><span class="nav-number">1.8.</span> <span class="nav-text">控制语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注释规约"><span class="nav-number">1.9.</span> <span class="nav-text">注释规约</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="brainBike"
+      src="/images/Deadpool.jpg">
+  <p class="site-author-name" itemprop="name">brainBike</p>
+  <div class="site-description" itemprop="description">理论何等强大，就何等狡猾</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/xiangyanlin" title="https:&#x2F;&#x2F;github.com&#x2F;xiangyanlin" rel="noopener" target="_blank">github</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">brainBike</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">42k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">38 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
