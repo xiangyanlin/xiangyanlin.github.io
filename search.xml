@@ -1,64 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Docker基础-镜像</title>
-    <url>/2020/07/04/Docker%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h4 id="Docker-镜像"><a href="#Docker-镜像" class="headerlink" title="Docker 镜像"></a>Docker 镜像</h4><a id="more"></a>
-
-<h5 id="分层存储"><a href="#分层存储" class="headerlink" title="分层存储"></a>分层存储</h5><p>因为镜像包含操作系统完整的 <code>root</code> 文件系统，其体积往往是庞大的，因此在 Docker 设计时，就充分利用 <a href="https://en.wikipedia.org/wiki/Union_mount" target="_blank" rel="noopener">Union FS</a> 的技术，将其设计为分层存储的架构。所以严格来说，镜像并非是像一个 ISO 那样的打包文件，镜像只是一个虚拟的概念，其实际体现并非由一个文件组成，而是由一组文件系统组成，或者说，由多层文件系统联合组成。</p>
-<p>镜像构建时，会一层层构建，前一层是后一层的基础。每一层构建完就不会再发生改变，后一层上的任何改变只发生在自己这一层。比如，删除前一层文件的操作，实际不是真的删除前一层的文件，而是仅在当前层标记为该文件已删除。在最终容器运行的时候，虽然不会看到这个文件，但是实际上该文件会一直跟随镜像。因此，在构建镜像的时候，需要额外小心，每一层尽量只包含该层需要添加的东西，任何额外的东西应该在该层构建结束前清理掉。</p>
-<p>分层存储的特征还使得镜像的复用、定制变的更为容易。甚至可以用之前构建好的镜像作为基础层，然后进一步添加新的层，以定制自己所需的内容，构建新的镜像。</p>
-<h5 id="虚悬镜像"><a href="#虚悬镜像" class="headerlink" title="虚悬镜像"></a>虚悬镜像</h5><p>一个特殊的镜像，这个镜像既没有仓库名，也没有标签，均为 <code>&lt;none&gt;</code>。：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;none&gt;               &lt;none&gt;              00285df0df87        5 days ago          342 MB</span><br></pre></td></tr></table></figure>
-
-<p>1</p>
-<p>这个镜像原本是有镜像名和标签的，原来为 <code>mongo:3.2</code>，随着官方镜像维护，发布了新版本后，重新 <code>docker pull mongo:3.2</code> 时，<code>mongo:3.2</code> 这个镜像名被转移到了新下载的镜像身上，而旧的镜像上的这个名称则被取消，从而成为了 <code>&lt;none&gt;</code>。除了 <code>docker pull</code> 可能导致这种情况，<code>docker build</code> 也同样可以导致这种现象。由于新旧镜像同名，旧镜像名称被取消，从而出现仓库名、标签均为 <code>&lt;none&gt;</code> 的镜像。这类无标签镜像也被称为 <strong>虚悬镜像(dangling image)</strong> ，可以用下面的命令专门显示这类镜像：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker image ls -f dangling=<span class="literal">true</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">&lt;none&gt;              &lt;none&gt;              00285df0df87        5 days ago          342 MB</span><br></pre></td></tr></table></figure>
-
-
-
-<p>一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，可以用下面的命令删除。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker image prune</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）"><a href="#DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）" class="headerlink" title="DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）"></a>DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）</h5><p>如果注意，会看到 <code>docker build</code> 命令最后有一个 <code>.</code>。<code>.</code> 表示当前目录，而 <code>Dockerfile</code> 就在当前目录，因此不少初学者以为这个路径是在指定 <code>Dockerfile</code> 所在路径，这么理解其实是不准确的。如果对应上面的命令格式，你可能会发现，这是在指定<strong>上下文路径</strong>。那么什么是上下文呢？</p>
-<p>首先我们要理解 <code>docker build</code> 的工作原理。Docker 在运行时分为 Docker 引擎（也就是服务端守护进程）和客户端工具。Docker 的引擎提供了一组 REST API，被称为 <a href="https://docs.docker.com/engine/reference/api/docker_remote_api/" target="_blank" rel="noopener">Docker Remote API</a>，而如 <code>docker</code> 命令这样的客户端工具，则是通过这组 API 与 Docker 引擎交互，从而完成各种功能。因此，虽然表面上我们好像是在本机执行各种 <code>docker</code> 功能，但实际上，一切都是使用的远程调用形式在服务端（Docker 引擎）完成。也因为这种 C/S 设计，让我们操作远程服务器的 Docker 引擎变得轻而易举。</p>
-<p>当我们进行镜像构建的时候，并非所有定制都会通过 <code>RUN</code> 指令完成，经常会需要将一些本地文件复制进镜像，比如通过 <code>COPY</code> 指令、<code>ADD</code> 指令等。而 <code>docker build</code> 命令构建镜像，其实并非在本地构建，而是在服务端，也就是 Docker 引擎中构建的。那么在这种客户端/服务端的架构中，如何才能让服务端获得本地文件呢？</p>
-<p>这就引入了上下文的概念。当构建的时候，用户会指定构建镜像上下文的路径，<code>docker build</code> 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。</p>
-<p>如果在 <code>Dockerfile</code> 中这么写：</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> ./package.json /app/</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>这并不是要复制执行 <code>docker build</code> 命令所在的目录下的 <code>package.json</code>，也不是复制 <code>Dockerfile</code> 所在目录下的 <code>package.json</code>，而是复制 <strong>上下文（context）</strong> 目录下的 <code>package.json</code>。</p>
-<p>因此，<code>COPY</code> 这类指令中的源文件的路径都是<em>相对路径</em>。这也是初学者经常会问的为什么 <code>COPY ../package.json /app</code> 或者 <code>COPY /opt/xxxx /app</code> 无法工作的原因，因为这些路径已经超出了上下文的范围，Docker 引擎无法获得这些位置的文件。如果真的需要那些文件，应该将它们复制到上下文目录中去。</p>
-<p>现在就可以理解刚才的命令 <code>docker build -t nginx:v3 .</code> 中的这个 <code>.</code>，实际上是在指定上下文的目录，<code>docker build</code> 命令会将该目录下的内容打包交给 Docker 引擎以帮助构建镜像。</p>
-<p>如果观察 <code>docker build</code> 输出，我们其实已经看到了这个发送上下文的过程：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t nginx:v3 .</span><br><span class="line">Sending build context to Docker daemon 2.048 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-
-
-<p>理解构建上下文对于镜像构建是很重要的，避免犯一些不应该的错误。比如有些初学者在发现 <code>COPY /opt/xxxx /app</code> 不工作后，于是干脆将 <code>Dockerfile</code> 放到了硬盘根目录去构建，结果发现 <code>docker build</code> 执行后，在发送一个几十 GB 的东西，极为缓慢而且很容易构建失败。那是因为这种做法是在让 <code>docker build</code> 打包整个硬盘，这显然是使用错误。</p>
-<p>一般来说，应该会将 <code>Dockerfile</code> 置于一个空目录下，或者项目根目录下。如果该目录下没有所需文件，那么应该把所需文件复制一份过来。如果目录下有些东西确实不希望构建时传给 Docker 引擎，那么可以用 <code>.gitignore</code> 一样的语法写一个 <code>.dockerignore</code>，该文件是用于剔除不需要作为上下文传递给 Docker 引擎的。</p>
-<p>那么为什么会有人误以为 <code>.</code> 是指定 <code>Dockerfile</code> 所在目录呢？这是因为在默认情况下，如果不额外指定 <code>Dockerfile</code> 的话，会将上下文目录下的名为 <code>Dockerfile</code> 的文件作为 Dockerfile。</p>
-<p>这只是默认行为，实际上 <code>Dockerfile</code> 的文件名并不要求必须为 <code>Dockerfile</code>，而且并不要求必须位于上下文目录中，比如可以用 <code>-f ../Dockerfile.php</code> 参数指定某个文件作为 <code>Dockerfile</code>。</p>
-<p>当然，一般大家习惯性的会使用默认的文件名 <code>Dockerfile</code>，以及会将其置于镜像构建上下文目录中。</p>
-<h2 id="其它-docker-build-的用法"><a href="#其它-docker-build-的用法" class="headerlink" title="#其它 docker build 的用法"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-使用-Dockerfile-定制镜像.html#其它-docker-build-的用法" target="_blank" rel="noopener">#</a>其它 <code>docker build</code> 的用法</h2><h3 id="直接用-Git-repo-进行构建"><a href="#直接用-Git-repo-进行构建" class="headerlink" title="#直接用 Git repo 进行构建"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-使用-Dockerfile-定制镜像.html#直接用-git-repo-进行构建" target="_blank" rel="noopener">#</a>直接用 Git repo 进行构建</h3><p>或许你已经注意到了，<code>docker build</code> 还支持从 URL 构建，比如可以直接从 Git repo 中构建：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build https://github.com/twang2218/gitlab-ce-zh.git<span class="comment">#:8.14</span></span><br><span class="line">docker build https://github.com/twang2218/gitlab-ce-zh.git\<span class="comment">#:8.14</span></span><br><span class="line">Sending build context to Docker daemon 2.048 kB</span><br><span class="line">Step 1 : FROM gitlab/gitlab-ce:8.14.0-ce.0</span><br><span class="line">8.14.0-ce.0: Pulling from gitlab/gitlab-ce</span><br><span class="line">aed15891ba52: Already exists</span><br><span class="line">773ae8583d14: Already exists</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-
-
-<p>这行命令指定了构建所需的 Git repo，并且指定默认的 <code>master</code> 分支，构建目录为 <code>/8.14/</code>，然后 Docker 就会自己去 <code>git clone</code> 这个项目、切换到指定分支、并进入到指定目录后开始构建。</p>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Dockerfile指令详解</title>
     <url>/2020/07/04/Dockerfile%E6%8C%87%E4%BB%A4%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<p>Dockerfile的常用指令：FROM,RUN,COPY,ADD,CMD等等</p>
@@ -210,6 +152,64 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker基础-镜像</title>
+    <url>/2020/07/04/Docker%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h4 id="Docker-镜像"><a href="#Docker-镜像" class="headerlink" title="Docker 镜像"></a>Docker 镜像</h4><a id="more"></a>
+
+<h5 id="分层存储"><a href="#分层存储" class="headerlink" title="分层存储"></a>分层存储</h5><p>因为镜像包含操作系统完整的 <code>root</code> 文件系统，其体积往往是庞大的，因此在 Docker 设计时，就充分利用 <a href="https://en.wikipedia.org/wiki/Union_mount" target="_blank" rel="noopener">Union FS</a> 的技术，将其设计为分层存储的架构。所以严格来说，镜像并非是像一个 ISO 那样的打包文件，镜像只是一个虚拟的概念，其实际体现并非由一个文件组成，而是由一组文件系统组成，或者说，由多层文件系统联合组成。</p>
+<p>镜像构建时，会一层层构建，前一层是后一层的基础。每一层构建完就不会再发生改变，后一层上的任何改变只发生在自己这一层。比如，删除前一层文件的操作，实际不是真的删除前一层的文件，而是仅在当前层标记为该文件已删除。在最终容器运行的时候，虽然不会看到这个文件，但是实际上该文件会一直跟随镜像。因此，在构建镜像的时候，需要额外小心，每一层尽量只包含该层需要添加的东西，任何额外的东西应该在该层构建结束前清理掉。</p>
+<p>分层存储的特征还使得镜像的复用、定制变的更为容易。甚至可以用之前构建好的镜像作为基础层，然后进一步添加新的层，以定制自己所需的内容，构建新的镜像。</p>
+<h5 id="虚悬镜像"><a href="#虚悬镜像" class="headerlink" title="虚悬镜像"></a>虚悬镜像</h5><p>一个特殊的镜像，这个镜像既没有仓库名，也没有标签，均为 <code>&lt;none&gt;</code>。：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;none&gt;               &lt;none&gt;              00285df0df87        5 days ago          342 MB</span><br></pre></td></tr></table></figure>
+
+<p>1</p>
+<p>这个镜像原本是有镜像名和标签的，原来为 <code>mongo:3.2</code>，随着官方镜像维护，发布了新版本后，重新 <code>docker pull mongo:3.2</code> 时，<code>mongo:3.2</code> 这个镜像名被转移到了新下载的镜像身上，而旧的镜像上的这个名称则被取消，从而成为了 <code>&lt;none&gt;</code>。除了 <code>docker pull</code> 可能导致这种情况，<code>docker build</code> 也同样可以导致这种现象。由于新旧镜像同名，旧镜像名称被取消，从而出现仓库名、标签均为 <code>&lt;none&gt;</code> 的镜像。这类无标签镜像也被称为 <strong>虚悬镜像(dangling image)</strong> ，可以用下面的命令专门显示这类镜像：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker image ls -f dangling=<span class="literal">true</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">&lt;none&gt;              &lt;none&gt;              00285df0df87        5 days ago          342 MB</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，可以用下面的命令删除。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker image prune</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）"><a href="#DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）" class="headerlink" title="DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）"></a>DockerFile镜像构建上下文（Context）（客户端将当前目录下内容打包传给docker引擎）</h5><p>如果注意，会看到 <code>docker build</code> 命令最后有一个 <code>.</code>。<code>.</code> 表示当前目录，而 <code>Dockerfile</code> 就在当前目录，因此不少初学者以为这个路径是在指定 <code>Dockerfile</code> 所在路径，这么理解其实是不准确的。如果对应上面的命令格式，你可能会发现，这是在指定<strong>上下文路径</strong>。那么什么是上下文呢？</p>
+<p>首先我们要理解 <code>docker build</code> 的工作原理。Docker 在运行时分为 Docker 引擎（也就是服务端守护进程）和客户端工具。Docker 的引擎提供了一组 REST API，被称为 <a href="https://docs.docker.com/engine/reference/api/docker_remote_api/" target="_blank" rel="noopener">Docker Remote API</a>，而如 <code>docker</code> 命令这样的客户端工具，则是通过这组 API 与 Docker 引擎交互，从而完成各种功能。因此，虽然表面上我们好像是在本机执行各种 <code>docker</code> 功能，但实际上，一切都是使用的远程调用形式在服务端（Docker 引擎）完成。也因为这种 C/S 设计，让我们操作远程服务器的 Docker 引擎变得轻而易举。</p>
+<p>当我们进行镜像构建的时候，并非所有定制都会通过 <code>RUN</code> 指令完成，经常会需要将一些本地文件复制进镜像，比如通过 <code>COPY</code> 指令、<code>ADD</code> 指令等。而 <code>docker build</code> 命令构建镜像，其实并非在本地构建，而是在服务端，也就是 Docker 引擎中构建的。那么在这种客户端/服务端的架构中，如何才能让服务端获得本地文件呢？</p>
+<p>这就引入了上下文的概念。当构建的时候，用户会指定构建镜像上下文的路径，<code>docker build</code> 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。</p>
+<p>如果在 <code>Dockerfile</code> 中这么写：</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> ./package.json /app/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这并不是要复制执行 <code>docker build</code> 命令所在的目录下的 <code>package.json</code>，也不是复制 <code>Dockerfile</code> 所在目录下的 <code>package.json</code>，而是复制 <strong>上下文（context）</strong> 目录下的 <code>package.json</code>。</p>
+<p>因此，<code>COPY</code> 这类指令中的源文件的路径都是<em>相对路径</em>。这也是初学者经常会问的为什么 <code>COPY ../package.json /app</code> 或者 <code>COPY /opt/xxxx /app</code> 无法工作的原因，因为这些路径已经超出了上下文的范围，Docker 引擎无法获得这些位置的文件。如果真的需要那些文件，应该将它们复制到上下文目录中去。</p>
+<p>现在就可以理解刚才的命令 <code>docker build -t nginx:v3 .</code> 中的这个 <code>.</code>，实际上是在指定上下文的目录，<code>docker build</code> 命令会将该目录下的内容打包交给 Docker 引擎以帮助构建镜像。</p>
+<p>如果观察 <code>docker build</code> 输出，我们其实已经看到了这个发送上下文的过程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t nginx:v3 .</span><br><span class="line">Sending build context to Docker daemon 2.048 kB</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+
+
+<p>理解构建上下文对于镜像构建是很重要的，避免犯一些不应该的错误。比如有些初学者在发现 <code>COPY /opt/xxxx /app</code> 不工作后，于是干脆将 <code>Dockerfile</code> 放到了硬盘根目录去构建，结果发现 <code>docker build</code> 执行后，在发送一个几十 GB 的东西，极为缓慢而且很容易构建失败。那是因为这种做法是在让 <code>docker build</code> 打包整个硬盘，这显然是使用错误。</p>
+<p>一般来说，应该会将 <code>Dockerfile</code> 置于一个空目录下，或者项目根目录下。如果该目录下没有所需文件，那么应该把所需文件复制一份过来。如果目录下有些东西确实不希望构建时传给 Docker 引擎，那么可以用 <code>.gitignore</code> 一样的语法写一个 <code>.dockerignore</code>，该文件是用于剔除不需要作为上下文传递给 Docker 引擎的。</p>
+<p>那么为什么会有人误以为 <code>.</code> 是指定 <code>Dockerfile</code> 所在目录呢？这是因为在默认情况下，如果不额外指定 <code>Dockerfile</code> 的话，会将上下文目录下的名为 <code>Dockerfile</code> 的文件作为 Dockerfile。</p>
+<p>这只是默认行为，实际上 <code>Dockerfile</code> 的文件名并不要求必须为 <code>Dockerfile</code>，而且并不要求必须位于上下文目录中，比如可以用 <code>-f ../Dockerfile.php</code> 参数指定某个文件作为 <code>Dockerfile</code>。</p>
+<p>当然，一般大家习惯性的会使用默认的文件名 <code>Dockerfile</code>，以及会将其置于镜像构建上下文目录中。</p>
+<h2 id="其它-docker-build-的用法"><a href="#其它-docker-build-的用法" class="headerlink" title="#其它 docker build 的用法"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-使用-Dockerfile-定制镜像.html#其它-docker-build-的用法" target="_blank" rel="noopener">#</a>其它 <code>docker build</code> 的用法</h2><h3 id="直接用-Git-repo-进行构建"><a href="#直接用-Git-repo-进行构建" class="headerlink" title="#直接用 Git repo 进行构建"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-使用-Dockerfile-定制镜像.html#直接用-git-repo-进行构建" target="_blank" rel="noopener">#</a>直接用 Git repo 进行构建</h3><p>或许你已经注意到了，<code>docker build</code> 还支持从 URL 构建，比如可以直接从 Git repo 中构建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build https://github.com/twang2218/gitlab-ce-zh.git<span class="comment">#:8.14</span></span><br><span class="line">docker build https://github.com/twang2218/gitlab-ce-zh.git\<span class="comment">#:8.14</span></span><br><span class="line">Sending build context to Docker daemon 2.048 kB</span><br><span class="line">Step 1 : FROM gitlab/gitlab-ce:8.14.0-ce.0</span><br><span class="line">8.14.0-ce.0: Pulling from gitlab/gitlab-ce</span><br><span class="line">aed15891ba52: Already exists</span><br><span class="line">773ae8583d14: Already exists</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这行命令指定了构建所需的 Git repo，并且指定默认的 <code>master</code> 分支，构建目录为 <code>/8.14/</code>，然后 Docker 就会自己去 <code>git clone</code> 这个项目、切换到指定分支、并进入到指定目录后开始构建。</p>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>14种常见的HTTP返回状态码</title>
     <url>/2019/11/17/14%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81/</url>
     <content><![CDATA[<p>今天学习了一下HTTP状态码，把自己的理解记录一下，如有不对之处，欢迎指正</p>
@@ -254,6 +254,85 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringCloud的学习与使用</title>
+    <url>/2020/08/23/SpringCloud%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h3><p>Spring Cloud 是一套完整的微服务解决方案，基于 Spring Boot 框架，准确的说，它不是一个框架，而是一个大的容器，它将市面上较好的微服务框架集成进来，从而简化了开发者的代码量。</p>
+<a id="more"></a>
+
+<h4 id="学习的版本说明与记录"><a href="#学习的版本说明与记录" class="headerlink" title="学习的版本说明与记录"></a>学习的版本说明与记录</h4><p>springBoot2.x版和springcloud H版</p>
+<p>springcloud与springboot版本对应：<br><a href="https://start.spring.io/actuator/info" target="_blank" rel="noopener">https://start.spring.io/actuator/info</a></p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"spring-cloud": &#123;</span><br><span class="line">      "Finchley.M2": "Spring Boot &gt;=2.0.0.M3 and &lt;2.0.0.M5",</span><br><span class="line">      "Finchley.M3": "Spring Boot &gt;=2.0.0.M5 and &lt;=2.0.0.M5",</span><br><span class="line">      "Finchley.M4": "Spring Boot &gt;=2.0.0.M6 and &lt;=2.0.0.M6",</span><br><span class="line">      "Finchley.M5": "Spring Boot &gt;=2.0.0.M7 and &lt;=2.0.0.M7",</span><br><span class="line">      "Finchley.M6": "Spring Boot &gt;=2.0.0.RC1 and &lt;=2.0.0.RC1",</span><br><span class="line">      "Finchley.M7": "Spring Boot &gt;=2.0.0.RC2 and &lt;=2.0.0.RC2",</span><br><span class="line">      "Finchley.M9": "Spring Boot &gt;=2.0.0.RELEASE and &lt;=2.0.0.RELEASE",</span><br><span class="line">      "Finchley.RC1": "Spring Boot &gt;=2.0.1.RELEASE and &lt;2.0.2.RELEASE",</span><br><span class="line">      "Finchley.RC2": "Spring Boot &gt;=2.0.2.RELEASE and &lt;2.0.3.RELEASE",</span><br><span class="line">      "Finchley.SR4": "Spring Boot &gt;=2.0.3.RELEASE and &lt;2.0.999.BUILD-SNAPSHOT",</span><br><span class="line">      "Finchley.BUILD-SNAPSHOT": "Spring Boot &gt;=2.0.999.BUILD-SNAPSHOT and &lt;2.1.0.M3",</span><br><span class="line">      "Greenwich.M1": "Spring Boot &gt;=2.1.0.M3 and &lt;2.1.0.RELEASE",</span><br><span class="line">      "Greenwich.SR6": "Spring Boot &gt;=2.1.0.RELEASE and &lt;2.1.17.BUILD-SNAPSHOT",</span><br><span class="line">      "Greenwich.BUILD-SNAPSHOT": "Spring Boot &gt;=2.1.17.BUILD-SNAPSHOT and &lt;2.2.0.M4",</span><br><span class="line">      "Hoxton.SR7": "Spring Boot &gt;=2.2.0.M4 and &lt;2.3.4.BUILD-SNAPSHOT",</span><br><span class="line">      "Hoxton.BUILD-SNAPSHOT": "Spring Boot &gt;=2.3.4.BUILD-SNAPSHOT and &lt;2.4.0.M1",</span><br><span class="line">      "2020.0.0-SNAPSHOT": "Spring Boot &gt;=2.4.0.M1"</span><br><span class="line">    &#125;,</span><br><span class="line">    "spring-cloud-alibaba": &#123;</span><br><span class="line">      "2.2.1.RELEASE": "Spring Boot &gt;=2.2.0.RELEASE and &lt;2.3.0.M1"</span><br><span class="line">    &#125;,</span><br><span class="line">    "spring-cloud-services": &#123;</span><br><span class="line">      "2.0.3.RELEASE": "Spring Boot &gt;=2.0.0.RELEASE and &lt;2.1.0.RELEASE",</span><br><span class="line">      "2.1.7.RELEASE": "Spring Boot &gt;=2.1.0.RELEASE and &lt;2.2.0.RELEASE",</span><br><span class="line">      "2.2.3.RELEASE": "Spring Boot &gt;=2.2.0.RELEASE and &lt;2.3.0.M1"</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>spring cloud:Hoxton.SR1</p>
+<p>springboot:2.2.2RELEASE</p>
+<p>spring cloud alibaba 2.1.0RELEASE</p>
+<h4 id="组件选用"><a href="#组件选用" class="headerlink" title="组件选用"></a>组件选用</h4><p>服务于注册中心：</p>
+<p>Eureka(停更)  ZooKeeper     Consul   Nacos(主要使用)</p>
+<p>服务调用：</p>
+<p>Ribbon（维护） LoadBalancer</p>
+<p>服务调用2：</p>
+<p>Feign(停更)  OpenFeign</p>
+<p>服务熔断与降级：Hystrix(停更)  resilience4j  sentienal(alibaba 国内主要使用)</p>
+<p>服务网关：</p>
+<p>Zuul(停更)   gateWay(主要使用)</p>
+<p>服务配置：</p>
+<p>config（停更） Nacos</p>
+<p>服务总线：Nacos</p>
+]]></content>
+      <categories>
+        <category>微服务 - SpringCloud</category>
+      </categories>
+      <tags>
+        <tag>SpringCloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker Compose的使用</title>
+    <url>/2020/07/07/Docker-Compose%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h4 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h4><a id="more"></a>
+
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>centos安装（使用root用户或者sudo）：</p>
+<p>从 <a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener">官方 GitHub Release</a> 处直接下载编译好的二进制文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -L https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.26.2&#x2F;docker-compose-&#96;uname -s&#96;-&#96;uname -m&#96; &gt; &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
+
+
+
+<p>给予执行权限：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><p>编写 <code>docker-compose.yml</code> 文件，这个是 Compose 使用的主模板文件。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">tomcat:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>对于 Compose 来说，大部分命令的对象既可以是项目本身，也可以指定为项目中的服务或者容器。如果没有特别的说明，命令对象将是项目，这意味着项目中所有的服务都会受到命令影响。</p>
+<p>执行 <code>docker-compose [COMMAND] --help</code> 或者 <code>docker-compose help [COMMAND]</code> 可以查看具体某个命令的使用格式。</p>
+<p><code>docker-compose</code> 命令的基本的使用格式是</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose [-f=&lt;arg&gt;...] [options] [COMMAND] [ARGS...]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="命令选项"><a href="#命令选项" class="headerlink" title="#命令选项"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-Compose-命令说明.html#命令选项" target="_blank" rel="noopener">#</a>命令选项</h2><ul>
+<li><code>-f, --file FILE</code> 指定使用的 Compose 模板文件，默认为 <code>docker-compose.yml</code>，可以多次指定。</li>
+<li><code>-p, --project-name NAME</code> 指定项目名称，默认将使用所在目录名称作为项目名。</li>
+<li><code>--x-networking</code> 使用 Docker 的可拔插网络后端特性</li>
+<li><code>--x-network-driver DRIVER</code> 指定网络后端的驱动，默认为 <code>bridge</code></li>
+<li><code>--verbose</code> 输出更多调试信息。</li>
+<li><code>-v, --version</code> 打印版本并退出。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>Docker Compose</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring 声明式事务注解@Transactional</title>
     <url>/2019/11/21/Spring-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%B3%A8%E8%A7%A3-Transactional/</url>
     <content><![CDATA[<p> Spring 声明式事务注解@Transactional使用的两种方式：1 结合xml配置使用； 2纯注解使用</p>
@@ -263,6 +342,40 @@
 <h5 id="在serivce层或者serice层的方法加-Transactional注解"><a href="#在serivce层或者serice层的方法加-Transactional注解" class="headerlink" title="在serivce层或者serice层的方法加@Transactional注解"></a>在serivce层或者serice层的方法加@Transactional注解</h5><p>参数：<br>propagation：事务传播行为<br>timeout：事务超时设置<br>isolation：事务隔离级别</p>
 <h2 id="2-纯注解使用"><a href="#2-纯注解使用" class="headerlink" title="2 纯注解使用"></a>2 纯注解使用</h2><h3 id="事务管理器配置类"><a href="#事务管理器配置类" class="headerlink" title="事务管理器配置类"></a>事务管理器配置类</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * 和事务相关的配置类</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class TransactionConfig &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 用于创建事务管理器对象</span><br><span class="line">     * @param dataSource</span><br><span class="line">     * @return</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Bean(name&#x3D;&quot;transactionManager&quot;)</span><br><span class="line">    public PlatformTransactionManager createTransactionManager(DataSource dataSource)&#123;</span><br><span class="line">        return new DataSourceTransactionManager(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="service中的配置和1一样"><a href="#service中的配置和1一样" class="headerlink" title="service中的配置和1一样"></a>service中的配置和1一样</h5>]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title> mybatic初学环境搭建</title>
+    <url>/2019/11/19/mybatic%E5%88%9D%E5%AD%A6%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>搭建mybatis环境</p>
+<a id="more"></a>
+
+<h3 id="1-maven导入相关依赖"><a href="#1-maven导入相关依赖" class="headerlink" title="1 maven导入相关依赖"></a>1 maven导入相关依赖</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">&lt;!--mybatic--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4.5&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--mysql连接--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;5.1.6&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--日志--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.12&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">               &lt;!--junit测试--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.10&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置mybaits的配置文件SqlMapConfig-xml"><a href="#2-配置mybaits的配置文件SqlMapConfig-xml" class="headerlink" title="2 配置mybaits的配置文件SqlMapConfig.xml"></a>2 配置mybaits的配置文件SqlMapConfig.xml</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;!-- mybatis的主配置文件 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 配置环境 --&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">        &lt;!-- 配置mysql的环境--&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">            &lt;!-- 配置事务的类型--&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;</span><br><span class="line">            &lt;!-- 配置数据源（连接池） --&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;!-- 配置连接数据库的4个基本信息 --&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;test&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 --&gt;</span><br><span class="line">    &lt;mappers&gt;</span><br><span class="line">        &lt;mapper resource&#x3D;&quot;com&#x2F;itheima&#x2F;dao&#x2F;IUserDao.xml&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3-创建数据库表对应的实体"><a href="#3-创建数据库表对应的实体" class="headerlink" title="3 创建数据库表对应的实体"></a>3 创建数据库表对应的实体</h3><h3 id="4-创建SqlMapConfig-xml对应的映射文件"><a href="#4-创建SqlMapConfig-xml对应的映射文件" class="headerlink" title="4 创建SqlMapConfig.xml对应的映射文件"></a>4 创建SqlMapConfig.xml对应的映射文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">        &lt;!DOCTYPE mapper</span><br><span class="line">                PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">                &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">                &lt;!--****是对应的dao层接口--&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;****&quot;&gt;</span><br><span class="line">&lt;!--这里写自己的动态sql--&gt;</span><br><span class="line">.......</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml"><a href="#5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml" class="headerlink" title="5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml"></a>5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml</h5>]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring 编程式事务</title>
+    <url>/2019/11/21/Spring-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
+    <content><![CDATA[<p>Spring 编程式事务:1 配置文件bean.xml; 2在自己的业务层方法加编程式事务</p>
+<a id="more"></a>
+
+<h4 id="1-配置文件bean-xml"><a href="#1-配置文件bean-xml" class="headerlink" title="1 配置文件bean.xml"></a>1 配置文件bean.xml</h4><p>导入相关依赖后，在配置文件bean.xml文件中配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 配置事务管理器--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">&lt;!--这里是自己配置的数据源--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置事务模板对象--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionTemplate&quot; class&#x3D;&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;transactionManager&quot; ref&#x3D;&quot;transactionManager&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2在自己的业务层方法加编程式事务"><a href="#2在自己的业务层方法加编程式事务" class="headerlink" title="2在自己的业务层方法加编程式事务"></a>2在自己的业务层方法加编程式事务</h4><p>在需要加事务的方法method中书写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallback&lt;Object&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object doInTransaction(TransactionStatus status) &#123;</span><br><span class="line">                ......</span><br><span class="line">                自己的方法逻辑</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Spring</category>
       </categories>
@@ -291,23 +404,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Spring 编程式事务</title>
-    <url>/2019/11/21/Spring-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
-    <content><![CDATA[<p>Spring 编程式事务:1 配置文件bean.xml; 2在自己的业务层方法加编程式事务</p>
-<a id="more"></a>
-
-<h4 id="1-配置文件bean-xml"><a href="#1-配置文件bean-xml" class="headerlink" title="1 配置文件bean.xml"></a>1 配置文件bean.xml</h4><p>导入相关依赖后，在配置文件bean.xml文件中配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 配置事务管理器--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">&lt;!--这里是自己配置的数据源--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--配置事务模板对象--&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;transactionTemplate&quot; class&#x3D;&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;transactionManager&quot; ref&#x3D;&quot;transactionManager&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="2在自己的业务层方法加编程式事务"><a href="#2在自己的业务层方法加编程式事务" class="headerlink" title="2在自己的业务层方法加编程式事务"></a>2在自己的业务层方法加编程式事务</h4><p>在需要加事务的方法method中书写：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallback&lt;Object&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object doInTransaction(TransactionStatus status) &#123;</span><br><span class="line">                ......</span><br><span class="line">                自己的方法逻辑</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>mybatis 延迟加载和立即加载的实现</title>
     <url>/2020/01/08/mybatis-%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%92%8C%E7%AB%8B%E5%8D%B3%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>mybatis 延迟加载和立即加载的实现</p>
@@ -319,48 +415,6 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!--开启Mybatis支持延迟加载--&gt;</span><br><span class="line">        &lt;setting name&#x3D;&quot;lazyLoadingEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;settings&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
 <p>官方文档：<a href="https://mybatis.org/mybatis-3/zh/configuration.html#settings" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/configuration.html#settings</a>.<br><img src="https://img-blog.csdnimg.cn/20200108220513576.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODg0OTcy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 ]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title> mybatic初学环境搭建</title>
-    <url>/2019/11/19/mybatic%E5%88%9D%E5%AD%A6%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<p>搭建mybatis环境</p>
-<a id="more"></a>
-
-<h3 id="1-maven导入相关依赖"><a href="#1-maven导入相关依赖" class="headerlink" title="1 maven导入相关依赖"></a>1 maven导入相关依赖</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">&lt;!--mybatic--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4.5&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--mysql连接--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;5.1.6&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">        &lt;!--日志--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.12&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">               &lt;!--junit测试--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.10&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2-配置mybaits的配置文件SqlMapConfig-xml"><a href="#2-配置mybaits的配置文件SqlMapConfig-xml" class="headerlink" title="2 配置mybaits的配置文件SqlMapConfig.xml"></a>2 配置mybaits的配置文件SqlMapConfig.xml</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;!-- mybatis的主配置文件 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 配置环境 --&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">        &lt;!-- 配置mysql的环境--&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">            &lt;!-- 配置事务的类型--&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;</span><br><span class="line">            &lt;!-- 配置数据源（连接池） --&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;!-- 配置连接数据库的4个基本信息 --&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;test&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 --&gt;</span><br><span class="line">    &lt;mappers&gt;</span><br><span class="line">        &lt;mapper resource&#x3D;&quot;com&#x2F;itheima&#x2F;dao&#x2F;IUserDao.xml&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3-创建数据库表对应的实体"><a href="#3-创建数据库表对应的实体" class="headerlink" title="3 创建数据库表对应的实体"></a>3 创建数据库表对应的实体</h3><h3 id="4-创建SqlMapConfig-xml对应的映射文件"><a href="#4-创建SqlMapConfig-xml对应的映射文件" class="headerlink" title="4 创建SqlMapConfig.xml对应的映射文件"></a>4 创建SqlMapConfig.xml对应的映射文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">        &lt;!DOCTYPE mapper</span><br><span class="line">                PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">                &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">                &lt;!--****是对应的dao层接口--&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;****&quot;&gt;</span><br><span class="line">&lt;!--这里写自己的动态sql--&gt;</span><br><span class="line">.......</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
-<h5 id="5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml"><a href="#5-写好自己的dao层接口，以及运行，读取SqlMapConfig-xml" class="headerlink" title="5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml"></a>5 写好自己的dao层接口，以及运行，读取SqlMapConfig.xml</h5>]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mybatis连接池的3种配置方式</title>
-    <url>/2019/12/11/mybatis%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%843%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[<p> mybatis连接池的3种配置方式:1,POOLED; 2,UNPOOLED 3,JNDI</p>
-<a id="more"></a>
-
-<h4 id="1-POOLED"><a href="#1-POOLED" class="headerlink" title="1,POOLED"></a>1,POOLED</h4><p>采用传统的javax. sql. DataSource规范中的连接池.一旦数据库操作完成，mybaties会将此连接返回给连接池。mybatis有实现规范。<br>SqlMapConfig.xml中的配置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">          &lt;&#x2F;dataSource&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-UNPOOLED"><a href="#2-UNPOOLED" class="headerlink" title="2,UNPOOLED"></a>2,UNPOOLED</h4><p>采用传统的获取连接的方式，同样实现Javax. sql. DataSourcel，不过没有使用池的思想。也就是说mybaties会为每一个数据库操作创建一个新的连接，使用完就关闭它。<br>SqlMapConfig.xml中的配置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dataSource type&#x3D;&quot;UNPOOLED&quot;&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">          &lt;&#x2F;dataSource&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-JNDI"><a href="#3-JNDI" class="headerlink" title="3,JNDI"></a>3,JNDI</h4><p>  是SUN公司推出的一套规范，属于JavaEE技术之一。目的是模仿windows系统中的注册表。采用服务器提供的JNDI技术实现，来获取DataSource对 象，不同的服务器所能拿到DataSource是不一样。<br>  mybaties会从在应用服务器向配置好的JNDI数据源DataSource获取数据库连接。一般在生产环境中使用。<br>  SqlMapConfig.xml中的配置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;environments default&#x3D; &quot;mysql&quot;&gt;</span><br><span class="line">&lt;environment id&#x3D; &quot;mysql&quot;&gt;</span><br><span class="line">&lt;transact ionManager type &#x3D;”JDBC&quot;&gt;&lt; &#x2F; transact ionManager&gt;</span><br><span class="line">&lt;dataSource type&#x3D; ”JNDI&quot; &gt;</span><br><span class="line">&lt; property name&#x3D; ”data_ source&quot; value&#x3D; &quot;java : comp&#x2F; env&#x2F; jdbc&#x2F;数据库名</span><br><span class="line">&lt;&#x2F;dataSource&gt;</span><br><span class="line">&lt; &#x2F;environment&gt;</span><br><span class="line">&lt; &#x2F; environments&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Context&gt;</span><br><span class="line"></span><br><span class="line">&lt;Resource </span><br><span class="line">name&#x3D;&quot;jdbc&#x2F;test&quot;                  数据源的名称</span><br><span class="line">type&#x3D;&quot;javax.sql.DataSource&quot;                   数据源类型</span><br><span class="line">auth&#x3D;&quot;Container&quot;                        数据源提供者</span><br><span class="line">maxActive&#x3D;&quot;20&quot;                         最大活动数</span><br><span class="line">maxWait&#x3D;&quot;10000&quot;                            最大等待时间</span><br><span class="line">maxIdle&#x3D;&quot;5&quot;                               最大空闲数</span><br><span class="line">username&#x3D;&quot;root&quot;                            用户名</span><br><span class="line">password&#x3D;&quot;1234&quot;                            密码</span><br><span class="line">driverClassName&#x3D;&quot;com.mysql.jdbc.Driver&quot;          驱动类</span><br><span class="line">url&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;eesy_mybatis&quot; 连接url字符串</span><br><span class="line">&#x2F;&gt;</span><br></pre></td></tr></table></figure>
-<p>在resouce的目录下：<br>写一个配置文件：context.xml</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Resource </span><br><span class="line">name&#x3D;&quot;jdbc&#x2F;test&quot;</span><br><span class="line">type&#x3D;&quot;javax.sql.DataSource&quot;</span><br><span class="line">auth&#x3D;&quot;Container&quot;</span><br><span class="line">maxActive&#x3D;</span><br><span class="line">maxWait&#x3D;</span><br><span class="line">maxIdle&#x3D;</span><br><span class="line">username&#x3D;</span><br><span class="line">password&#x3D;</span><br><span class="line">driverClassName&#x3D;&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">url&#x3D;</span><br><span class="line">&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Context&gt;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>mybatis</category>
       </categories>
@@ -394,6 +448,145 @@
       </categories>
       <tags>
         <tag>jdk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java8学习笔记</title>
+    <url>/2020/08/02/java8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h3 id="Java-8新特性"><a href="#Java-8新特性" class="headerlink" title="Java 8新特性"></a>Java 8新特性</h3><p>java8的新特性主要有Stream流；Lambda表达式；通过行为参数化传递代码；函数式接口；接口的默认方法；全新的时间日期AP；Annotation 支持多重注解。等等</p>
+<h4 id="通过行为参数化传递代码"><a href="#通过行为参数化传递代码" class="headerlink" title="通过行为参数化传递代码"></a>通过行为参数化传递代码</h4><p>传递抽象化类，作为参数：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//择标准建模</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplePredicate</span></span>&#123; </span><br><span class="line"> <span class="function"><span class="keyword">boolean</span> <span class="title">test</span> <span class="params">(Apple apple)</span></span>; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//多个实现</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleHeavyWeightPredicate</span> <span class="keyword">implements</span> <span class="title">ApplePredicate</span></span>&#123; </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123; </span><br><span class="line"> <span class="keyword">return</span> apple.getWeight() &gt; <span class="number">150</span>; </span><br><span class="line"> &#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleGreenColorPredicate</span> <span class="keyword">implements</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123; </span><br><span class="line"> <span class="keyword">return</span> <span class="string">"green"</span>.equals(apple.getColor()); </span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//根据抽象条件筛选</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Apple&gt; <span class="title">filterApples</span><span class="params">(List&lt;Apple&gt; inventory, </span></span></span><br><span class="line"><span class="function"><span class="params"> ApplePredicate p)</span></span>&#123; </span><br><span class="line"> List&lt;Apple&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;(); </span><br><span class="line"> <span class="keyword">for</span>(Apple apple: inventory)&#123; </span><br><span class="line"> <span class="keyword">if</span>(p.test(apple))&#123; </span><br><span class="line"> result.add(apple); </span><br><span class="line"> &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> <span class="keyword">return</span> result; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Java 8中，List自带了一个sort方法（你也可以使用Collections.sort）。sort的行为</p>
+<p>可以用java.util.Comparator对象来参数化，它的接口如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// java.util.Comparator </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparator</span>&lt;<span class="title">T</span>&gt; </span>&#123; </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(T o1, T o2)</span></span>; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//因此，你可以随时创建Comparator的实现，用sort方法表现出不同的行为。比如，你可以</span></span><br><span class="line"><span class="comment">//使用匿名类，按照重量升序对库存排序：</span></span><br><span class="line">inventory.sort(<span class="keyword">new</span> Comparator&lt;Apple&gt;() &#123; </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Apple a1, Apple a2)</span></span>&#123; </span><br><span class="line"> <span class="keyword">return</span> a1.getWeight().compareTo(a2.getWeight()); </span><br><span class="line"> &#125; </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h4><p><strong>Lambda 表达式</strong> − Lambda 允许把函数作为一个方法的参数（函数作为参数传递到方法中）。</p>
+<p>格式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(parameters) -&gt; expression</span><br><span class="line">或</span><br><span class="line">(parameters) -&gt;&#123; statements; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><p>在函数式接口上使用Lambda表达式。</p>
+<p>将Lambda表达式作为参数传递给某个方法</p>
+<h5 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h5><p>一言以蔽之，函数式接口就是只定义一个抽象方法的接口，但是可以有多个非抽象方法的接口。。</p>
+<h5 id="函数描述符"><a href="#函数描述符" class="headerlink" title="函数描述符"></a>函数描述符</h5><p>函数式接口的抽象方法的签名基本上就是Lambda表达式的签名。我们将这种抽象方法叫作</p>
+<p>函数描述符。</p>
+<h5 id="使用函数式接口来传递行为"><a href="#使用函数式接口来传递行为" class="headerlink" title="使用函数式接口来传递行为"></a>使用函数式接口来传递行为</h5><p>Java 8的库设计师帮你在java.util.function包中引入了几个新的函数式接口。如：Predicate、Consumer和Function</p>
+<h5 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h5><p>lambda 表达式只能引用标记了 final 的外层局部变量，这就是说不能在 lambda 内部修改定义在域外的局部变量，否则会编译错误。</p>
+<h4 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h4><p>方法引用使用一对冒号 <strong>::</strong></p>
+<ul>
+<li><p><strong>构造器引用：</strong>它的语法是Class::new，或者更一般的Class&lt; T &gt;::new实例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> Car car = Car.create( Car::<span class="keyword">new</span> ); <span class="keyword">final</span> List&lt; Car &gt; cars = Arrays.asList( car );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>静态方法引用：</strong>它的语法是Class::static_method，实例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">cars.forEach( Car::collide );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>特定类的任意对象的方法引用：</strong>它的语法是Class::method实例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">cars.forEach( Car::repair );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>特定对象的方法引用：</strong>它的语法是instance::method实例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> Car police = Car.create( Car::<span class="keyword">new</span> ); cars.forEach( police::follow );</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h4 id="默认方法"><a href="#默认方法" class="headerlink" title="默认方法"></a>默认方法</h4><p>Java 8 新增了接口的默认方法。</p>
+<p>简单说，默认方法就是接口可以有实现方法，而且不需要实现类去实现其方法。</p>
+<p>我们只需在方法名前面加个 default 关键字即可实现默认方法。</p>
+<h4 id="Stream-流"><a href="#Stream-流" class="headerlink" title="Stream 流"></a>Stream 流</h4><p>流是Java API的新成员，它允许你以声明性方式处理数据集合（通过查询语句来表达，而不</p>
+<p>是临时编写一个实现）。就现在来说，你可以把它们看成遍历数据集的高级迭代器。</p>
+<p>是一组便捷对集合处理的api。</p>
+<ul>
+<li><strong>stream()</strong> − 为集合创建串行流。</li>
+<li><strong>parallelStream()</strong> − 为集合创建并行流。</li>
+</ul>
+<h5 id="只能遍历一次"><a href="#只能遍历一次" class="headerlink" title="只能遍历一次"></a>只能遍历一次</h5><p>请注意，和迭代器类似，流只能遍历一次。遍历完之后，我们就说这个流已经被消费掉了。</p>
+<p>你可以从原始数据源那里再获得一个新的流来重新遍历一遍，就像迭代器一样。例如，以下代码会抛出一个异常，说流已被消</p>
+<p>费掉了：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; title = Arrays.asList(<span class="string">"Java8"</span>, <span class="string">"In"</span>, <span class="string">"Action"</span>); </span><br><span class="line">Stream&lt;String&gt; s = title.stream(); </span><br><span class="line">s.forEach(System.out::println); </span><br><span class="line">s.forEach(System.out::println);<span class="comment">//java.lang.IllegalStateException:流已被操作或关闭</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>总而言之，流的使用一般包括三件事：</p>
+<p> 一个数据源（如集合）来执行一个查询；</p>
+<p> 一个中间操作链，形成一条流的流水线；</p>
+<p> 一个终端操作，执行流水线，并能生成结果。</p>
+<p><img src="/2020/08/02/java8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/D:%5Ccode%5CmyBlog%5Csource_posts%5Cjava8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%5Cimage-20200911102914791.png" alt="image-20200911102914791"></p>
+<h5 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h5><p>Stream 提供了新的方法 ‘forEach’ 来迭代流中的每个数据。以下代码片段使用 forEach 输出了10个随机数</p>
+<h5 id="map（对每个元素的操作）"><a href="#map（对每个元素的操作）" class="headerlink" title="map（对每个元素的操作）"></a>map（对每个元素的操作）</h5><p>map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：</p>
+<h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h5><p>filter 方法用于通过设置的条件过滤出元素。以下代码片段使用 filter 方法过滤出空字符串：</p>
+<h5 id="limit"><a href="#limit" class="headerlink" title="limit"></a>limit</h5><p>imit 方法用于获取指定数量的流。 以下代码片段使用 limit 方法打印出 10 条数据：</p>
+<h5 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h5><p>sorted 方法用于对流进行排序。</p>
+<h5 id="anyMatch"><a href="#anyMatch" class="headerlink" title="anyMatch"></a>anyMatch</h5><p>anyMatch方法可以回答“流中是否有一个元素能匹配给定的谓词”。比如，你可以用它来看</p>
+<p>看菜单里面是否有素食可选择：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(menu.stream().anyMatch(Dish::isVegetarian))&#123; </span><br><span class="line"></span><br><span class="line"> System.out.println(<span class="string">"The menu is (somewhat) vegetarian friendly!!"</span>); </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>anyMatch方法返回一个boolean，因此是一个终端操作。</p>
+<h5 id="allMatch"><a href="#allMatch" class="headerlink" title="allMatch"></a>allMatch</h5><p>allMatch方法的工作原理和anyMatch类似，但它会看看流中的元素是否都能匹配给定的谓词。比如，你可以用它来看看菜品是否有利健康（即所有菜的热量都低于1000卡路里）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">boolean</span> isHealthy = menu.stream() </span><br><span class="line"> .allMatch(d -&gt; d.getCalories() &lt; <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<h5 id="noneMatch"><a href="#noneMatch" class="headerlink" title="noneMatch"></a>noneMatch</h5><p>和allMatch相对的是noneMatch。它可以确保流中没有任何元素与给定的谓词匹配。比如，</p>
+<p>你可以用noneMatch重写前面的例子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">boolean</span> isHealthy = menu.stream() </span><br><span class="line"> .noneMatch(d -&gt; d.getCalories() &gt;= <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="findFirst和indAny"><a href="#findFirst和indAny" class="headerlink" title="findFirst和indAny"></a><strong>findFirst</strong>和indAny</h5><p>findAny方法将返回当前流中的任意元素。</p>
+<p>findFirst方法将返回当前流中的第一个元素。</p>
+<p>你可能会想，为什么会同时有findFirst和findAny呢？答案是并行。找到第一个元素</p>
+<p>在并行上限制更多。如果你不关心返回的元素是哪个，请使用findAny，因为它在使用并行流</p>
+<p>时限制较少。</p>
+<h5 id="reduce归约"><a href="#reduce归约" class="headerlink" title="reduce归约"></a>reduce归约</h5><p>Lambda反复结合每个元素，直到流被归约成一个值。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//求和</span></span><br><span class="line"><span class="keyword">int</span> sum = numbers.stream().reduce(<span class="number">0</span>, (a, b) -&gt; a + b);</span><br></pre></td></tr></table></figure>
+
+<h5 id="数值流"><a href="#数值流" class="headerlink" title="数值流"></a>数值流</h5><p>Java 8引入了三个原始类型特化流接口：IntStream、DoubleStream和LongStream</p>
+<p>将流转换为特化版本的常用方法是mapToInt、mapToDouble和mapToLong。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> calories = menu.stream() </span><br><span class="line">    <span class="comment">//返回一个 IntStream</span></span><br><span class="line"> .mapToInt(Dish::getCalories) </span><br><span class="line"> .sum();</span><br></pre></td></tr></table></figure>
+
+<h5 id="构建流"><a href="#构建流" class="headerlink" title="构建流"></a>构建流</h5><p>1由值创建流。使用静态方法Stream.of，通过显式值创建一个流。</p>
+<p>2由数组创建流。使用静态方法Arrays.stream从数组创建一个流。</p>
+<p>3由文件生成流。Java中用于处理文件等I/O操作的NIO API（非阻塞 I/O）已更新，以便利用Stream API。</p>
+<p>java.nio.file.Files中的很多静态方法都会返回一个流。例如，一个很有用的方法是</p>
+<p>Files.lines，它会返回一个由指定文件中的各行构成的字符串流</p>
+<p>4由函数生成流。创建无限流。Stream API提供了两个静态方法来从函数生成流：Stream.iterate和Stream.generate。</p>
+<p>这两个操作可以创建所谓的无限流：不像从固定集合创建的流那样有固定大小的流。由iterate</p>
+<p>和generate产生的流会用给定的函数按需创建值，因此可以无穷无尽地计算下去！</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream.iterate(<span class="number">0</span>, n -&gt; n + <span class="number">2</span>) </span><br><span class="line"> .limit(<span class="number">10</span>) </span><br><span class="line"> .forEach(System.out::println)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Java-8-日期时间-API"><a href="#Java-8-日期时间-API" class="headerlink" title="Java 8 日期时间 API"></a>Java 8 日期时间 API</h4><p>Java 8 在 <strong>java.time</strong> 包下提供了很多新的 API。以下为两个比较重要的 API：</p>
+<ul>
+<li><strong>Local(本地)</strong> − 简化了日期时间的处理，没有时区的问题。</li>
+<li><strong>Zoned(时区)</strong> − 通过制定的时区处理日期时间。</li>
+</ul>
+<p>新的java.time包涵盖了所有处理日期，时间，日期/时间，时区，时刻（instants），过程（during）与时钟（clock）的操作。</p>
+<h5 id="本地化时间API"><a href="#本地化时间API" class="headerlink" title="本地化时间API"></a>本地化时间API</h5><p>LocalDate/LocalTime 和 LocalDateTime 类可以在处理时区不是必须的情况。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="comment">// 获取当前的日期时间</span></span><br><span class="line">   LocalDateTime currentTime = LocalDateTime.now();</span><br><span class="line">LocalDate date1 = currentTime.toLocalDate();</span><br><span class="line">   Month month = currentTime.getMonth();</span><br><span class="line">   <span class="keyword">int</span> day = currentTime.getDayOfMonth();</span><br><span class="line">   <span class="keyword">int</span> seconds = currentTime.getSecond();</span><br><span class="line">     </span><br><span class="line">   System.out.println(<span class="string">"月: "</span> + month +<span class="string">", 日: "</span> + day +<span class="string">", 秒: "</span> + seconds);</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用时区的的日期时间API"><a href="#使用时区的的日期时间API" class="headerlink" title="使用时区的的日期时间API"></a>使用时区的的日期时间API</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ZonedDateTime date1 = ZonedDateTime.parse(<span class="string">"2015-12-03T10:15:30+05:30[Asia/Shanghai]"</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="java小知识"><a href="#java小知识" class="headerlink" title="java小知识"></a>java小知识</h4><p>1 方法的签名:方法的名称和参数类型</p>
+<p>2 匿名类:Java 中可以实现一个类中包含另外一个类，且不需要提供任何的类名直接实例化。</p>
+<p>主要是用于在我们需要的时候创建一个对象来执行特定的任务，可以使代码更加简洁。</p>
+<p>匿名类是不能有名字的类，它们不能被引用，只能在创建时用 <strong>new</strong> 语句来声明它们。</p>
+<p>匿名类语法格式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">outerClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个匿名类</span></span><br><span class="line">    object1 = <span class="keyword">new</span> Type(parameterList) &#123;</span><br><span class="line">         <span class="comment">// 匿名类代码</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>jak</category>
+      </categories>
+      <tags>
+        <tag>java8</tag>
       </tags>
   </entry>
   <entry>
@@ -449,70 +642,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker Compose的使用</title>
-    <url>/2020/07/07/Docker-Compose%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h4 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h4><a id="more"></a>
-
-<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>centos安装（使用root用户或者sudo）：</p>
-<p>从 <a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener">官方 GitHub Release</a> 处直接下载编译好的二进制文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -L https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.26.2&#x2F;docker-compose-&#96;uname -s&#96;-&#96;uname -m&#96; &gt; &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
-
-
-
-<p>给予执行权限：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><p>编写 <code>docker-compose.yml</code> 文件，这个是 Compose 使用的主模板文件。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">tomcat:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>对于 Compose 来说，大部分命令的对象既可以是项目本身，也可以指定为项目中的服务或者容器。如果没有特别的说明，命令对象将是项目，这意味着项目中所有的服务都会受到命令影响。</p>
-<p>执行 <code>docker-compose [COMMAND] --help</code> 或者 <code>docker-compose help [COMMAND]</code> 可以查看具体某个命令的使用格式。</p>
-<p><code>docker-compose</code> 命令的基本的使用格式是</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose [-f=&lt;arg&gt;...] [options] [COMMAND] [ARGS...]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="命令选项"><a href="#命令选项" class="headerlink" title="#命令选项"></a><a href="https://www.funtl.com/zh/docs-docker/Docker-Compose-命令说明.html#命令选项" target="_blank" rel="noopener">#</a>命令选项</h2><ul>
-<li><code>-f, --file FILE</code> 指定使用的 Compose 模板文件，默认为 <code>docker-compose.yml</code>，可以多次指定。</li>
-<li><code>-p, --project-name NAME</code> 指定项目名称，默认将使用所在目录名称作为项目名。</li>
-<li><code>--x-networking</code> 使用 Docker 的可拔插网络后端特性</li>
-<li><code>--x-network-driver DRIVER</code> 指定网络后端的驱动，默认为 <code>bridge</code></li>
-<li><code>--verbose</code> 输出更多调试信息。</li>
-<li><code>-v, --version</code> 打印版本并退出。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>Docker Compose</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用dhcp始终无法连接mysql的问题解决</title>
-    <url>/2019/11/21/%E4%BD%BF%E7%94%A8dhcp%E5%A7%8B%E7%BB%88%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5mysql%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>把mysql的时区加8</p>
-<a id="more"></a>
-
-<p>把mysql的时区加8</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global time_zone &#x3D; &#39;+8:00&#39;;</span><br></pre></td></tr></table></figure>
-
-<p>参考链接：<br><a href="https://blog.csdn.net/zqb765720343/article/details/80076020" target="_blank" rel="noopener">https://blog.csdn.net/zqb765720343/article/details/80076020:</a></p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>mysql删除database报错ERROR 1010 (HY000): Error dropping database (can&#39;t rmdir &#39;./library&#39;, errno:</title>
     <url>/2020/02/27/mysql%E5%88%A0%E9%99%A4database%E6%8A%A5%E9%94%99ERROR-1010-HY000-Error-dropping-database-can-t-rmdir-library-errno/</url>
     <content><![CDATA[<h3 id="数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno"><a href="#数据库删除报错：ERROR-1010-HY000-Error-dropping-database-can’t-rmdir-‘-library’-errno" class="headerlink" title="数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:"></a>数据库删除报错：ERROR 1010 (HY000): Error dropping database (can’t rmdir ‘./library’, errno:</h3><p>‘./library’删除的数据库文件夹下面还有东西，需要手动删除。<br>参考文章:<a href="https://www.cnblogs.com/ivictor/p/5917370.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5917370.html</a>.</p>
@@ -538,6 +667,49 @@
       </categories>
       <tags>
         <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mybatis连接池的3种配置方式</title>
+    <url>/2019/12/11/mybatis%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%843%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<p> mybatis连接池的3种配置方式:1,POOLED; 2,UNPOOLED 3,JNDI</p>
+<a id="more"></a>
+
+<h4 id="1-POOLED"><a href="#1-POOLED" class="headerlink" title="1,POOLED"></a>1,POOLED</h4><p>采用传统的javax. sql. DataSource规范中的连接池.一旦数据库操作完成，mybaties会将此连接返回给连接池。mybatis有实现规范。<br>SqlMapConfig.xml中的配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">          &lt;&#x2F;dataSource&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-UNPOOLED"><a href="#2-UNPOOLED" class="headerlink" title="2,UNPOOLED"></a>2,UNPOOLED</h4><p>采用传统的获取连接的方式，同样实现Javax. sql. DataSourcel，不过没有使用池的思想。也就是说mybaties会为每一个数据库操作创建一个新的连接，使用完就关闭它。<br>SqlMapConfig.xml中的配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dataSource type&#x3D;&quot;UNPOOLED&quot;&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">              &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">          &lt;&#x2F;dataSource&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-JNDI"><a href="#3-JNDI" class="headerlink" title="3,JNDI"></a>3,JNDI</h4><p>  是SUN公司推出的一套规范，属于JavaEE技术之一。目的是模仿windows系统中的注册表。采用服务器提供的JNDI技术实现，来获取DataSource对 象，不同的服务器所能拿到DataSource是不一样。<br>  mybaties会从在应用服务器向配置好的JNDI数据源DataSource获取数据库连接。一般在生产环境中使用。<br>  SqlMapConfig.xml中的配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;environments default&#x3D; &quot;mysql&quot;&gt;</span><br><span class="line">&lt;environment id&#x3D; &quot;mysql&quot;&gt;</span><br><span class="line">&lt;transact ionManager type &#x3D;”JDBC&quot;&gt;&lt; &#x2F; transact ionManager&gt;</span><br><span class="line">&lt;dataSource type&#x3D; ”JNDI&quot; &gt;</span><br><span class="line">&lt; property name&#x3D; ”data_ source&quot; value&#x3D; &quot;java : comp&#x2F; env&#x2F; jdbc&#x2F;数据库名</span><br><span class="line">&lt;&#x2F;dataSource&gt;</span><br><span class="line">&lt; &#x2F;environment&gt;</span><br><span class="line">&lt; &#x2F; environments&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Context&gt;</span><br><span class="line"></span><br><span class="line">&lt;Resource </span><br><span class="line">name&#x3D;&quot;jdbc&#x2F;test&quot;                  数据源的名称</span><br><span class="line">type&#x3D;&quot;javax.sql.DataSource&quot;                   数据源类型</span><br><span class="line">auth&#x3D;&quot;Container&quot;                        数据源提供者</span><br><span class="line">maxActive&#x3D;&quot;20&quot;                         最大活动数</span><br><span class="line">maxWait&#x3D;&quot;10000&quot;                            最大等待时间</span><br><span class="line">maxIdle&#x3D;&quot;5&quot;                               最大空闲数</span><br><span class="line">username&#x3D;&quot;root&quot;                            用户名</span><br><span class="line">password&#x3D;&quot;1234&quot;                            密码</span><br><span class="line">driverClassName&#x3D;&quot;com.mysql.jdbc.Driver&quot;          驱动类</span><br><span class="line">url&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;eesy_mybatis&quot; 连接url字符串</span><br><span class="line">&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p>在resouce的目录下：<br>写一个配置文件：context.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Resource </span><br><span class="line">name&#x3D;&quot;jdbc&#x2F;test&quot;</span><br><span class="line">type&#x3D;&quot;javax.sql.DataSource&quot;</span><br><span class="line">auth&#x3D;&quot;Container&quot;</span><br><span class="line">maxActive&#x3D;</span><br><span class="line">maxWait&#x3D;</span><br><span class="line">maxIdle&#x3D;</span><br><span class="line">username&#x3D;</span><br><span class="line">password&#x3D;</span><br><span class="line">driverClassName&#x3D;&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">url&#x3D;</span><br><span class="line">&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Context&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用dhcp始终无法连接mysql的问题解决</title>
+    <url>/2019/11/21/%E4%BD%BF%E7%94%A8dhcp%E5%A7%8B%E7%BB%88%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5mysql%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>把mysql的时区加8</p>
+<a id="more"></a>
+
+<p>把mysql的时区加8</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global time_zone &#x3D; &#39;+8:00&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<br><a href="https://blog.csdn.net/zqb765720343/article/details/80076020" target="_blank" rel="noopener">https://blog.csdn.net/zqb765720343/article/details/80076020:</a></p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -603,6 +775,73 @@
       </tags>
   </entry>
   <entry>
+    <title>定时任务框架quartz</title>
+    <url>/2020/09/04/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E6%A1%86%E6%9E%B6quartz/</url>
+    <content><![CDATA[<h3 id="定时任务框架quartz"><a href="#定时任务框架quartz" class="headerlink" title="定时任务框架quartz"></a>定时任务框架quartz</h3><h4 id="什么是-quartz-？"><a href="#什么是-quartz-？" class="headerlink" title="什么是 quartz ？"></a>什么是 quartz ？</h4><p>Quartz是OpenSymphony开源组织在Job scheduling领域又一个开源项目，完全由Java开发，可以用来执行定时任务，类似于java.util.Timer。但是相较于Timer， Quartz增加了很多功能：</p>
+<ul>
+<li>持久性作业 - 就是保持调度定时的状态;</li>
+<li>作业管理 - 对调度作业进行有效的管理;</li>
+</ul>
+<h4 id="Quartz的三个组成部分"><a href="#Quartz的三个组成部分" class="headerlink" title="Quartz的三个组成部分"></a>Quartz的三个组成部分</h4><ul>
+<li>调度器：Scheduler</li>
+<li>任务：JobDetail</li>
+<li>触发器：Trigger，包括SimpleTrigger和CronTrigger</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>quartz</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>工作流activiti</title>
+    <url>/2020/09/24/%E5%B7%A5%E4%BD%9C%E6%B5%81activiti/</url>
+    <content><![CDATA[<h3 id="工作流activit"><a href="#工作流activit" class="headerlink" title="工作流activit"></a>工作流activit</h3><p>工作流(Workflow)，就是通过计算机对业务流程自动化执行管理。Activiti 是一个工作流引擎， activiti 可以将业务系统中复杂的业务流程抽取出来，使用专门的 建模语言（BPMN2.0）进行定义，业务系统按照预先定义的流程进行执行，实现了业务系统的业务 流程由 activiti进行管理，减少业务系统由于流程变更进行系统升级改造的工作量，从而提高系统的 健壮性，同时也减少了系统开发维护成本。 </p>
+<a id="more"></a>
+
+<h5 id="ProcessEngine"><a href="#ProcessEngine" class="headerlink" title="ProcessEngine"></a>ProcessEngine</h5><p>一般创建方式:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建processEngineConfiguration </span></span><br><span class="line">ProcessEngineConfiguration configuration = ProcessEngineConfiguration;  .createProcessEngineConfigurationFromResource(<span class="string">"activiti.cfg.xml"</span>) </span><br><span class="line"><span class="comment">//通过ProcessEngineConfiguration创建ProcessEngine   </span></span><br><span class="line">    ProcessEngine processEngine =  processEngineConfiguration.buildProcessEngine();</span><br></pre></td></tr></table></figure>
+
+<p> 简单创建方式 :</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用classpath下的activiti.cfg.xml中的配置创建processEngine   </span></span><br><span class="line">ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();   </span><br><span class="line">System.out.println(processEngine);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h4><p>工作流中的Service </p>
+]]></content>
+      <categories>
+        <category>工作流</category>
+      </categories>
+      <tags>
+        <tag>activiti</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式锁</title>
+    <url>/2020/07/14/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+    <content><![CDATA[<h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4><a id="more"></a>
+
+<p>单点故障：</p>
+<p>分布式锁：双主服务器问题。备用服务器ping不同主服务器，代替其成为主服务器。然而主服务器只是因为网络延迟没有及时反馈。并没有挂掉，从而出双主问题。（解决方案：分布式锁）</p>
+<p>如zookeeper（服务注册与发现中心）解决了分布式锁：</p>
+<p>所有服务到zookeeper注册.</p>
+<p>有zookeeper选举主节点。（如果主节点出现网络问题，删除主节点，选举备用节点为主节点。主节点恢复后重新注册，成为新的备用节点）</p>
+<h5 id="为什么要使用分布式锁："><a href="#为什么要使用分布式锁：" class="headerlink" title="为什么要使用分布式锁："></a>为什么要使用分布式锁：</h5><p>为了保证一个方法或属性在高并发时只能被一个线程执行。</p>
+<p>单机控制锁失效</p>
+<p>需要跨jvm的互斥机制控制共享资源的访问</p>
+<h5 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h5><p>（同一个方法）myzookeeper目录下创建顺讯节点。如 1 2 3.</p>
+<p>获取MyZookeeper目录下所有的子节点,然后获取比自己小的兄弟节点，如果不存在，则说明当前线程顺序号最小，获得锁</p>
+<p>线程B获取所有节点,判断自己不是最小节点,设置监听比自己次小的节点</p>
+<p>线程A处理完,删除自己的节点，线程B监听到变更事件,判断自己是不是最小的节点，如果是则获得锁</p>
+]]></content>
+      <categories>
+        <category>微服务 - 理论</category>
+      </categories>
+      <tags>
+        <tag>分布式锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>区块链和Hyperledger Fabric入门</title>
     <url>/2020/07/09/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%92%8CHyperledger-Fabric%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h4 id="什么是区块链"><a href="#什么是区块链" class="headerlink" title="什么是区块链"></a>什么是区块链</h4><h5 id="一个分布式账本"><a href="#一个分布式账本" class="headerlink" title="一个分布式账本"></a>一个分布式账本</h5><p>区块链网络的核心是一个分布式账本，记录网络上发生的所有交易。</p>
@@ -618,6 +857,33 @@
       </categories>
       <tags>
         <tag>Hyperledger Fabric</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>消息队列和rabbitMQ</title>
+    <url>/2020/08/02/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%92%8CrabbitMQ/</url>
+    <content><![CDATA[<h4 id="消息中间件概述"><a href="#消息中间件概述" class="headerlink" title="消息中间件概述"></a>消息中间件概述</h4><p>消息队列已经逐渐成为企业IT系统内部通信的核心手段。它具有低耦合、可靠投递、广播、流量控制、最终一致性等一系列功能，成为异步RPC的主要手段之一。当今市面上有很多主流的消息中间件，如老牌的ActiveMQ、RabbitMQ，炙手可热的Kafka，阿里巴巴自主开发RocketMQ等。</p>
+<a id="more"></a>
+
+<h5 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h5><p>MQ是消息通信的模型。实现MQ的大致有两种主流方式:AMQP,JMS.</p>
+<p>AMQP:AMQP（Advanced Message Queuing Protocol，高级消息队列协议）是一个进程间传递<strong>异步消息</strong>的<strong>网络协议</strong>。</p>
+<p><strong>JMS</strong>:　JMS即<a href="http://baike.baidu.com/view/3292569.htm" target="_blank" rel="noopener">Java消息服务</a>（Java Message Service）应用程序接口，是一个<a href="http://baike.baidu.com/view/209634.htm" target="_blank" rel="noopener">Java平台</a>中关于面向<a href="http://baike.baidu.com/view/3118541.htm" target="_blank" rel="noopener">消息中间件</a>（MOM）的<a href="http://baike.baidu.com/subview/16068/5889234.htm" target="_blank" rel="noopener">API</a>，用于在两个应用程序之间，或<a href="http://baike.baidu.com/view/991489.htm" target="_blank" rel="noopener">分布式系统</a>中发送消息，进行异步通信。Java消息服务是一个与具体平台无关的API，绝大多数MOM提供商都对JMS提供支持（百度百科给出的概述）。我们可以简单的理解：两个应用程序之间需要进行通信，我们使用一个JMS服务，进行中间的转发，通过JMS 的使用，我们可以解除两个程序之间的耦合。（如ActiveMQ,RocketMQ）</p>
+<p><strong>RbbitMQ</strong>：基于AMQP协议。使用erlang语言开发，稳定性好。它是应用程序之间的通信方法，消息队列在分布式系统中应用十分广泛。（生产者，消费者）</p>
+<p><strong>RbbitMQ的六种工作模式</strong></p>
+<p>简单模式，work模式，Publish/Subscribe发布与订阅模式，Routing路由模式，Topics主题模式，RPC远程调用模式。</p>
+<h4 id="消息自动确认机制"><a href="#消息自动确认机制" class="headerlink" title="消息自动确认机制"></a>消息自动确认机制</h4><p>默认情况下，生产者生产的消息平均分配给每一个消费者。</p>
+<h5 id="work模式"><a href="#work模式" class="headerlink" title="work模式"></a>work模式</h5><p>平均的吧消息分发给每一个消费者</p>
+<p>某个消费者宕机的情况下：</p>
+<p>关闭自动确认。在业务代码执行完成时手动确认。</p>
+<h5 id="Publish-Subscribe发布与订阅模式"><a href="#Publish-Subscribe发布与订阅模式" class="headerlink" title="Publish/Subscribe发布与订阅模式"></a>Publish/Subscribe发布与订阅模式</h5><p>广播。通过指定交换机发给 所有与此交换机绑定的队列（交换机类型fanout）</p>
+<h5 id="Routing路由模式"><a href="#Routing路由模式" class="headerlink" title="Routing路由模式"></a>Routing路由模式</h5><p>通过指定交换机 发给所有与此交换机下指定的路由键绑定的队列(交换机类型direct)</p>
+<h5 id="Topics主题模式-动态路由"><a href="#Topics主题模式-动态路由" class="headerlink" title="Topics主题模式(动态路由)"></a>Topics主题模式(动态路由)</h5><p>通过指定交换机 发给所有与此交换机下指定的(路由键通配符，如a.*)绑定的队列(交换机类型topic)</p>
+]]></content>
+      <categories>
+        <category>消息队列</category>
+      </categories>
+      <tags>
+        <tag>rabbitMQ</tag>
       </tags>
   </entry>
   <entry>
@@ -687,31 +953,6 @@
       </categories>
       <tags>
         <tag>阿里云服务器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式锁</title>
-    <url>/2020/07/14/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
-    <content><![CDATA[<h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4><a id="more"></a>
-
-<p>单点故障：</p>
-<p>分布式锁：双主服务器问题。备用服务器ping不同主服务器，代替其成为主服务器。然而主服务器只是因为网络延迟没有及时反馈。并没有挂掉，从而出双主问题。（解决方案：分布式锁）</p>
-<p>如zookeeper（服务注册与发现中心）解决了分布式锁：</p>
-<p>所有服务到zookeeper注册.</p>
-<p>有zookeeper选举主节点。（如果主节点出现网络问题，删除主节点，选举备用节点为主节点。主节点恢复后重新注册，成为新的备用节点）</p>
-<h5 id="为什么要使用分布式锁："><a href="#为什么要使用分布式锁：" class="headerlink" title="为什么要使用分布式锁："></a>为什么要使用分布式锁：</h5><p>为了保证一个方法或属性在高并发时只能被一个线程执行。</p>
-<p>单机控制锁失效</p>
-<p>需要跨jvm的互斥机制控制共享资源的访问</p>
-<h5 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h5><p>（同一个方法）myzookeeper目录下创建顺讯节点。如 1 2 3.</p>
-<p>获取MyZookeeper目录下所有的子节点,然后获取比自己小的兄弟节点，如果不存在，则说明当前线程顺序号最小，获得锁</p>
-<p>线程B获取所有节点,判断自己不是最小节点,设置监听比自己次小的节点</p>
-<p>线程A处理完,删除自己的节点，线程B监听到变更事件,判断自己是不是最小的节点，如果是则获得锁</p>
-]]></content>
-      <categories>
-        <category>微服务 - 理论</category>
-      </categories>
-      <tags>
-        <tag>分布式锁</tag>
       </tags>
   </entry>
   <entry>
