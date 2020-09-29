@@ -11,7 +11,9 @@ Spring Cloud 是一套完整的微服务解决方案，基于 Spring Boot 框架
 
 <!--more-->
 
-#### 学习的版本说明与记录
+#### 项目构建
+
+##### 学习的版本说明与记录
 
 springBoot2.x版和springcloud H版
 
@@ -54,7 +56,9 @@ springboot:2.2.2RELEASE
 
 spring cloud alibaba 2.1.0RELEASE
 
-#### 组件选用
+
+
+##### 组件选用
 
 服务于注册中心：
 
@@ -80,3 +84,30 @@ config（停更） Nacos
 
 服务总线：Nacos
 
+
+
+##### 微服务模块的建立
+
+1建module
+
+2改pom
+
+3写yml
+
+4主启动
+
+5业务类
+
+
+
+##### 一些小知识点
+
+pom:<dependencyManagement></dependencyManagement>
+
+```
+-- 子模块继承之后，提供作用：锁定版本+子modlue不用写groupId和version 
+```
+
+
+
+ 
