@@ -5,11 +5,13 @@ categories: jak
 tags: java8
 ---
 
-<!--more-->
+
 
 ### Java 8新特性
 
 java8的新特性主要有Stream流；Lambda表达式；通过行为参数化传递代码；函数式接口；接口的默认方法；全新的时间日期AP；Annotation 支持多重注解。等等
+
+<!--more-->
 
 #### 通过行为参数化传递代码
 
