@@ -32,9 +32,7 @@ AMQP:AMQP（Advanced Message Queuing Protocol，高级消息队列协议）是�
 
 默认情况下，生产者生产的消息平均分配给每一个消费者。
 
-
-
-##### 2work模式
+##### work模式
 
 平均的吧消息分发给每一个消费者
 
@@ -44,19 +42,19 @@ AMQP:AMQP（Advanced Message Queuing Protocol，高级消息队列协议）是�
 
 
 
-##### 3Publish/Subscribe发布与订阅模式
+##### Publish/Subscribe发布与订阅模式
 
 广播。通过指定交换机发给 所有与此交换机绑定的队列（交换机类型fanout）
 
 
 
-##### 4Routing路由模式
+##### Routing路由模式
 
 通过指定交换机 发给所有与此交换机下指定的路由键绑定的队列(交换机类型direct)
 
 
 
-##### 5Topics主题模式(动态路由)
+##### Topics主题模式(动态路由)
 
 通过指定交换机 发给所有与此交换机下指定的(路由键通配符，如a.*)绑定的队列(交换机类型topic)
 
