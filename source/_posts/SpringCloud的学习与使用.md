@@ -100,6 +100,58 @@ config（停更） Nacos
 
 
 
+##### 服务与注册中心
+
+###### Eureka
+
+​	Spring Cloud封装了Netflix公司开发的Eureka模块来实现服务治理
+
+​	在传统的rpc远程调用框架中，管理每个服务与服务之间依赖关系比较复杂，管理比较复杂，所以需要使用服务治理，管理服务于服务之间依赖关系，可以实现服务调用、负载均衡、容错等，实现服务发现与注册。
+
+  Eureka包含两个组件:Eureka Server和Eureka Client。 Eureka 采用cs结构Eureka Server维持心跳连接
+
+  服务注册:将服务信息注册进注册中心
+
+  服务发现:从注册中心上获取服务信息
+
+   实质:存key服务命取value调用地址
+
+![image-20201018205756145](E:\code\myBlog\source\_posts\SpringCloud的学习与使用\image-20201018205756145.png)
+
+1先启动eureka注册中心
+2启动服务提供者payment支付服务
+3支付服务启动后会把自身信息(k服务地址以别名方主
+册进eureka)
+4消费者order服务在需要调用接口时，使用服务别名去注册
+中心获取实际的RPC远程调用地址
+5消费者获是调用地址后，底层实际是利用HttpClient支术
+
+
+
+设计思想
+
+分布式CAP理论里面的AP
+
+
+
+
+
+###### Zookeeper
+
+###### Consul
+
+###### Nacos
+
+
+
+
+
+
+
+
+
+
+
 ##### 一些小知识点
 
 pom:<dependencyManagement></dependencyManagement>
@@ -110,4 +162,5 @@ pom:<dependencyManagement></dependencyManagement>
 
 
 
- 
+idea热部署： ctrl+f9重启服务
+健康路径：/actuator/health
